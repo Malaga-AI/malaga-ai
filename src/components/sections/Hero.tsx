@@ -1,5 +1,6 @@
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
+import { BrandLogo } from '@/components/layout/BrandLogo'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { events } from '@/data/events'
@@ -25,7 +26,7 @@ export function Hero() {
         <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
           <Badge className="gap-2">
             <Sparkles className="h-3.5 w-3.5" />
-            Malaga-based · Open to builders everywhere
+            Malaga-based - Open to builders everywhere
           </Badge>
           <h1 className="mt-6 max-w-4xl font-safiro text-5xl leading-[1.02] text-white sm:text-6xl lg:text-7xl">
             Build, learn, and connect with the AI community in Malaga.
@@ -57,9 +58,9 @@ export function Hero() {
             <p className="mt-3 max-w-xs font-safiro text-xl leading-tight text-white sm:text-2xl">{nextEvent.title}</p>
           </div>
 
-          <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full border border-teal-300/25 bg-slate-950/55 p-4">
-            <div className="grid h-full place-items-center rounded-full border border-white/10 bg-teal-300/10 text-center font-safiro text-lg leading-tight text-white">
-              Malaga AI
+          <div className="absolute left-1/2 top-1/2 h-32 w-64 -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-teal-300/25 bg-slate-950/65 p-4">
+            <div className="grid h-full place-items-center rounded-2xl border border-white/10 bg-teal-300/10">
+              <BrandLogo showText={false} imageClassName="h-16 max-w-[210px]" />
             </div>
           </div>
           <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10" />

@@ -1,12 +1,14 @@
-import { CalendarDays, Clock, MapPin } from 'lucide-react'
+import { CalendarDays, Clock, MapPin, Users } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { getEventLevelLabel, getEventSpeakerName, getEventTypeLabel } from '@/data/eventMeta'
 import { events } from '@/data/events'
 import { getNextEvent } from '@/lib/events'
 import { formatEventDate } from '@/lib/utils'
 
 export function FeaturedEvent() {
   const event = getNextEvent(events)
+  const speakerNames = event.speakers.map(getEventSpeakerName)
 
   return (
     <section className="py-20 md:py-28" aria-labelledby="featured-event-title">
@@ -27,11 +29,14 @@ export function FeaturedEvent() {
                 <span className="flex items-center gap-3"><CalendarDays className="h-5 w-5 text-teal-300" />{formatEventDate(event.date)}</span>
                 <span className="flex items-center gap-3"><Clock className="h-5 w-5 text-teal-300" />{event.startTime} - {event.endTime}</span>
                 <span className="flex items-center gap-3"><MapPin className="h-5 w-5 text-teal-300" />{event.location}</span>
+                {speakerNames.length > 0 ? (
+                  <span className="flex items-center gap-3"><Users className="h-5 w-5 text-teal-300" />{speakerNames.join(', ')}</span>
+                ) : null}
               </div>
               <div className="mt-6 flex flex-wrap gap-2">
                 <Badge>{event.language}</Badge>
-                <Badge>{event.level}</Badge>
-                <Badge>{event.type}</Badge>
+                <Badge>{getEventLevelLabel(event.level)}</Badge>
+                <Badge>{getEventTypeLabel(event.type)}</Badge>
               </div>
             </div>
           </div>

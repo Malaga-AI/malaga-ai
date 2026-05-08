@@ -1,5 +1,6 @@
 import { X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { BrandLogo } from '@/components/layout/BrandLogo'
 
 type MobileMenuProps = {
   open: boolean
@@ -13,7 +14,9 @@ export function MobileMenu({ open, links, onClose }: MobileMenuProps) {
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/95 p-6 backdrop-blur md:hidden">
       <div className="flex items-center justify-between">
-        <a href="#top" onClick={onClose} className="font-safiro text-xl text-white">Malaga AI</a>
+        <a href="#top" onClick={onClose} aria-label="Malaga AI home">
+          <BrandLogo showText={false} imageClassName="h-10 max-w-[180px]" />
+        </a>
         <button className="rounded-full border border-white/10 p-2 text-white" onClick={onClose} aria-label="Close menu">
           <X className="h-5 w-5" />
         </button>

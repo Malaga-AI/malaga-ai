@@ -1,5 +1,6 @@
 import { CalendarDays, Clock, MapPin } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { getEventLevelLabel, getEventTypeLabel } from '@/data/eventMeta'
 import { formatEventDate } from '@/lib/utils'
 import type { Event } from '@/types/community'
 
@@ -7,8 +8,8 @@ export function EventCard({ event }: { event: Event }) {
   return (
     <article className="group flex h-full flex-col rounded-2xl border border-white/10 bg-card/80 p-6 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-teal-300/40">
       <div className="flex flex-wrap gap-2">
-        <Badge>{event.type.replace('-', ' ')}</Badge>
-        <Badge>{event.level}</Badge>
+        <Badge>{getEventTypeLabel(event.type)}</Badge>
+        <Badge>{getEventLevelLabel(event.level)}</Badge>
         <Badge>{event.language}</Badge>
       </div>
       <h3 className="mt-5 font-safiro text-2xl leading-tight text-white">{event.title}</h3>
