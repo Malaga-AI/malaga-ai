@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 80" role="img" aria-labelledby="title">
+  <title id="title">GDG Malaga logo</title>
+  <rect width="160" height="80" rx="18" fill="#0f172a"/>
+  <path d="m42 40 18-18 9 9-9 9 9 9-9 9-18-18Z" fill="#38bdf8"/>
+  <path d="m118 40-18 18-9-9 9-9-9-9 9-9 18 18Z" fill="#34d399"/>
+  <path d="M73 54 89 20h10L83 54H73Z" fill="#facc15"/>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 80" role="img" aria-labelledby="title">
+  <title id="title">Cloud Partner logo</title>
+  <rect width="160" height="80" rx="18" fill="#082f49"/>
+  <path d="M38 51h42a13 13 0 0 0 1-26 18 18 0 0 0-34-4 15 15 0 0 0-9 30Z" fill="#7dd3fc"/>
+  <path d="M94 30h34v8H94zM94 43h24v7H94z" fill="#e0f2fe"/>
+</svg>

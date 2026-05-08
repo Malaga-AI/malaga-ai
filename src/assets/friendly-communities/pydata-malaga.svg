@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 80" role="img" aria-labelledby="title">
+  <title id="title">PyData Malaga logo</title>
+  <rect width="160" height="80" rx="18" fill="#172554"/>
+  <circle cx="52" cy="40" r="22" fill="#7dd3fc"/>
+  <path d="M52 24c9 0 16 7 16 16H52V24Z" fill="#1d4ed8"/>
+  <path d="M52 40h16c0 9-7 16-16 16V40Z" fill="#22d3ee"/>
+  <path d="M88 30h32v8H88zM88 43h24v7H88z" fill="#dbeafe"/>
+</svg>
