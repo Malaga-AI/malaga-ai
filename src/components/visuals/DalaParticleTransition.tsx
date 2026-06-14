@@ -14,6 +14,7 @@ import {
   Scene,
   ShaderMaterial,
   Vector2,
+  Vector3,
   WebGLRenderer,
 } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -377,11 +378,19 @@ export function DalaParticleTransition() {
 
       const xTo = gsap.quickTo(material.uniforms.uPointer.value, 'x', { duration: 0.45, ease: 'power3.out' })
       const yTo = gsap.quickTo(material.uniforms.uPointer.value, 'y', { duration: 0.45, ease: 'power3.out' })
+      const pointerWorld = new Vector3()
 
       const onPointerMove = (event: PointerEvent) => {
         const rect = canvasHost.getBoundingClientRect()
-        const x = ((event.clientX - rect.left) / rect.width - 0.5) * 3.4
-        const y = -((event.clientY - rect.top) / rect.height - 0.5) * 2
+        if (rect.width === 0 || rect.height === 0) return
+
+        const ndcX = ((event.clientX - rect.left) / rect.width) * 2 - 1
+        const ndcY = -(((event.clientY - rect.top) / rect.height) * 2 - 1)
+        pointerWorld.set(ndcX, ndcY, 0.5).unproject(camera).sub(camera.position).normalize()
+
+        const distanceToParticlePlane = -camera.position.z / pointerWorld.z
+        const x = camera.position.x + pointerWorld.x * distanceToParticlePlane
+        const y = camera.position.y + pointerWorld.y * distanceToParticlePlane
         xTo(x)
         yTo(y)
       }
