@@ -1,6 +1,7 @@
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
 import { BrandLogo } from '@/components/layout/BrandLogo'
+import { SocialLinks } from '@/components/layout/SocialLinks'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { events } from '@/data/events'
@@ -36,13 +37,11 @@ export function Hero() {
             people may benefit from this transformative technology.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button href="#join-form">
-              Join the community <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button href="#events" variant="secondary">
-              Explore events
+            <Button href="#contact-form">
+              Contact <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
+          <SocialLinks className="mt-5" showLabels />
         </motion.div>
 
         <motion.div

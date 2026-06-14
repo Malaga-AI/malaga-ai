@@ -56,3 +56,45 @@ a {
 ::selection {
   background: rgba(45, 212, 191, 0.32);
 }
+
+.collaborator-marquee {
+  --marquee-duration: 34s;
+  overflow: hidden;
+}
+
+.collaborator-marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  padding-inline: 0.75rem;
+  animation: collaborator-scroll var(--marquee-duration) linear infinite;
+}
+
+.collaborator-marquee[data-direction='right'] .collaborator-marquee__track {
+  animation-direction: reverse;
+}
+
+.collaborator-marquee:hover .collaborator-marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes collaborator-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collaborator-marquee {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .collaborator-marquee__track {
+    animation: none;
+  }
+}

@@ -510,8 +510,8 @@ export function DalaParticleTransition() {
               </p>
               {index === 0 && (
                 <div className="pointer-events-auto mt-8 flex flex-col gap-3 sm:flex-row">
-                  <Button href="#join-form">
-                    Join the community <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button href="#contact-form">
+                    Contact <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               )}

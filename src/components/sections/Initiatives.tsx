@@ -1,18 +1,18 @@
-import { GraduationCap, Hammer, UsersRound } from 'lucide-react'
+import { BookOpen, GraduationCap, UsersRound } from 'lucide-react'
 
 const initiatives = [
   {
     title: 'Talent Group',
     status: 'Active',
     description:
-      'A group for connecting AI-minded people, sharing opportunities, and accelerating peer learning across the community.',
+      'A bridge between companies looking for AI talent and people who join the community while searching for new work opportunities.',
     icon: UsersRound,
   },
   {
     title: 'Certified Studies Group',
     status: 'Active',
     description:
-      'A focused space to prepare certifications, organize study paths, and build a steady rhythm of technical progress.',
+      'Since 2023, Malaga-AI study groups have helped cohesive teams learn AI by building projects, from Innovation Hub and LLM exploits to agents, safety AI, and evals.',
     icon: GraduationCap,
   },
   {
@@ -20,7 +20,7 @@ const initiatives = [
     status: 'Under construction',
     description:
       'Practical sessions in progress for training specific skills through workshops, guided challenges, and applied learning.',
-    icon: Hammer,
+    icon: BookOpen,
   },
 ]
 
