@@ -34,7 +34,7 @@ export function MobileMenu({ open, links, onClose }: MobileMenuProps) {
           </a>
         ))}
       </nav>
-      <Button href="#join-form" onClick={onClose} className="mt-8 w-full">Join the community</Button>
+      <Button href="#contact" onClick={onClose} className="mt-8 w-full">Contact</Button>
     </div>,
     document.body,
   )

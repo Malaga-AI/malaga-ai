@@ -27,22 +27,22 @@ const SHAPE_COUNT = 3
 
 const panels = [
   {
-    kicker: 'Stop managing knowledge. Start using it.',
-    title: 'Unlock collective wisdom.',
-    copy: 'Plug into Malaga AI’s shared brainpower. Find events, builders, projects, partners, and practical AI knowledge in one connected community.',
+    kicker: 'Human brains, artificial ones, and coffee in between.',
+    title: 'Meet Malaga AI.',
+    copy: 'A community for curious minds, builders, researchers, founders, and creatives exploring AI together through practical events, shared projects, honest learning, and the occasional “wait, the model did what?” moment.',
     layout: 'left',
   },
   {
-    kicker: 'Manifesto',
-    title: 'Make decisions with confidence',
-    copy: 'A stronger local AI scene helps builders move faster: shared context, useful demos, and people who can turn ideas into real systems.',
+    kicker: 'Events',
+    title: 'Talks, demos, and delightfully weird AI moments',
+    copy: 'Join practical sessions where ideas leave the slide deck, demos occasionally surprise their own creators, and smart people compare notes before the coffee gets cold.',
     layout: 'right',
   },
   {
-    kicker: 'Shared context',
+    kicker: 'Malaga is moving',
     title:
-      'This is your community today. Countless fragments of critical knowledge scattered across meetups, teams, projects, and partners.',
-    copy: 'Spend less time searching for the right people and more time learning, building, and sharing what works.',
+      'AI is advancing across Malaga, from startups and research groups to meetups, universities, makers, and teams building by the sea.',
+    copy: 'Do not miss what is happening in the city: follow Malaga AI to discover the people, projects, events, and ideas shaping the next wave of AI in Malaga.',
     layout: 'center',
   },
 ] as const
@@ -474,41 +474,37 @@ export function DalaParticleTransition() {
         {panels.map((panel, index) => (
           <article
             key={panel.title}
-            className={`dala-panel mx-auto flex min-h-screen max-w-7xl px-4 py-24 sm:px-6 lg:px-8 ${
-              panel.layout === 'center' ? 'items-center justify-center text-center' : 'items-center'
-            }`}
+            className={`dala-panel mx-auto flex min-h-screen max-w-7xl px-4 py-24 sm:px-6 lg:px-8 ${panel.layout === 'center' ? 'items-center justify-center text-center' : 'items-center'
+              }`}
           >
             <div
-              className={`${
-                panel.layout === 'right'
+              className={`${panel.layout === 'right'
                   ? 'ml-auto max-w-lg text-left lg:text-left'
                   : panel.layout === 'center'
                     ? 'mx-auto max-w-6xl'
                     : 'max-w-2xl pt-16'
-              }`}
+                }`}
             >
               {panel.layout !== 'center' && (
                 <p className="text-xs font-black uppercase tracking-[0.12em] text-yellow-300">{panel.kicker}</p>
               )}
               {index === 0 ? (
-              <h1 className="mt-5 font-sans text-6xl font-semibold leading-[0.9] tracking-[-0.08em] text-white drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-7xl lg:text-8xl">
+                <h1 className="mt-5 font-sans text-6xl font-semibold leading-[0.9] tracking-[-0.08em] text-white drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-7xl lg:text-8xl">
                   {panel.title}
                 </h1>
               ) : (
                 <h2
-                  className={`font-sans font-medium tracking-[-0.07em] text-white ${
-                    panel.layout === 'center'
+                  className={`font-sans font-medium tracking-[-0.07em] text-white ${panel.layout === 'center'
                       ? 'text-4xl leading-[1.08] drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl'
                       : 'mt-5 text-4xl leading-[1.08] drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl'
-                  }`}
+                    }`}
                 >
                   {panel.title}
                 </h2>
               )}
               <p
-                className={`mt-6 text-base leading-8 text-slate-100 sm:text-lg ${
-                  panel.layout === 'center' ? 'mx-auto max-w-5xl text-3xl leading-tight sm:text-4xl' : 'max-w-xl'
-                }`}
+                className={`mt-6 text-base leading-8 text-slate-100 sm:text-lg ${panel.layout === 'center' ? 'mx-auto max-w-5xl text-3xl leading-tight sm:text-4xl' : 'max-w-xl'
+                  }`}
               >
                 {panel.copy}
               </p>
@@ -517,8 +513,12 @@ export function DalaParticleTransition() {
                   <Button href="#join-form">
                     Join the community <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
+                </div>
+              )}
+              {index === 1 && (
+                <div className="pointer-events-auto mt-8 flex">
                   <Button href="#events" variant="secondary">
-                    Explore events
+                    See events <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               )}

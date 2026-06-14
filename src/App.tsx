@@ -1,17 +1,19 @@
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
+import { Contact } from '@/components/sections/Contact'
 import { Events } from '@/components/sections/Events'
+import { EventPhotos } from '@/components/sections/EventPhotos'
 import { FeaturedEvent } from '@/components/sections/FeaturedEvent'
-import { FriendlyCommunities } from '@/components/sections/FriendlyCommunities'
-import { JoinCommunity } from '@/components/sections/JoinCommunity'
-import { Projects } from '@/components/sections/Projects'
-import { Resources } from '@/components/sections/Resources'
-import { Sponsors } from '@/components/sections/Sponsors'
+import { Initiatives } from '@/components/sections/Initiatives'
+import { CommunityPartners } from '@/components/sections/CommunityPartners'
+import { Team } from '@/components/sections/Team'
 import { DalaParticleTransition } from '@/components/visuals/DalaParticleTransition'
 import { useEvents } from '@/features/events/useEvents'
+import { useState } from 'react'
 
 export default function App() {
   const eventsState = useEvents()
+  const [contactType, setContactType] = useState('General')
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -25,11 +27,11 @@ export default function App() {
           error={eventsState.error}
           onRetry={eventsState.refetch}
         />
-        <Projects />
-        <Sponsors />
-        <FriendlyCommunities />
-        <Resources />
-        <JoinCommunity />
+        <Initiatives />
+        <Team />
+        <EventPhotos events={eventsState.events} />
+        <CommunityPartners onContactTypeChange={setContactType} />
+        <Contact contactType={contactType} onContactTypeChange={setContactType} />
       </main>
       <Footer />
     </div>

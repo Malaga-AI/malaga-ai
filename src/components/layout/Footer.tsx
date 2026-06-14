@@ -2,9 +2,13 @@ import { BrandLogo } from '@/components/layout/BrandLogo'
 
 const links = [
   { href: '#events', label: 'Events' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#resources', label: 'Resources' },
+  { href: '#initiatives', label: 'Initiatives' },
+  { href: '#team', label: 'Team' },
+  { href: '#photos', label: 'Photos' },
+  { href: '#sponsors', label: 'Sponsors' },
   { href: '#partners', label: 'Partners' },
+  { href: '#collaborators', label: 'Collaborators' },
+  { href: '#contact', label: 'Contact' },
 ]
 
 export function Footer() {
