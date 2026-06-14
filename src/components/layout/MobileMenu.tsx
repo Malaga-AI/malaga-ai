@@ -13,7 +13,7 @@ export function MobileMenu({ open, links, onClose }: MobileMenuProps) {
   if (!open) return null
 
   return createPortal(
-    <div className="fixed inset-0 z-[100] bg-slate-950 p-6 md:hidden">
+    <div className="fixed inset-x-0 top-0 z-[100] bg-slate-950 p-6 shadow-2xl ring-1 ring-white/10 md:hidden">
       <div className="flex items-center justify-between">
         <a href="#top" onClick={onClose} aria-label="Malaga AI home">
           <BrandLogo showText={false} imageClassName="h-10 max-w-[180px]" />
