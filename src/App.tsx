@@ -13,7 +13,7 @@ import { useState } from 'react'
 
 export default function App() {
   const eventsState = useEvents()
-  const [contactType, setContactType] = useState('General')
+  const [contactReason, setContactReason] = useState('General')
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -30,8 +30,8 @@ export default function App() {
         <Initiatives />
         <Team />
         <EventPhotos events={eventsState.events} />
-        <CommunityPartners onContactTypeChange={setContactType} />
-        <Contact contactType={contactType} onContactTypeChange={setContactType} />
+        <CommunityPartners onContactTypeChange={setContactReason} />
+        <Contact contactReason={contactReason} onContactReasonChange={setContactReason} />
       </main>
       <Footer />
     </div>

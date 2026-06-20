@@ -1,43 +1,70 @@
-import type { FormEvent } from 'react'
-import { ArrowRight, Mail, MapPin } from 'lucide-react'
+import { useState, type FormEvent } from 'react'
+import { ArrowRight } from 'lucide-react'
 
-const contactEmail = 'juangallego001@gmail.com'
-const contactTypes = ['General', 'Sponsor', 'Partner', 'Collaborator', 'Speaker', 'Volunteer']
+const contactEndpoint = 'https://formsubmit.co/ajax/esparcaso@gmail.com'
+const contactReasons = ['General', 'Sponsor', 'Partner', 'Collaborator', 'Speaker', 'Volunteer', 'Other']
 
 type ContactProps = {
-  contactType: string
-  onContactTypeChange: (type: string) => void
+  contactReason: string
+  onContactReasonChange: (reason: string) => void
 }
 
-function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
-  event.preventDefault()
+type SubmitState = 'idle' | 'sending' | 'sent' | 'error'
 
-  const formData = new FormData(event.currentTarget)
-  const name = String(formData.get('name') ?? '').trim()
-  const email = String(formData.get('email') ?? '').trim()
-  const type = String(formData.get('type') ?? '').trim()
-  const message = String(formData.get('message') ?? '').trim()
-
-  const subject = encodeURIComponent(`Malaga AI contact: ${type || 'General'}${name ? ` - ${name}` : ''}`)
-  const body = encodeURIComponent(
-    [
-      'Hi Malaga AI,',
-      '',
-      'I would like to get in touch.',
-      '',
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Type: ${type}`,
-      '',
-      'Message:',
-      message || 'No additional message.',
-    ].join('\n'),
-  )
-
-  window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`
+type FormSubmitResponse = {
+  success?: string | boolean
+  message?: string
 }
 
-export function Contact({ contactType, onContactTypeChange }: ContactProps) {
+export function Contact({ contactReason, onContactReasonChange }: ContactProps) {
+  const [submitState, setSubmitState] = useState<SubmitState>('idle')
+  const [submitMessage, setSubmitMessage] = useState('')
+
+  async function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const name = String(formData.get('name') ?? '').trim()
+    const reason = String(formData.get('reason') ?? '').trim()
+    const message = String(formData.get('message') ?? '').trim()
+
+    formData.set('_subject', `Malaga AI contact: ${reason || 'General'}${name ? ` - ${name}` : ''}`)
+    formData.set('_template', 'table')
+    formData.set('reason', reason || 'General')
+    formData.set('message', message || 'No additional message.')
+
+    setSubmitState('sending')
+    setSubmitMessage('')
+
+    try {
+      const response = await fetch(contactEndpoint, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: formData,
+      })
+      const result = await response.json() as FormSubmitResponse
+
+      if (!response.ok || result.success === false || result.success === 'false') {
+        const message = result.message?.toLowerCase().includes('activation')
+          ? 'The form needs one-time activation. Check esparcaso@gmail.com and click the FormSubmit activation link.'
+          : result.message ?? 'Contact request failed'
+
+        setSubmitMessage(message)
+        throw new Error('Contact request failed')
+      }
+
+      event.currentTarget.reset()
+      onContactReasonChange('General')
+      setSubmitState('sent')
+      setSubmitMessage('Request sent. We will read it before the robots do.')
+    } catch {
+      setSubmitState('error')
+      setSubmitMessage((currentMessage) => currentMessage || 'Something went wrong. Please try again in a moment.')
+    }
+  }
+
   return (
     <section id="contact" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="contact-title">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -45,21 +72,11 @@ export function Contact({ contactType, onContactTypeChange }: ContactProps) {
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Contact</p>
             <h2 id="contact-title" className="mt-3 font-safiro text-4xl leading-tight text-white md:text-5xl">
-              Let's talk about working with Malaga AI
+              Got an idea, a plan, or an AI question?
             </h2>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-              Reach out to sponsor, partner, propose a talk, collaborate, or activate a new community initiative.
+              Send it over. If it involves AI, people, projects, or snacks after a meetup, we are probably curious.
             </p>
-            <div className="mt-8 grid gap-4 text-sm text-slate-300">
-              <span className="flex items-center gap-3">
-                <Mail className="h-5 w-5 shrink-0 text-teal-300" />
-                {contactEmail}
-              </span>
-              <span className="flex items-center gap-3">
-                <MapPin className="h-5 w-5 shrink-0 text-teal-300" />
-                Malaga, Spain
-              </span>
-            </div>
           </div>
 
           <form id="contact-form" className="grid gap-4 scroll-mt-24" onSubmit={handleContactSubmit}>
@@ -90,16 +107,16 @@ export function Contact({ contactType, onContactTypeChange }: ContactProps) {
             </div>
             <div className="grid gap-2">
               <label className="text-sm font-medium text-slate-200" htmlFor="contact-type">
-                Type
+                Reason
               </label>
               <select
                 id="contact-type"
-                name="type"
-                value={contactType}
-                onChange={(event) => onContactTypeChange(event.target.value)}
+                name="reason"
+                value={contactReason}
+                onChange={(event) => onContactReasonChange(event.target.value)}
                 className="min-h-12 rounded-2xl border border-white/10 bg-slate-950/55 px-4 text-white outline-none transition focus:border-teal-300"
               >
-                {contactTypes.map((type) => <option key={type}>{type}</option>)}
+                {contactReasons.map((reason) => <option key={reason}>{reason}</option>)}
               </select>
             </div>
             <div className="grid gap-2">
@@ -116,10 +133,17 @@ export function Contact({ contactType, onContactTypeChange }: ContactProps) {
             </div>
             <button
               type="submit"
+              disabled={submitState === 'sending'}
               className="inline-flex min-h-12 items-center justify-center rounded-full bg-teal-300 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-glow transition hover:-translate-y-0.5 hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2 focus:ring-offset-background"
             >
-              Send request <ArrowRight className="ml-2 h-4 w-4" />
+              {submitState === 'sending' ? 'Sending...' : 'Send request'} <ArrowRight className="ml-2 h-4 w-4" />
             </button>
+            {submitState === 'sent' && submitMessage ? (
+              <p className="text-sm text-teal-200">{submitMessage}</p>
+            ) : null}
+            {submitState === 'error' && submitMessage ? (
+              <p className="text-sm text-rose-200">{submitMessage}</p>
+            ) : null}
           </form>
         </div>
       </div>

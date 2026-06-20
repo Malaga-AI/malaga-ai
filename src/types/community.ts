@@ -60,7 +60,7 @@ export type Project = {
 export type Sponsor = {
   id: string
   name: string
-  tier: 'community' | 'venue' | 'pizza' | 'gold' | 'main'
+  tier: 'community' | 'venue' | 'pizza' | 'gold' | 'silver' | 'bronze' | 'main'
   logo?: string
   url?: string
 }

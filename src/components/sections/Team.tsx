@@ -11,58 +11,46 @@ const team = [
   {
     name: 'Adrian Tineo',
     role: 'Community Lead',
-    description: 'Coordinates Malaga AI initiatives and helps connect builders, speakers, and partners around practical AI.',
     image: adrianImage,
-    contactUrl: 'https://www.linkedin.com/in/adriantineo/',
-    contactType: 'linkedin',
+    emailUrl: 'mailto:adrian@malaga-ai.community',
+    linkedinUrl: 'https://www.linkedin.com/in/adriantineo/',
   },
   {
     name: 'Rosa Castillo',
-    role: 'Events & Community',
-    description: 'Shapes welcoming events and community touchpoints so people can learn, meet, and collaborate.',
+    role: 'Community Lead',
     image: rosaImage,
-    contactUrl: 'https://www.linkedin.com/in/arosacastillo/',
-    contactType: 'linkedin',
+    emailUrl: 'mailto:hello@malaga-ai.community',
+    linkedinUrl: 'https://www.linkedin.com/in/arosacastillo/',
   },
   {
     name: 'Paul Ben',
-    role: 'Operations',
-    description: 'Supports event logistics, coordination, and the behind-the-scenes details that keep the community moving.',
+    role: 'Collaborator',
     image: paulImage,
-    contactUrl: 'mailto:Paul.benta@yahoo.ro',
-    contactType: 'mail',
   },
   {
     name: 'Juan Gallego',
-    role: 'Technical Program',
-    description: 'Helps turn ideas into hands-on sessions, demos, and learning experiences for the local AI scene.',
+    role: 'Technical Program Manager',
     image: juanImage,
-    contactUrl: 'https://www.linkedin.com/in/juan-gallego-güeto-7b3a22141/',
-    contactType: 'linkedin',
+    emailUrl: 'mailto:juan@malaga-ai.community',
+    linkedinUrl: 'https://www.linkedin.com/in/juan-gallego-güeto-7b3a22141/',
   },
   {
     name: 'Andrea Villanca',
-    role: 'Partnerships',
-    description: 'Builds bridges with local communities, companies, and collaborators across Malaga.',
+    role: 'Commnity Manager',
     image: andreaImage,
-    contactUrl: 'https://www.linkedin.com/in/andreavillanca/',
-    contactType: 'linkedin',
+    linkedinUrl: 'https://www.linkedin.com/in/andreavillanca/',
   },
   {
     name: 'Jose Rodriguez',
-    role: 'Content & Projects',
-    description: 'Contributes to community storytelling, project visibility, and resources for people building with AI.',
+    role: 'Collaborator',
     image: joseImage,
-    contactUrl: 'https://www.linkedin.com/in/jose-rodriguez-ortega/',
-    contactType: 'linkedin',
+    linkedinUrl: 'https://www.linkedin.com/in/jose-rodriguez-ortega/',
   },
   {
     name: 'Janine Boldt',
-    role: 'Community Experience',
-    description: 'Focuses on making Malaga AI feel useful, open, and easy to join for newcomers and regulars.',
+    role: 'Collaborator',
     image: janineImage,
-    contactUrl: 'https://www.linkedin.com/in/janine-boldt/',
-    contactType: 'linkedin',
+    linkedinUrl: 'https://www.linkedin.com/in/janine-boldt/',
   },
 ]
 
@@ -80,60 +68,52 @@ export function Team() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-3 sm:grid-cols-3 lg:grid-cols-7">
           {team.map((member) => (
             <article
               key={member.name}
-              className="group overflow-hidden rounded-xl border border-white/10 bg-card/80 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-teal-300/40"
+              className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-card/80 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-teal-300/40"
             >
-              <div className="relative aspect-[5/4] overflow-hidden bg-white/[0.05]">
+              <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.05]">
                 <img
                   src={member.image}
                   alt={`${member.name} portrait`}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/92 via-slate-950/16 to-transparent" />
-                {member.role ? (
-                  <span className="absolute bottom-3 left-3 right-3 rounded-full border border-white/15 bg-slate-950/70 px-3 py-1.5 text-center text-xs font-semibold text-teal-100 backdrop-blur">
-                    {member.role}
-                  </span>
-                ) : null}
               </div>
-              <div className="p-4">
-                <div className="flex min-h-40 flex-col justify-between gap-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="font-safiro text-xl leading-tight text-white">{member.name}</h3>
-                      {member.role ? (
-                        <p className="mt-1 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                          {member.role}
-                        </p>
-                      ) : null}
-                    </div>
-                    <div className="flex shrink-0 gap-2">
-                      <a
-                        href="#contact"
-                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 transition hover:border-teal-300/40 hover:text-white"
-                        aria-label={`Contact ${member.name}`}
-                      >
-                        <Mail className="h-4 w-4" />
-                      </a>
-                      <a
-                        href={member.contactUrl}
-                        target={member.contactUrl.startsWith('http') ? '_blank' : undefined}
-                        rel={member.contactUrl.startsWith('http') ? 'noreferrer' : undefined}
-                        className="grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 transition hover:border-teal-300/40 hover:text-white"
-                        aria-label={member.contactType === 'mail' ? `Email ${member.name}` : `${member.name} LinkedIn`}
-                      >
-                        {member.contactType === 'mail' ? <Mail className="h-4 w-4" /> : <Linkedin className="h-4 w-4" />}
-                      </a>
-                    </div>
+              <div className="flex flex-1 p-3">
+                <div className="flex w-full items-start justify-between gap-2">
+                  <div>
+                    <h3 className="font-safiro text-base leading-tight text-white">{member.name}</h3>
+                    {member.role ? (
+                      <p className="mt-1 text-xs leading-4 text-muted-foreground">
+                        {member.role}
+                      </p>
+                    ) : null}
                   </div>
-                  <div className="h-px w-full bg-gradient-to-r from-teal-300/40 via-white/10 to-transparent" aria-hidden="true" />
-                  {member.description ? (
-                    <p className="text-sm leading-5 text-muted-foreground">{member.description}</p>
-                  ) : null}
+                  <div className="flex shrink-0 gap-2">
+                    {member.emailUrl ? (
+                      <a
+                        href={member.emailUrl}
+                        className="grid h-7 w-7 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 transition hover:border-teal-300/40 hover:text-white"
+                        aria-label={`Email ${member.name}`}
+                      >
+                        <Mail className="h-3.5 w-3.5" />
+                      </a>
+                    ) : null}
+                    {member.linkedinUrl ? (
+                      <a
+                        href={member.linkedinUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="grid h-7 w-7 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 transition hover:border-teal-300/40 hover:text-white"
+                        aria-label={`${member.name} LinkedIn`}
+                      >
+                        <Linkedin className="h-3.5 w-3.5" />
+                      </a>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </article>

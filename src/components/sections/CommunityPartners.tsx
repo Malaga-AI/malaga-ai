@@ -1,24 +1,13 @@
 import gdgMalagaLogo from '@/assets/friendly-communities/gdg-malaga.svg'
 import womenTechmakersLogo from '@/assets/friendly-communities/women-techmakers-malaga.svg'
-import { ArrowRight, Building2 } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { SponsorCard } from '@/components/community/SponsorCard'
 import { Button } from '@/components/ui/button'
-import { sponsors } from '@/data/sponsors'
+import { partners, sponsors } from '@/data/sponsors'
 
 type CommunityPartnersProps = {
   onContactTypeChange: (type: string) => void
 }
-
-const partnerItems = [
-  {
-    name: 'Universities and education centers',
-    description: 'Academic allies that bring talent, research, and applied learning closer to the community.',
-  },
-  {
-    name: 'Technology companies',
-    description: 'Organizations that share knowledge, real-world cases, and opportunities for the local ecosystem.',
-  },
-]
 
 type Collaborator = {
   name: string
@@ -48,7 +37,6 @@ const collaboratorGroups: CollaboratorGroup[] = [
       { name: 'Bravend', url: 'https://bravend.com.br/', logo: favicon('bravend.com.br') },
       { name: 'CodeSpace', url: 'https://codespaceacademy.com/', logo: favicon('codespaceacademy.com') },
       { name: 'Freepik (Magnific)', url: 'https://www.magnific.com/', logo: favicon('magnific.com') },
-      { name: 'Innovation Campus', url: 'https://innovationcampus.biz/', logo: favicon('innovationcampus.biz') },
       { name: 'Marlife', url: 'https://marlife.eu/', logo: favicon('marlife.eu') },
     ],
   },
@@ -156,16 +144,8 @@ export function CommunityPartners({ onContactTypeChange }: CommunityPartnersProp
                 Contact as partner <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              {partnerItems.map((item) => (
-                <article key={item.name} className="rounded-2xl border border-white/10 bg-white/[0.055] p-6">
-                  <span className="grid h-12 w-12 place-items-center rounded-xl bg-cyan-300/12 text-cyan-200">
-                    <Building2 className="h-6 w-6" />
-                  </span>
-                  <h3 className="mt-5 font-safiro text-2xl text-white">{item.name}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.description}</p>
-                </article>
-              ))}
+            <div className="grid gap-4 sm:grid-cols-2">
+              {partners.map((partner) => <SponsorCard key={partner.id} sponsor={partner} />)}
             </div>
           </div>
         </div>

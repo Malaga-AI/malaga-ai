@@ -1,36 +1,46 @@
 import type { Sponsor } from '@/types/community'
-import cloudPartnerLogo from '@/assets/sponsors/cloud-partner.svg'
-import educationPartnerLogo from '@/assets/sponsors/education-partner.svg'
+import malagaAiLogo from '@/assets/brand/malaga-ai-logo.png'
 import grupoBillinghamLogo from '@/assets/sponsors/grupo-billingham.png'
-import pizzaSponsorLogo from '@/assets/sponsors/pizza-sponsor.svg'
+
+const favicon = (domain: string) => `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
 
 export const sponsors: Sponsor[] = [
   {
-    id: 'venue',
+    id: 'sponsor-gold',
+    name: 'Be a sponsor',
+    tier: 'gold',
+    logo: malagaAiLogo,
+    url: 'https://malaga-ai.community/',
+  },
+  {
+    id: 'sponsor-silver',
+    name: 'Be a sponsor',
+    tier: 'silver',
+    logo: malagaAiLogo,
+    url: 'https://malaga-ai.community/',
+  },
+  {
+    id: 'sponsor-bronze',
+    name: 'Be a sponsor',
+    tier: 'bronze',
+    logo: malagaAiLogo,
+    url: 'https://malaga-ai.community/',
+  },
+]
+
+export const partners: Sponsor[] = [
+  {
+    id: 'grupo-billingham',
     name: 'Grupo Billingham',
-    tier: 'venue',
+    tier: 'community',
     logo: grupoBillinghamLogo,
     url: 'https://www.grupobillingham.com/',
   },
   {
-    id: 'pizza',
-    name: 'Pizza Sponsor',
-    tier: 'pizza',
-    logo: pizzaSponsorLogo,
-    url: '#',
-  },
-  {
-    id: 'cloud',
-    name: 'Cloud Partner',
-    tier: 'gold',
-    logo: cloudPartnerLogo,
-    url: '#',
-  },
-  {
-    id: 'education',
-    name: 'Education Partner',
+    id: 'innovation-campus-malaga',
+    name: 'Innovation Campus Malaga',
     tier: 'community',
-    logo: educationPartnerLogo,
-    url: '#',
+    logo: favicon('innovationcampus.biz'),
+    url: 'https://innovationcampus.biz/',
   },
 ]
