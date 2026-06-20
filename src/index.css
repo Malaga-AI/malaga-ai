@@ -53,6 +53,30 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+.image-auto-slider__container {
+  mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.image-auto-slider__track {
+  animation: image-auto-slider-scroll 24s linear infinite;
+}
+
+.image-auto-slider__container:hover .image-auto-slider__track,
+.image-auto-slider__container:focus-within .image-auto-slider__track {
+  animation-play-state: paused;
+}
+
+@keyframes image-auto-slider-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 ::selection {
   background: rgba(45, 212, 191, 0.32);
 }
@@ -89,6 +113,15 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .image-auto-slider__container {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .image-auto-slider__track {
+    animation: none;
+  }
+
   .collaborator-marquee {
     overflow-x: auto;
     scrollbar-width: thin;

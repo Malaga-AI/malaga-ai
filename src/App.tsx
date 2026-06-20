@@ -29,7 +29,7 @@ export default function App() {
         />
         <Initiatives />
         <Team />
-        <EventPhotos events={eventsState.events} />
+        <EventPhotos />
         <CommunityPartners onContactTypeChange={setContactReason} />
         <Contact contactReason={contactReason} onContactReasonChange={setContactReason} />
       </main>
