@@ -1,4 +1,4 @@
-import type { EventItem, EventStatus } from './types'
+import type { EventItem, EventStatus } from './types.js'
 
 type EventbriteMoney = {
   major_value?: string | null

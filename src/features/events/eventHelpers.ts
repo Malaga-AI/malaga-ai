@@ -1,4 +1,4 @@
-import type { EventItem } from './types'
+import type { EventItem } from './types.js'
 
 export function getFeaturedEvent(events: EventItem[], now = Date.now()) {
   return (

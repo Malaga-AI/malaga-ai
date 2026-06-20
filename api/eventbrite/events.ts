@@ -1,7 +1,7 @@
-import { fallbackEvents } from '../../src/features/events/fallbackEvents'
-import { sortEventsForDisplay } from '../../src/features/events/eventHelpers'
-import { mapEventbriteEventToEventItem, type EventbriteRawEvent } from '../../src/features/events/eventbriteMapper'
-import type { EventItem, EventsResponse } from '../../src/features/events/types'
+import { fallbackEvents } from '../../src/features/events/fallbackEvents.js'
+import { sortEventsForDisplay } from '../../src/features/events/eventHelpers.js'
+import { mapEventbriteEventToEventItem, type EventbriteRawEvent } from '../../src/features/events/eventbriteMapper.js'
+import type { EventItem, EventsResponse } from '../../src/features/events/types.js'
 
 type ServerlessRequest = {
   method?: string
