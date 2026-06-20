@@ -6,10 +6,13 @@ import { MobileMenu } from '@/components/layout/MobileMenu'
 
 const links = [
   { href: '#events', label: 'Events' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#resources', label: 'Resources' },
+  { href: '#initiatives', label: 'Initiatives' },
+  { href: '#team', label: 'Team' },
+  { href: '#photos', label: 'Photos' },
+  { href: '#sponsors', label: 'Sponsors' },
   { href: '#partners', label: 'Partners' },
-  { href: '#friends', label: 'Friend Communities' },
+  { href: '#collaborators', label: 'Collaborators' },
+  { href: '#contact', label: 'Contact' },
 ]
 
 export function Header() {
@@ -27,7 +30,7 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden md:block">
-          <Button href="#join-form">Join the community</Button>
+          <Button href="#contact">Contact</Button>
         </div>
         <button className="rounded-full border border-white/10 p-2 text-white md:hidden" onClick={() => setOpen(true)} aria-label="Open menu">
           <Menu className="h-5 w-5" />

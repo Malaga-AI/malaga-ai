@@ -45,8 +45,8 @@ export function JoinCommunity() {
               Get updates about upcoming sessions, open calls for demos, workshops, and community opportunities.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-              <Button href="#join-form">
-                Join the community <ArrowRight className="ml-2 h-4 w-4" />
+              <Button href="#contact-form">
+                Contact <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button href="#join-form" variant="secondary">
                 <Mic2 className="mr-2 h-4 w-4" />

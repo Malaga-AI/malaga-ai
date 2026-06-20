@@ -1,10 +1,15 @@
 import { BrandLogo } from '@/components/layout/BrandLogo'
+import { SocialLinks } from '@/components/layout/SocialLinks'
 
 const links = [
   { href: '#events', label: 'Events' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#resources', label: 'Resources' },
+  { href: '#initiatives', label: 'Initiatives' },
+  { href: '#team', label: 'Team' },
+  { href: '#photos', label: 'Photos' },
+  { href: '#sponsors', label: 'Sponsors' },
   { href: '#partners', label: 'Partners' },
+  { href: '#collaborators', label: 'Collaborators' },
+  { href: '#contact', label: 'Contact' },
 ]
 
 export function Footer() {
@@ -17,14 +22,15 @@ export function Footer() {
             Malaga AI is a community for people building, learning, and experimenting with artificial intelligence in Malaga.
           </p>
         </div>
-        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-          {links.map((link) => (
-            <a key={link.href} href={link.href} className="hover:text-white">
-              {link.label}
-            </a>
-          ))}
-          <a href="#" className="hover:text-white">LinkedIn</a>
-          <a href="#" className="hover:text-white">GitHub</a>
+        <div className="flex flex-col gap-5 md:items-end">
+          <div className="flex flex-wrap gap-4 text-sm text-muted-foreground md:justify-end">
+            {links.map((link) => (
+              <a key={link.href} href={link.href} className="hover:text-white">
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <SocialLinks linkClassName="h-10 w-10" />
         </div>
         <p className="text-sm text-muted-foreground">© 2026 Malaga AI.</p>
       </div>
