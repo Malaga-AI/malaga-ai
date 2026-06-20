@@ -112,6 +112,35 @@ a {
   }
 }
 
+@media (max-width: 639px) {
+  .collaborator-marquee {
+    overflow: visible;
+  }
+
+  .collaborator-marquee__track {
+    display: grid;
+    width: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-inline: 0.75rem;
+    animation: none;
+  }
+
+  .collaborator-marquee__track > a {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .collaborator-marquee__repeat {
+    display: none;
+  }
+}
+
+@media (max-width: 399px) {
+  .collaborator-marquee__track {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .image-auto-slider__container {
     overflow-x: auto;

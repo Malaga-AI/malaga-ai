@@ -96,7 +96,9 @@ function CollaboratorRow({ group, index }: { group: CollaboratorGroup; index: nu
         <div className="collaborator-marquee__track">
           {group.items.map((collaborator) => <CollaboratorLogo key={collaborator.name} collaborator={collaborator} />)}
           {group.items.map((collaborator) => (
-            <CollaboratorLogo key={`${collaborator.name}-repeat`} collaborator={collaborator} />
+            <span key={`${collaborator.name}-repeat`} className="collaborator-marquee__repeat contents" aria-hidden="true">
+              <CollaboratorLogo collaborator={collaborator} />
+            </span>
           ))}
         </div>
       </div>

@@ -68,11 +68,11 @@ export function Team() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-3 sm:grid-cols-3 lg:grid-cols-7">
+        <div className="-mx-4 mt-10 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 [scrollbar-width:thin] sm:mx-0 sm:grid sm:snap-none sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-7">
           {team.map((member) => (
             <article
               key={member.name}
-              className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-card/80 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-teal-300/40"
+              className="group flex h-full w-[72vw] max-w-56 shrink-0 snap-center flex-col overflow-hidden rounded-xl border border-white/10 bg-card/80 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-teal-300/40 sm:w-auto sm:max-w-none"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.05]">
                 <img
