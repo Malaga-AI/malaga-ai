@@ -8,7 +8,6 @@ import {
   BufferAttribute,
   BufferGeometry,
   Color,
-  Mesh,
   PerspectiveCamera,
   Points,
   Scene,
@@ -17,13 +16,22 @@ import {
   Vector3,
   WebGLRenderer,
 } from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { Button } from '@/components/ui/button'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const PARTICLE_COUNT = 12800
 const SHAPE_COUNT = 3
+
+// Logo particle source: the SVG is rasterised to an offscreen canvas and its
+// opaque pixels become the point cloud that the particles assemble into.
+const LOGO_SRC = '/logo-particles.svg'
+const RASTER_SIZE = 620
+const LOGO_ALPHA_CUTOFF = 40
+const LOGO_SPAN = 3.1
+// World-space offset of the assembled logo. Positive x shifts it right.
+const LOGO_OFFSET_X = 1.15
+const LOGO_OFFSET_Y = 0
 
 const panels = [
   {
@@ -148,58 +156,15 @@ function writeShape(target: Float32Array, index: number, x: number, y: number, z
   target[offset + 2] = z
 }
 
-function rotateY(x: number, z: number, angle: number) {
+// Soft disc of points shown while the logo SVG is still rasterising.
+function makeDiscFallback(index: number) {
+  const radius = Math.sqrt(random(index + 10)) * 1.45
+  const theta = random(index + 20) * Math.PI * 2
   return {
-    x: x * Math.cos(angle) + z * Math.sin(angle),
-    z: -x * Math.sin(angle) + z * Math.cos(angle),
+    x: Math.cos(theta) * radius,
+    y: Math.sin(theta) * radius * 0.92,
+    z: centeredRand(index + 30) * 0.1,
   }
-}
-
-function rotateZ(x: number, y: number, angle: number) {
-  return {
-    x: x * Math.cos(angle) - y * Math.sin(angle),
-    y: x * Math.sin(angle) + y * Math.cos(angle),
-  }
-}
-
-function transformPoint(
-  x: number,
-  y: number,
-  z: number,
-  options: { scale: number; x: number; y: number; z: number; rotateY: number; rotateZ: number },
-) {
-  const yz = rotateY(x, z, options.rotateY)
-  const xy = rotateZ(yz.x, y, options.rotateZ)
-  return {
-    x: xy.x * options.scale + options.x,
-    y: xy.y * options.scale + options.y,
-    z: yz.z * options.scale + options.z,
-  }
-}
-
-function makeBrainFallback(index: number, side: 'right' | 'left') {
-  const r1 = random(index + 10)
-  const r2 = random(index + 20)
-  const r3 = random(index + 30)
-  const hemisphere = random(index + 40) > 0.5 ? 1 : -1
-  const theta = r1 * Math.PI * 2
-  const phi = Math.acos(2 * r2 - 1)
-  const radius = 0.55 + Math.pow(r3, 2.2) * 0.48
-  const fold = Math.sin(theta * 5 + r3 * 9) * 0.09
-  const point = {
-    x: hemisphere * 0.42 + Math.sin(phi) * Math.cos(theta) * radius * 0.58 + fold * hemisphere,
-    y: Math.cos(phi) * radius * 0.82 + Math.sin(theta * 3) * 0.05,
-    z: Math.sin(phi) * Math.sin(theta) * radius * 0.64,
-  }
-
-  return transformPoint(point.x, point.y, point.z, {
-    scale: side === 'right' ? 1.62 : 2.25,
-    x: side === 'right' ? 1.22 : -1.05,
-    y: side === 'right' ? 0.02 : 0.02,
-    z: 0,
-    rotateY: side === 'right' ? -0.22 : 1.12,
-    rotateZ: side === 'right' ? 0.02 : -0.06,
-  })
 }
 
 function makeScatter(index: number) {
@@ -217,55 +182,75 @@ function makeScatter(index: number) {
   }
 }
 
-function normaliseModel(source: ArrayLike<number>) {
-  const sourceCount = Math.floor(source.length / 3)
-  let minX = Infinity
-  let minY = Infinity
-  let minZ = Infinity
-  let maxX = -Infinity
-  let maxY = -Infinity
-  let maxZ = -Infinity
-
-  for (let i = 0; i < sourceCount; i += 1) {
-    const x = source[i * 3]
-    const y = source[i * 3 + 1]
-    const z = source[i * 3 + 2]
-    minX = Math.min(minX, x)
-    minY = Math.min(minY, y)
-    minZ = Math.min(minZ, z)
-    maxX = Math.max(maxX, x)
-    maxY = Math.max(maxY, y)
-    maxZ = Math.max(maxZ, z)
-  }
-
-  const centerX = (minX + maxX) / 2
-  const centerY = (minY + maxY) / 2
-  const centerZ = (minZ + maxZ) / 2
-  const scale = 1 / Math.max(maxX - minX, maxY - minY, maxZ - minZ)
-
-  return { centerX, centerY, centerZ, scale, sourceCount }
+type LogoPool = {
+  points: Float32Array
+  count: number
+  centerX: number
+  centerY: number
+  extent: number
 }
 
-function makeBrainFromModel(source: ArrayLike<number>, side: 'right' | 'left') {
+// Rasterise the logo image and collect every opaque pixel, plus the bounding
+// box of the artwork so it can be centred and scaled independently of margins.
+function collectOpaquePixels(image: HTMLImageElement): LogoPool | null {
+  const canvas = document.createElement('canvas')
+  canvas.width = RASTER_SIZE
+  canvas.height = RASTER_SIZE
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return null
+
+  const naturalW = image.naturalWidth || image.width || RASTER_SIZE
+  const naturalH = image.naturalHeight || image.height || RASTER_SIZE
+  const fit = Math.min(RASTER_SIZE / naturalW, RASTER_SIZE / naturalH)
+  const drawW = naturalW * fit
+  const drawH = naturalH * fit
+  ctx.drawImage(image, (RASTER_SIZE - drawW) / 2, (RASTER_SIZE - drawH) / 2, drawW, drawH)
+
+  const { data } = ctx.getImageData(0, 0, RASTER_SIZE, RASTER_SIZE)
+  const collected: number[] = []
+  let minX = Infinity
+  let minY = Infinity
+  let maxX = -Infinity
+  let maxY = -Infinity
+
+  for (let py = 0; py < RASTER_SIZE; py += 1) {
+    for (let px = 0; px < RASTER_SIZE; px += 1) {
+      const alpha = data[(py * RASTER_SIZE + px) * 4 + 3]
+      if (alpha > LOGO_ALPHA_CUTOFF) {
+        collected.push(px, py)
+        if (px < minX) minX = px
+        if (px > maxX) maxX = px
+        if (py < minY) minY = py
+        if (py > maxY) maxY = py
+      }
+    }
+  }
+
+  if (collected.length === 0) return null
+
+  return {
+    points: Float32Array.from(collected),
+    count: collected.length / 2,
+    centerX: (minX + maxX) / 2,
+    centerY: (minY + maxY) / 2,
+    extent: Math.max(maxX - minX, maxY - minY) || RASTER_SIZE,
+  }
+}
+
+// Sample the opaque-pixel pool into a full particle shape, mapped to centred
+// world coordinates. seedOffset lets shape0/shape1 draw slightly different
+// samples so the logo gently shimmers during the first morph segment.
+function makeLogoShape(pool: LogoPool, seedOffset: number) {
   const target = new Float32Array(PARTICLE_COUNT * 3)
-  const model = normaliseModel(source)
 
   for (let i = 0; i < PARTICLE_COUNT; i += 1) {
-    const sourceIndex = (i * 7) % model.sourceCount
-    const point = transformPoint(
-      (source[sourceIndex * 3] - model.centerX) * model.scale,
-      (source[sourceIndex * 3 + 1] - model.centerY) * model.scale,
-      (source[sourceIndex * 3 + 2] - model.centerZ) * model.scale,
-      {
-        scale: side === 'right' ? 2.45 : 3.25,
-        x: side === 'right' ? 1.25 : -1.15,
-        y: side === 'right' ? 0.02 : 0.02,
-        z: 0,
-        rotateY: side === 'right' ? -0.16 : 1.18,
-        rotateZ: side === 'right' ? 0.02 : -0.05,
-      },
-    )
-    writeShape(target, i, point.x, point.y, point.z)
+    const pick = Math.floor(random(i + seedOffset) * pool.count) * 2
+    const px = pool.points[pick]
+    const py = pool.points[pick + 1]
+    const x = ((px - pool.centerX) / pool.extent) * LOGO_SPAN + LOGO_OFFSET_X + centeredRand(i + seedOffset + 1) * 0.012
+    const y = (-(py - pool.centerY) / pool.extent) * LOGO_SPAN + LOGO_OFFSET_Y + centeredRand(i + seedOffset + 2) * 0.012
+    const z = centeredRand(i + seedOffset + 3) * 0.08
+    writeShape(target, i, x, y, z)
   }
 
   return target
@@ -276,13 +261,16 @@ function buildGeometry() {
   const shapes = Array.from({ length: SHAPE_COUNT }, () => new Float32Array(PARTICLE_COUNT * 3))
   const colors = new Float32Array(PARTICLE_COUNT * 3)
   const seeds = new Float32Array(PARTICLE_COUNT)
-  const palette = [new Color('#facc15'), new Color('#8b5cf6'), new Color('#14b8a6'), new Color('#e5e7eb')]
+  // Brand-led palette: cyan + white dominant (matching the logo). Yellow is a
+  // rare accent spark, rolled separately so it stays ~8% of particles.
+  const palette = [new Color('#18DAE3'), new Color('#e5e7eb'), new Color('#8ef0f5'), new Color('#ffffff')]
+  const accent = new Color('#facc15')
 
   for (let i = 0; i < PARTICLE_COUNT; i += 1) {
-    const points = [makeBrainFallback(i, 'right'), makeBrainFallback(i, 'left'), makeScatter(i)]
+    const points = [makeDiscFallback(i), makeDiscFallback(i + 7000), makeScatter(i)]
     points.forEach((point, shapeIndex) => writeShape(shapes[shapeIndex], i, point.x, point.y, point.z))
 
-    const color = palette[Math.floor(random(i + 260) * palette.length)]
+    const color = random(i + 280) > 0.92 ? accent : palette[Math.floor(random(i + 260) * palette.length)]
     const cOffset = i * 3
     colors[cOffset] = color.r
     colors[cOffset + 1] = color.g
@@ -340,29 +328,25 @@ export function DalaParticleTransition() {
       const particles = new Points(geometry, material)
       scene.add(particles)
 
-      const loader = new GLTFLoader()
-      loader.load('/brain.glb', (gltf) => {
-        let source: ArrayLike<number> | null = null
+      const logoImage = new Image()
+      logoImage.crossOrigin = 'anonymous'
+      logoImage.decoding = 'async'
+      logoImage.onload = () => {
+        const pool = collectOpaquePixels(logoImage)
+        if (!pool) return
 
-        gltf.scene.traverse((child) => {
-          if (child instanceof Mesh && !source) {
-            source = child.geometry.getAttribute('position')?.array ?? null
-          }
-        })
-
-        if (!source) return
-
-        const rightBrain = makeBrainFromModel(source, 'right')
-        const leftBrain = makeBrainFromModel(source, 'left')
-        geometry.setAttribute('position', new BufferAttribute(rightBrain, 3))
-        geometry.setAttribute('aShape0', new BufferAttribute(rightBrain, 3))
-        geometry.setAttribute('aShape1', new BufferAttribute(leftBrain, 3))
+        const logoShape0 = makeLogoShape(pool, 500)
+        const logoShape1 = makeLogoShape(pool, 900000)
+        geometry.setAttribute('position', new BufferAttribute(logoShape0, 3))
+        geometry.setAttribute('aShape0', new BufferAttribute(logoShape0, 3))
+        geometry.setAttribute('aShape1', new BufferAttribute(logoShape1, 3))
         geometry.attributes.position.needsUpdate = true
         geometry.attributes.aShape0.needsUpdate = true
         geometry.attributes.aShape1.needsUpdate = true
         geometry.computeBoundingSphere()
         ScrollTrigger.refresh()
-      })
+      }
+      logoImage.src = LOGO_SRC
 
       const setSize = () => {
         const width = canvasHost.clientWidth
