@@ -32,6 +32,10 @@ const LOGO_SPAN = 3.1
 // World-space offset of the assembled logo. Positive x shifts it right.
 const LOGO_OFFSET_X = 1.15
 const LOGO_OFFSET_Y = 0
+// On scroll the whole particle cloud slides left into the second page's
+// negative space (text is right-aligned there), then re-centres for the
+// centered third page. Roughly mirrors the logo across to the left.
+const SCROLL_SHIFT_X = -2.3
 
 const panels = [
   {
@@ -391,9 +395,14 @@ export function DalaParticleTransition() {
         },
       })
 
+      const scrollShiftX = reduceMotion ? 0 : SCROLL_SHIFT_X
       timeline
+        // Page 1 -> Page 2: logo shimmers while sliding left into the negative space.
         .to(material.uniforms.uMorph, { value: reduceMotion ? 2 : 1, ease: 'none', duration: 1 })
+        .to(particles.position, { x: scrollShiftX, ease: 'none', duration: 1 }, '<')
+        // Page 2 -> Page 3: particles scatter and re-centre behind the centered copy.
         .to(material.uniforms.uMorph, { value: 2, ease: 'none', duration: 1 })
+        .to(particles.position, { x: 0, ease: 'none', duration: 1 }, '<')
 
       const textItems = gsap.utils.toArray<HTMLElement>('.dala-panel', rootRef.current)
       textItems.forEach((item) => {
