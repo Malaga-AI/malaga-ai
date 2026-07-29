@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import dsc05500 from '@/assets/events/DSC05500.jpg'
 import dsc05507 from '@/assets/events/DSC05507.jpg'
 import DSC05631 from '@/assets/events/DSC05631.jpg'
@@ -50,16 +50,33 @@ const eventPhotos: GalleryPhoto[] = [
 ]
 
 export function EventPhotos() {
-  const [selectedPhoto, setSelectedPhoto] = useState<GalleryPhoto | null>(null)
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
+  const selectedPhoto = selectedPhotoIndex === null ? null : eventPhotos[selectedPhotoIndex]
+
+  const showPreviousPhoto = () => {
+    setSelectedPhotoIndex((index) => (index === null ? null : (index - 1 + eventPhotos.length) % eventPhotos.length))
+  }
+
+  const showNextPhoto = () => {
+    setSelectedPhotoIndex((index) => (index === null ? null : (index + 1) % eventPhotos.length))
+  }
 
   useEffect(() => {
-    if (!selectedPhoto) {
+    if (selectedPhotoIndex === null) {
       return
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setSelectedPhoto(null)
+        setSelectedPhotoIndex(null)
+      }
+
+      if (event.key === 'ArrowLeft') {
+        showPreviousPhoto()
+      }
+
+      if (event.key === 'ArrowRight') {
+        showNextPhoto()
       }
     }
 
@@ -70,7 +87,7 @@ export function EventPhotos() {
       document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
     }
-  }, [selectedPhoto])
+  }, [selectedPhotoIndex])
 
   return (
     <section id="photos" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="photos-title">
@@ -86,7 +103,7 @@ export function EventPhotos() {
         </div>
 
         <div className="mt-10">
-          <ImageAutoSlider images={eventPhotos} onImageClick={setSelectedPhoto} />
+          <ImageAutoSlider images={eventPhotos} onImageClick={(_, index) => setSelectedPhotoIndex(index)} />
         </div>
       </div>
 
@@ -96,16 +113,34 @@ export function EventPhotos() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="photo-modal-title"
-          onClick={() => setSelectedPhoto(null)}
+          onClick={() => setSelectedPhotoIndex(null)}
         >
           <div className="relative w-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
             <button
               type="button"
               className="absolute -top-14 right-0 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.08] text-white transition hover:bg-white/[0.14] focus:outline-none focus:ring-2 focus:ring-teal-300"
-              onClick={() => setSelectedPhoto(null)}
+              onClick={() => setSelectedPhotoIndex(null)}
               aria-label="Close photo"
             >
               <X className="h-5 w-5" aria-hidden="true" />
+            </button>
+
+            <button
+              type="button"
+              className="absolute left-2 top-[calc(50%-3rem)] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-slate-950/70 text-white shadow-lg backdrop-blur transition hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-teal-300 sm:left-4"
+              onClick={showPreviousPhoto}
+              aria-label="Previous photo"
+            >
+              <ChevronLeft className="h-6 w-6" aria-hidden="true" />
+            </button>
+
+            <button
+              type="button"
+              className="absolute right-2 top-[calc(50%-3rem)] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-slate-950/70 text-white shadow-lg backdrop-blur transition hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-teal-300 sm:right-4"
+              onClick={showNextPhoto}
+              aria-label="Next photo"
+            >
+              <ChevronRight className="h-6 w-6" aria-hidden="true" />
             </button>
 
             <figure>
