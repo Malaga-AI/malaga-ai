@@ -19,7 +19,7 @@ const team = [
     name: 'Rosa Castillo',
     role: 'Community Lead',
     image: rosaImage,
-    emailUrl: 'mailto:hello@malaga-ai.community',
+    emailUrl: 'mailto:rosa@malaga-ai.community',
     linkedinUrl: 'https://www.linkedin.com/in/arosacastillo/',
   },
   {

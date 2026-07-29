@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowRight } from 'lucide-react'
 
-const contactEndpoint = 'https://formsubmit.co/ajax/esparcaso@gmail.com'
+const contactEndpoint = 'https://formsubmit.co/ajax/hello@malaga-ai.community'
 const contactReasons = ['General', 'Sponsor', 'Partner', 'Collaborator', 'Speaker', 'Volunteer', 'Other']
 
 type ContactProps = {
