@@ -35,7 +35,9 @@ const LOGO_OFFSET_Y = 0
 // On scroll the whole particle cloud slides left into the second page's
 // negative space (text is right-aligned there), then re-centres for the
 // centered third page. Roughly mirrors the logo across to the left.
-const SCROLL_SHIFT_X = -2.3
+// Keep the Events artwork fully on the left, leaving the right side clear for
+// its copy. The prior offset left an unnecessary empty strip on wide screens.
+const SCROLL_SHIFT_X = -3.05
 
 const panels = [
   {
@@ -367,6 +369,17 @@ export function DalaParticleTransition() {
       const xTo = gsap.quickTo(material.uniforms.uPointer.value, 'x', { duration: 0.45, ease: 'power3.out' })
       const yTo = gsap.quickTo(material.uniforms.uPointer.value, 'y', { duration: 0.45, ease: 'power3.out' })
       const pointerWorld = new Vector3()
+      const pointerPlane = new Vector2()
+      let hasPointer = false
+
+      // The shader receives positions in the particle object's local space,
+      // while the raycast below produces world-space coordinates. Recalculate
+      // this whenever the object moves as well as when the pointer moves.
+      const updatePointer = () => {
+        if (!hasPointer) return
+        xTo(pointerPlane.x - particles.position.x)
+        yTo(pointerPlane.y - particles.position.y)
+      }
 
       const onPointerMove = (event: PointerEvent) => {
         const rect = canvasHost.getBoundingClientRect()
@@ -377,10 +390,12 @@ export function DalaParticleTransition() {
         pointerWorld.set(ndcX, ndcY, 0.5).unproject(camera).sub(camera.position).normalize()
 
         const distanceToParticlePlane = -camera.position.z / pointerWorld.z
-        const x = camera.position.x + pointerWorld.x * distanceToParticlePlane
-        const y = camera.position.y + pointerWorld.y * distanceToParticlePlane
-        xTo(x)
-        yTo(y)
+        pointerPlane.set(
+          camera.position.x + pointerWorld.x * distanceToParticlePlane,
+          camera.position.y + pointerWorld.y * distanceToParticlePlane,
+        )
+        hasPointer = true
+        updatePointer()
       }
 
       window.addEventListener('resize', setSize, { passive: true })
@@ -403,6 +418,7 @@ export function DalaParticleTransition() {
         // Page 2 -> Page 3: particles scatter and re-centre behind the centered copy.
         .to(material.uniforms.uMorph, { value: 2, ease: 'none', duration: 1 })
         .to(particles.position, { x: 0, ease: 'none', duration: 1 }, '<')
+      timeline.eventCallback('onUpdate', updatePointer)
 
       const textItems = gsap.utils.toArray<HTMLElement>('.dala-panel', rootRef.current)
       textItems.forEach((item) => {
