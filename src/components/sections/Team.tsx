@@ -26,6 +26,7 @@ const team = [
     name: 'Paul Ben',
     role: 'Collaborator',
     image: paulImage,
+    emailUrl: 'mailto:paul@malaga-ai.community',
   },
   {
     name: 'Juan Gallego',

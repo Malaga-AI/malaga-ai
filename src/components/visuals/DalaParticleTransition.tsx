@@ -41,7 +41,7 @@ const SCROLL_SHIFT_X = -3.05
 
 const panels = [
   {
-    kicker: 'Human brains, artificial ones, and coffee in between.',
+    kicker: 'The AI community in Malaga and beyond',
     title: 'Meet Malaga AI.',
     copy: 'A community for curious minds, builders, researchers, founders, and creatives exploring AI together through practical events, shared projects, honest learning, and the occasional “wait, the model did what?” moment.',
     layout: 'left',
@@ -488,10 +488,10 @@ export function DalaParticleTransition() {
           >
             <div
               className={`${panel.layout === 'right'
-                  ? 'ml-auto max-w-lg text-left lg:text-left'
-                  : panel.layout === 'center'
-                    ? 'mx-auto max-w-6xl'
-                    : 'max-w-2xl pt-16'
+                ? 'ml-auto max-w-lg text-left lg:text-left'
+                : panel.layout === 'center'
+                  ? 'mx-auto max-w-6xl'
+                  : 'max-w-2xl pt-16'
                 }`}
             >
               {panel.layout !== 'center' && (
@@ -504,8 +504,8 @@ export function DalaParticleTransition() {
               ) : (
                 <h2
                   className={`font-sans font-medium tracking-[-0.07em] text-white ${panel.layout === 'center'
-                      ? 'text-4xl leading-[1.08] drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl'
-                      : 'mt-5 text-4xl leading-[1.08] drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl'
+                    ? 'text-4xl leading-[1.08] drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl'
+                    : 'mt-5 text-4xl leading-[1.08] drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl'
                     }`}
                 >
                   {panel.title}
