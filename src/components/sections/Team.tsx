@@ -47,12 +47,6 @@ const team = [
     image: joseImage,
     linkedinUrl: 'https://www.linkedin.com/in/jose-rodriguez-ortega/',
   },
-  {
-    name: 'Janine Boldt',
-    role: 'Collaborator',
-    image: janineImage,
-    linkedinUrl: 'https://www.linkedin.com/in/janine-boldt/',
-  },
 ]
 
 export function Team() {
