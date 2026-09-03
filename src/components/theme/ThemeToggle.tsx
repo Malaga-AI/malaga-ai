@@ -1,11 +1,13 @@
 import { Moon, Sun } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/lib/theme'
+import { useTexts } from '@/lib/texts'
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, toggleTheme } = useTheme()
+  const { themeToggleLabel } = useTexts().chrome
   const nextTheme = theme === 'dark' ? 'light' : 'dark'
-  const label = `Switch to ${nextTheme} theme`
+  const label = themeToggleLabel(nextTheme)
 
   return (
     <button

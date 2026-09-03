@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom'
 import { Button } from '@/components/ui/button'
 import { BrandLogo } from '@/components/layout/BrandLogo'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
+import { LanguageToggle } from '@/components/language/LanguageToggle'
+import { useTexts } from '@/lib/texts'
 
 type MobileMenuProps = {
   open: boolean
@@ -11,17 +13,19 @@ type MobileMenuProps = {
 }
 
 export function MobileMenu({ open, links, onClose }: MobileMenuProps) {
+  const texts = useTexts().chrome
   if (!open) return null
 
   return createPortal(
     <div className="fixed inset-x-0 top-0 z-[100] bg-background p-6 shadow-2xl ring-1 ring-border md:hidden">
       <div className="flex items-center justify-between">
-        <a href="#top" onClick={onClose} aria-label="Malaga AI home">
+        <a href="#top" onClick={onClose} aria-label={texts.homeAriaLabel}>
           <BrandLogo showText={false} imageClassName="h-10 max-w-[180px]" />
         </a>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <button className="rounded-full border border-border-strong bg-surface p-2 text-foreground" onClick={onClose} aria-label="Close menu">
+          <LanguageToggle />
+          <button className="rounded-full border border-border-strong bg-surface p-2 text-foreground" onClick={onClose} aria-label={texts.closeMenuAriaLabel}>
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -38,7 +42,7 @@ export function MobileMenu({ open, links, onClose }: MobileMenuProps) {
           </a>
         ))}
       </nav>
-      <Button href="#contact" onClick={onClose} className="mt-8 w-full">Contact</Button>
+      <Button href="#contact" onClick={onClose} className="mt-8 w-full">{texts.contactButton}</Button>
     </div>,
     document.body,
   )

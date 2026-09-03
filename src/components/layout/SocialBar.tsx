@@ -1,45 +1,44 @@
 import type { SVGProps } from 'react'
 import { LinkedInIcon, DiscordIcon } from '@/components/layout/SocialLinks'
+import { useTexts } from '@/lib/texts'
 
 const socialBarLinks = [
   {
     href: 'https://www.linkedin.com/company/malaga-ai',
     label: 'LinkedIn',
-    ariaLabel: 'Malaga AI on LinkedIn',
     Icon: LinkedInIcon,
   },
   {
     href: 'https://malaga-ai.eventbrite.com',
     label: 'Eventbrite',
-    ariaLabel: 'Malaga AI on Eventbrite',
     Icon: EventbriteIcon,
   },
   {
     href: 'https://discord.com/invite/2tv7W2jxXF',
     label: 'Discord',
-    ariaLabel: 'Malaga AI on Discord',
     Icon: DiscordIcon,
   },
   {
     href: 'https://github.com/Malaga-AI',
     label: 'GitHub',
-    ariaLabel: 'Malaga AI on GitHub',
     Icon: GitHubIcon,
   },
 ]
 
 export function SocialBar() {
+  const { socialAriaLabel } = useTexts().chrome
+
   return (
     <div className="h-11 border-t border-border bg-background/82">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-center gap-5 px-4 sm:px-6 lg:px-8">
-        {socialBarLinks.map(({ href, label, ariaLabel, Icon }) => (
+        {socialBarLinks.map(({ href, label, Icon }) => (
           <a
             key={href}
             href={href}
             target="_blank"
             rel="noreferrer"
-            aria-label={ariaLabel}
-            title={ariaLabel}
+            aria-label={socialAriaLabel(label)}
+            title={socialAriaLabel(label)}
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition hover:text-foreground"
           >
             <Icon className="h-4 w-4" aria-hidden="true" />

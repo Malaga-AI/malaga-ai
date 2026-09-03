@@ -1,17 +1,16 @@
 import type { SVGProps } from 'react'
 import { cn } from '@/lib/utils'
+import { useTexts } from '@/lib/texts'
 
 const socialLinks = [
   {
     href: 'https://www.linkedin.com/company/malaga-ai',
     label: 'LinkedIn',
-    ariaLabel: 'Malaga AI on LinkedIn',
     Icon: LinkedInIcon,
   },
   {
     href: 'https://discord.com/invite/2tv7W2jxXF',
     label: 'Discord',
-    ariaLabel: 'Malaga AI on Discord',
     Icon: DiscordIcon,
   },
 ]
@@ -23,16 +22,18 @@ type SocialLinksProps = {
 }
 
 export function SocialLinks({ className, linkClassName, showLabels = false }: SocialLinksProps) {
+  const { socialAriaLabel } = useTexts().chrome
+
   return (
     <div className={cn('flex flex-wrap items-center gap-3', className)}>
-      {socialLinks.map(({ href, label, ariaLabel, Icon }) => (
+      {socialLinks.map(({ href, label, Icon }) => (
         <a
           key={href}
           href={href}
           target="_blank"
           rel="noreferrer"
-          aria-label={ariaLabel}
-          title={ariaLabel}
+          aria-label={socialAriaLabel(label)}
+          title={socialAriaLabel(label)}
           className={cn(
             'inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border-strong bg-surface px-3.5 text-sm font-semibold text-foreground transition hover:-translate-y-0.5 hover:border-primary/55 hover:bg-surface-strong focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
             !showLabels && 'w-11 px-0',
