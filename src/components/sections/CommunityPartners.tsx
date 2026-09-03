@@ -1,13 +1,7 @@
 import gdgMalagaLogo from '@/assets/friendly-communities/gdg-malaga.svg'
 import womenTechmakersLogo from '@/assets/friendly-communities/women-techmakers-malaga.svg'
-import { ArrowRight } from 'lucide-react'
 import { SponsorCard } from '@/components/community/SponsorCard'
-import { Button } from '@/components/ui/button'
 import { partners, sponsors } from '@/data/sponsors'
-
-type CommunityPartnersProps = {
-  onContactTypeChange: (type: string) => void
-}
 
 type Collaborator = {
   name: string
@@ -106,7 +100,7 @@ function CollaboratorRow({ group, index }: { group: CollaboratorGroup; index: nu
   )
 }
 
-export function CommunityPartners({ onContactTypeChange }: CommunityPartnersProps) {
+export function CommunityPartners() {
   return (
     <>
       <section id="sponsors" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="sponsors-title">
@@ -120,9 +114,6 @@ export function CommunityPartners({ onContactTypeChange }: CommunityPartnersProp
               <p className="mt-4 text-lg leading-8 text-muted-foreground">
                 Brands that support high-quality spaces for learning, connecting, and activating AI projects in Malaga.
               </p>
-              <Button href="#contact-form" onClick={() => onContactTypeChange('Sponsor')} className="mt-7">
-                Contact as sponsor <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {sponsors.map((sponsor) => <SponsorCard key={sponsor.id} sponsor={sponsor} />)}
@@ -142,9 +133,6 @@ export function CommunityPartners({ onContactTypeChange }: CommunityPartnersProp
               <p className="mt-4 text-lg leading-8 text-muted-foreground">
                 Long-term collaborations with organizations that want to support talent, learning, and open innovation.
               </p>
-              <Button href="#contact-form" onClick={() => onContactTypeChange('Partner')} className="mt-7">
-                Contact as partner <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {partners.map((partner) => <SponsorCard key={partner.id} sponsor={partner} />)}
@@ -164,9 +152,6 @@ export function CommunityPartners({ onContactTypeChange }: CommunityPartnersProp
               <p className="mt-4 text-lg leading-8 text-muted-foreground">
                 Companies, communities, and entities that help Malaga AI connect talent, venues, knowledge, and local opportunity.
               </p>
-              <Button href="#contact-form" onClick={() => onContactTypeChange('Collaborator')} className="mt-7">
-                Contact as collaborator <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
             </div>
             <div className="space-y-4">
               {collaboratorGroups.map((group, index) => <CollaboratorRow key={group.title} group={group} index={index} />)}

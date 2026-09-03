@@ -2,12 +2,6 @@ import { useState, type FormEvent } from 'react'
 import { ArrowRight } from 'lucide-react'
 
 const contactEndpoint = 'https://formsubmit.co/ajax/hello@malaga-ai.community'
-const contactReasons = ['General', 'Sponsor', 'Partner', 'Collaborator', 'Speaker', 'Volunteer', 'Other']
-
-type ContactProps = {
-  contactReason: string
-  onContactReasonChange: (reason: string) => void
-}
 
 type SubmitState = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -16,7 +10,7 @@ type FormSubmitResponse = {
   message?: string
 }
 
-export function Contact({ contactReason, onContactReasonChange }: ContactProps) {
+export function Contact() {
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
 
@@ -25,12 +19,10 @@ export function Contact({ contactReason, onContactReasonChange }: ContactProps) 
 
     const formData = new FormData(event.currentTarget)
     const name = String(formData.get('name') ?? '').trim()
-    const reason = String(formData.get('reason') ?? '').trim()
     const message = String(formData.get('message') ?? '').trim()
 
-    formData.set('_subject', `Malaga AI contact: ${reason || 'General'}${name ? ` - ${name}` : ''}`)
+    formData.set('_subject', `Malaga AI contact${name ? ` - ${name}` : ''}`)
     formData.set('_template', 'table')
-    formData.set('reason', reason || 'General')
     formData.set('message', message || 'No additional message.')
 
     setSubmitState('sending')
@@ -56,7 +48,6 @@ export function Contact({ contactReason, onContactReasonChange }: ContactProps) 
       }
 
       event.currentTarget.reset()
-      onContactReasonChange('General')
       setSubmitState('sent')
       setSubmitMessage('Request sent. We will read it before the robots do.')
     } catch {
@@ -104,20 +95,6 @@ export function Contact({ contactReason, onContactReasonChange }: ContactProps) 
                 className="min-h-12 rounded-2xl border border-border bg-panel px-4 text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary"
                 placeholder="you@example.com"
               />
-            </div>
-            <div className="grid gap-2">
-              <label className="text-sm font-medium text-muted-foreground" htmlFor="contact-type">
-                Reason
-              </label>
-              <select
-                id="contact-type"
-                name="reason"
-                value={contactReason}
-                onChange={(event) => onContactReasonChange(event.target.value)}
-                className="min-h-12 rounded-2xl border border-border bg-panel px-4 text-foreground outline-none transition focus:border-primary"
-              >
-                {contactReasons.map((reason) => <option key={reason}>{reason}</option>)}
-              </select>
             </div>
             <div className="grid gap-2">
               <label className="text-sm font-medium text-muted-foreground" htmlFor="contact-message">

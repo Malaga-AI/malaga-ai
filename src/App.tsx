@@ -9,11 +9,9 @@ import { CommunityPartners } from '@/components/sections/CommunityPartners'
 import { Team } from '@/components/sections/Team'
 import { DalaParticleTransition } from '@/components/visuals/DalaParticleTransition'
 import { useEvents } from '@/features/events/useEvents'
-import { useState } from 'react'
 
 export default function App() {
   const eventsState = useEvents()
-  const [contactReason, setContactReason] = useState('General')
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -30,8 +28,8 @@ export default function App() {
         <Initiatives />
         <Team />
         <EventPhotos />
-        <CommunityPartners onContactTypeChange={setContactReason} />
-        <Contact contactReason={contactReason} onContactReasonChange={setContactReason} />
+        <CommunityPartners />
+        <Contact />
       </main>
       <Footer />
     </div>
