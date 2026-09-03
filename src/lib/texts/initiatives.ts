@@ -18,7 +18,7 @@ export const initiativesTexts: Record<Language, InitiativesTexts> = {
   en: {
     kicker: 'Initiatives',
     heading: 'Groups for learning, practicing, and growing with AI',
-    description: 'Malaga AI supports focused spaces where the community can move forward with structure, peers, and real opportunities.',
+    description: 'Malaga-AI supports focused spaces where the community can move forward with structure, peers, and real opportunities.',
     cards: [
       {
         title: 'Career Advice AI',
@@ -39,13 +39,14 @@ export const initiativesTexts: Record<Language, InitiativesTexts> = {
         status: 'Active',
         description:
           'Since 2023, Malaga-AI study groups have helped cohesive teams learn AI by building projects, from Innovation Hub and LLM exploits to agents, safety AI, and evals.',
+        actionLabel: 'Join the community',
       },
     ],
   },
   es: {
     kicker: 'Iniciativas',
     heading: 'Grupos para aprender, practicar y crecer con la IA',
-    description: 'Malaga AI impulsa espacios enfocados donde la comunidad puede avanzar con estructura, compañeros y oportunidades reales.',
+    description: 'Malaga-AI impulsa espacios enfocados donde la comunidad puede avanzar con estructura, compañeros y oportunidades reales.',
     cards: [
       {
         title: 'Career Advice AI',
@@ -66,6 +67,7 @@ export const initiativesTexts: Record<Language, InitiativesTexts> = {
         status: 'Activo',
         description:
           'Desde 2023, los grupos de estudio de Malaga-AI han ayudado a equipos cohesionados a aprender IA construyendo proyectos, desde el Innovation Hub y exploits de LLM hasta agentes, seguridad en IA y evals.',
+        actionLabel: 'Únete a la comunidad',
       },
     ],
   },

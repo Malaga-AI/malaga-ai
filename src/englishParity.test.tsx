@@ -5,18 +5,15 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
 import { LanguageProvider } from '@/components/language/LanguageProvider'
 import { ThemeProvider } from '@/components/theme/ThemeProvider'
-import { LANGUAGE_STORAGE_KEY } from '@/lib/language'
+
 
 /**
- * The bilingual rewiring (see design-notes-spanish.md) was meant to be a pure
- * refactor for English readers: every literal moved out of the components and
- * into `src/lib/texts/`, nothing reworded. This fixture is the rendered English
- * page, captured and diffed word-for-word against commit b8ca680 — the last
- * state before that work started — with the diff showing exactly one change:
- * the two new "ES" language-toggle labels (desktop bar and mobile menu, both
- * present in the DOM). That comparison does not run on every test invocation,
- * since it needs a second git worktree; this fixture is what is left of it, and
- * this test is what keeps it honest afterwards.
+ * The bilingual rewiring moved every literal out of the components and into
+ * `src/lib/texts/`, so it is easy for a later edit to accidentally reword the
+ * English side while touching the Spanish one. This fixture is a verified-good
+ * snapshot of the rendered English page (see `src/test/fixtures/english-page.txt`)
+ * — regenerate it deliberately whenever the English copy legitimately changes,
+ * never to make a failing test pass without checking why it failed.
  */
 
 vi.hoisted(() => {
@@ -61,7 +58,7 @@ beforeEach(() => {
 
 describe('English page parity', () => {
   it('renders exactly the verified English text', async () => {
-    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, 'en')
+    Object.defineProperty(navigator, 'language', { value: 'en-US', configurable: true })
     const { container, getByText } = render(
       <ThemeProvider>
         <LanguageProvider>

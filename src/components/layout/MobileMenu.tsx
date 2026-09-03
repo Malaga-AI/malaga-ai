@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom'
 import { Button } from '@/components/ui/button'
 import { BrandLogo } from '@/components/layout/BrandLogo'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
-import { LanguageToggle } from '@/components/language/LanguageToggle'
 import { useTexts } from '@/lib/texts'
 
 type MobileMenuProps = {
@@ -24,7 +23,6 @@ export function MobileMenu({ open, links, onClose }: MobileMenuProps) {
         </a>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <LanguageToggle />
           <button className="rounded-full border border-border-strong bg-surface p-2 text-foreground" onClick={onClose} aria-label={texts.closeMenuAriaLabel}>
             <X className="h-5 w-5" />
           </button>

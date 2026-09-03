@@ -17,7 +17,6 @@ export type ChromeTexts = {
   socialAriaLabel: (network: string) => string
   brandLogoAlt: string
   themeToggleLabel: (nextTheme: Theme) => string
-  languageToggleLabel: (nextLanguage: Language) => string
 }
 
 export const chromeTexts: Record<Language, ChromeTexts> = {
@@ -31,16 +30,15 @@ export const chromeTexts: Record<Language, ChromeTexts> = {
       { href: '#partners', label: 'Partners' },
       { href: '#contact', label: 'Contact' },
     ],
-    homeAriaLabel: 'Malaga AI home',
+    homeAriaLabel: 'Malaga-AI home',
     contactButton: 'Contact',
     openMenuAriaLabel: 'Open menu',
     closeMenuAriaLabel: 'Close menu',
-    footerTagline: 'Malaga AI is a community for people building, learning, and experimenting with artificial intelligence in Malaga.',
-    footerCopyright: '© 2026 Malaga AI.',
-    socialAriaLabel: (network) => `Malaga AI on ${network}`,
-    brandLogoAlt: 'Malaga AI logo',
+    footerTagline: 'Malaga-AI is a community for people building, learning, and experimenting with artificial intelligence in Malaga.',
+    footerCopyright: '© 2026 Malaga-AI.',
+    socialAriaLabel: (network) => `Malaga-AI on ${network}`,
+    brandLogoAlt: 'Malaga-AI logo',
     themeToggleLabel: (nextTheme) => `Switch to ${nextTheme} theme`,
-    languageToggleLabel: (nextLanguage) => `Switch to ${nextLanguage === 'es' ? 'Spanish' : 'English'}`,
   },
   es: {
     nav: [
@@ -52,15 +50,14 @@ export const chromeTexts: Record<Language, ChromeTexts> = {
       { href: '#partners', label: 'Partners' },
       { href: '#contact', label: 'Contacto' },
     ],
-    homeAriaLabel: 'Inicio de Malaga AI',
+    homeAriaLabel: 'Inicio de Malaga-AI',
     contactButton: 'Contacto',
     openMenuAriaLabel: 'Abrir menú',
     closeMenuAriaLabel: 'Cerrar menú',
-    footerTagline: 'Malaga AI es una comunidad de personas que construyen, aprenden y experimentan con la inteligencia artificial en Málaga.',
-    footerCopyright: '© 2026 Malaga AI.',
-    socialAriaLabel: (network) => `Malaga AI en ${network}`,
-    brandLogoAlt: 'Logotipo de Malaga AI',
+    footerTagline: 'Malaga-AI es una comunidad de personas que construyen, aprenden y experimentan con la inteligencia artificial en Málaga.',
+    footerCopyright: '© 2026 Malaga-AI.',
+    socialAriaLabel: (network) => `Malaga-AI en ${network}`,
+    brandLogoAlt: 'Logotipo de Malaga-AI',
     themeToggleLabel: (nextTheme) => `Cambiar a tema ${nextTheme === 'light' ? 'claro' : 'oscuro'}`,
-    languageToggleLabel: (nextLanguage) => `Cambiar a ${nextLanguage === 'es' ? 'español' : 'inglés'}`,
   },
 }

@@ -1,16 +1,10 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { LanguageProvider } from './LanguageProvider'
-import { useLanguage } from '@/lib/language'
 import { documentTexts } from '@/lib/texts/document'
 
-function ToggleButton() {
-  const { toggleLanguage } = useLanguage()
-  return (
-    <button type="button" onClick={toggleLanguage}>
-      toggle
-    </button>
-  )
+function mockNavigatorLanguage(language: string) {
+  Object.defineProperty(navigator, 'language', { value: language, configurable: true })
 }
 
 function getMetaDescription() {
@@ -18,50 +12,46 @@ function getMetaDescription() {
 }
 
 afterEach(() => {
-  window.localStorage.clear()
   document.documentElement.lang = ''
   document.title = ''
   getMetaDescription()?.remove()
 })
 
 describe('LanguageProvider', () => {
-  it('sets the document title and meta description for the initial language', () => {
+  it('sets the document title and meta description for a browser set to English', () => {
+    mockNavigatorLanguage('en-US')
     render(
       <LanguageProvider>
-        <ToggleButton />
+        <div />
       </LanguageProvider>,
     )
 
+    expect(document.documentElement.lang).toBe('en')
     expect(document.title).toBe(documentTexts.en.title)
     expect(getMetaDescription()?.getAttribute('content')).toBe(documentTexts.en.description)
   })
 
-  it('updates the title and meta description when the language changes', () => {
+  it('sets the document title and meta description for a browser set to Spanish', () => {
+    mockNavigatorLanguage('es-ES')
     render(
       <LanguageProvider>
-        <ToggleButton />
+        <div />
       </LanguageProvider>,
     )
-
-    fireEvent.click(screen.getByText('toggle'))
 
     expect(document.documentElement.lang).toBe('es')
     expect(document.title).toBe(documentTexts.es.title)
     expect(getMetaDescription()?.getAttribute('content')).toBe(documentTexts.es.description)
-
-    fireEvent.click(screen.getByText('toggle'))
-
-    expect(document.title).toBe(documentTexts.en.title)
-    expect(getMetaDescription()?.getAttribute('content')).toBe(documentTexts.en.description)
   })
 
   it('creates the meta description element when the page lacks one', () => {
+    mockNavigatorLanguage('en-US')
     getMetaDescription()?.remove()
     expect(getMetaDescription()).toBeNull()
 
     render(
       <LanguageProvider>
-        <ToggleButton />
+        <div />
       </LanguageProvider>,
     )
 

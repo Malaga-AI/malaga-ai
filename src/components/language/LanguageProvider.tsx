@@ -1,18 +1,12 @@
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
-import {
-  LanguageContext,
-  applyLanguage,
-  readStoredLanguage,
-  storeLanguage,
-  type Language,
-} from '@/lib/language'
+import { useEffect, useMemo, type ReactNode } from 'react'
+import { LanguageContext, detectLanguage } from '@/lib/language'
 import { documentTexts } from '@/lib/texts/document'
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => readStoredLanguage() ?? 'en')
+  const language = useMemo(() => detectLanguage(), [])
 
   useEffect(() => {
-    applyLanguage(language)
+    document.documentElement.lang = language
 
     const { title, description } = documentTexts[language]
     document.title = title
@@ -26,23 +20,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     meta.setAttribute('content', description)
   }, [language])
 
-  const setLanguage = useCallback((next: Language) => {
-    storeLanguage(next)
-    setLanguageState(next)
-  }, [])
-
-  const toggleLanguage = useCallback(() => {
-    setLanguageState((current) => {
-      const next = current === 'en' ? 'es' : 'en'
-      storeLanguage(next)
-      return next
-    })
-  }, [])
-
-  const value = useMemo(
-    () => ({ language, setLanguage, toggleLanguage }),
-    [language, setLanguage, toggleLanguage],
-  )
+  const value = useMemo(() => ({ language }), [language])
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
 }

@@ -5,7 +5,6 @@ import { BrandLogo } from '@/components/layout/BrandLogo'
 import { MobileMenu } from '@/components/layout/MobileMenu'
 import { SocialBar } from '@/components/layout/SocialBar'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
-import { LanguageToggle } from '@/components/language/LanguageToggle'
 import { useTexts } from '@/lib/texts'
 
 export function Header() {
@@ -26,12 +25,10 @@ export function Header() {
         </nav>
         <div className="hidden items-center gap-3 md:flex">
           <ThemeToggle />
-          <LanguageToggle />
           <Button href="#contact">{texts.contactButton}</Button>
         </div>
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
-          <LanguageToggle />
           <button className="rounded-full border border-border-strong bg-surface p-2 text-foreground md:hidden" onClick={() => setOpen(true)} aria-label={texts.openMenuAriaLabel}>
             <Menu className="h-5 w-5" />
           </button>

@@ -43,10 +43,10 @@ const LOGO_OFFSET_Y = 0
 const SCROLL_SHIFT_X = -3.05
 
 // Particle colours per theme. Dark leans on white/cyan over near-black; light
-// leans on brand navy/teal over a pale stage.
+// leans on brand navy (#090E2A) over a pale stage, with teal only as texture.
 const STAGE_PALETTE: Record<Theme, string[]> = {
   dark: ['#18DAE3', '#e5e7eb', '#8ef0f5', '#ffffff'],
-  light: ['#18DAE3', '#090E2A', '#0e7c8f', '#1f2a52'],
+  light: ['#090E2A', '#141b3f', '#1f2a52', '#18DAE3'],
 }
 const STAGE_ACCENT: Record<Theme, string> = { dark: '#facc15', light: '#b45309' }
 // Core highlight direction: brighten on dark, darken on light.
@@ -518,7 +518,7 @@ export function DalaParticleTransition() {
                 </h1>
               ) : (
                 <h2
-                  className={`font-sans font-medium tracking-[-0.07em] text-hero-ink ${panel.layout === 'center'
+                  className={`font-safiro font-medium tracking-[-0.07em] text-hero-ink ${panel.layout === 'center'
                     ? 'text-4xl leading-[1.08] drop-shadow-hero sm:text-5xl lg:text-6xl'
                     : 'mt-5 text-4xl leading-[1.08] drop-shadow-hero sm:text-5xl lg:text-6xl'
                     }`}

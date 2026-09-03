@@ -21,7 +21,7 @@ export function BrandLogo({ className, imageClassName, showText = true }: BrandL
         alt={brandLogoAlt}
         className={cn('h-12 w-auto max-w-[220px] object-contain', imageClassName)}
       />
-      {showText ? <span className="font-safiro text-xl text-foreground">Malaga AI</span> : null}
+      {showText ? <span className="font-safiro text-xl text-foreground">Malaga-AI</span> : null}
     </span>
   )
 }

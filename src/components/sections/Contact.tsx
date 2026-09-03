@@ -23,7 +23,7 @@ export function Contact() {
     const name = String(formData.get('name') ?? '').trim()
     const message = String(formData.get('message') ?? '').trim()
 
-    formData.set('_subject', `Malaga AI contact${name ? ` - ${name}` : ''}`)
+    formData.set('_subject', `Malaga-AI contact${name ? ` - ${name}` : ''}`)
     formData.set('_template', 'table')
     formData.set('message', message || 'No additional message.')
 

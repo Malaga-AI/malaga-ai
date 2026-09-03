@@ -76,8 +76,8 @@ const SHARED_VALUES = new Set([
   'Partners',
   'Online',
   'Career Advice AI',
-  'Malaga AI',
-  '© 2026 Malaga AI.',
+  'Malaga-AI',
+  '© 2026 Malaga-AI.',
   'GSEC',
   'IWD2026',
 ])

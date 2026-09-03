@@ -17,8 +17,8 @@ export const heroTexts: Record<Language, HeroTexts> = {
     panels: [
       {
         kicker: 'The AI community in Malaga and beyond',
-        title: 'Meet Malaga AI.',
-        copy: 'A community for curious minds, builders, researchers, founders, and creatives exploring AI together through practical events, shared projects, honest learning, and the occasional “wait, the model did what?” moment.',
+        title: 'Meet Malaga-AI.',
+        copy: 'Malaga-AI is a community dedicated to sharing the power and promise of Artificial Intelligence (AI), so that all people may benefit from this transformative technology.',
       },
       {
         kicker: 'Events',
@@ -28,7 +28,7 @@ export const heroTexts: Record<Language, HeroTexts> = {
       {
         kicker: 'Malaga is moving',
         title: 'AI is advancing across Malaga, from startups and research groups to meetups, universities, makers, and teams building by the sea.',
-        copy: 'Do not miss what is happening in the city: follow Malaga AI to discover the people, projects, events, and ideas shaping the next wave of AI in Malaga.',
+        copy: 'Do not miss what is happening in the city: follow Malaga-AI to discover the people, projects, events, and ideas shaping the next wave of AI in Malaga.',
       },
     ],
     contactCta: 'Contact',
@@ -38,8 +38,8 @@ export const heroTexts: Record<Language, HeroTexts> = {
     panels: [
       {
         kicker: 'La comunidad de IA en Málaga y más allá',
-        title: 'Conoce Malaga AI.',
-        copy: 'Una comunidad para mentes curiosas, personas que construyen, investigadores, fundadores y creativos que exploran juntos la IA a través de eventos prácticos, proyectos compartidos, aprendizaje sincero y el ocasional momento de «espera, ¿qué ha hecho el modelo?».',
+        title: 'Conoce Malaga-AI.',
+        copy: 'Malaga-AI es una comunidad dedicada a compartir el poder y la promesa de la Inteligencia Artificial (IA), para que todas las personas puedan beneficiarse de esta tecnología transformadora.',
       },
       {
         kicker: 'Eventos',
@@ -49,7 +49,7 @@ export const heroTexts: Record<Language, HeroTexts> = {
       {
         kicker: 'Málaga se mueve',
         title: 'La IA avanza por toda Málaga, desde startups y grupos de investigación hasta meetups, universidades, makers y equipos que construyen junto al mar.',
-        copy: 'No te pierdas lo que está pasando en la ciudad: sigue a Malaga AI para descubrir a las personas, proyectos, eventos e ideas que están dando forma a la próxima ola de IA en Málaga.',
+        copy: 'No te pierdas lo que está pasando en la ciudad: sigue a Malaga-AI para descubrir a las personas, proyectos, eventos e ideas que están dando forma a la próxima ola de IA en Málaga.',
       },
     ],
     contactCta: 'Contacto',

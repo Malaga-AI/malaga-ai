@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
 import { LanguageProvider } from '@/components/language/LanguageProvider'
 import { ThemeProvider } from '@/components/theme/ThemeProvider'
-import { LANGUAGE_STORAGE_KEY, type Language } from '@/lib/language'
+import type { Language } from '@/lib/language'
 import { TEXTS } from '@/lib/texts'
 
 // GSAP's ScrollTrigger calls `window.matchMedia` while it registers, at module
@@ -46,7 +46,10 @@ vi.mock('three', async () => {
 })
 
 function renderAppIn(language: Language) {
-  window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language)
+  Object.defineProperty(navigator, 'language', {
+    value: language === 'es' ? 'es-ES' : 'en-US',
+    configurable: true,
+  })
   return render(
     <ThemeProvider>
       <LanguageProvider>

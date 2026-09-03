@@ -51,13 +51,6 @@ export const partners: Sponsor[] = [
     url: 'https://www.grupobillingham.com/',
   },
   {
-    id: 'vodafone',
-    name: 'Vodafone',
-    tier: 'community',
-    logo: favicon('vodafone.com'),
-    url: 'https://www.vodafone.com/',
-  },
-  {
     id: 'wunderdog',
     name: 'Wunderdog',
     tier: 'community',

@@ -37,7 +37,7 @@ export const eventsTexts: Record<Language, EventsTexts> = {
   en: {
     kicker: 'Events',
     heading: 'Upcoming and recent sessions',
-    description: 'Technical talks, demos, workshops, panels, and community sessions hosted by Malaga AI.',
+    description: 'Technical talks, demos, workshops, panels, and community sessions hosted by Malaga-AI.',
     errorMessage: 'We could not load the events right now.',
     retryLabel: 'Try again',
     emptyMessage: 'We will announce new events soon.',
@@ -65,7 +65,7 @@ export const eventsTexts: Record<Language, EventsTexts> = {
   es: {
     kicker: 'Eventos',
     heading: 'Sesiones próximas y recientes',
-    description: 'Charlas técnicas, demos, talleres, paneles y sesiones comunitarias organizadas por Malaga AI.',
+    description: 'Charlas técnicas, demos, talleres, paneles y sesiones comunitarias organizadas por Malaga-AI.',
     errorMessage: 'No hemos podido cargar los eventos ahora mismo.',
     retryLabel: 'Inténtalo de nuevo',
     emptyMessage: 'Pronto anunciaremos nuevos eventos.',

@@ -24,7 +24,7 @@ export const partnersTexts: Record<Language, PartnersTexts> = {
     sponsorsDescription: 'Brands that support high-quality spaces for learning, connecting, and activating AI projects in Malaga.',
     partnersKicker: 'Partners',
     partnersHeading: 'Partners for building the ecosystem',
-    partnersDescription: 'Companies, communities, and public entities that help Malaga AI connect talent, venues, knowledge, and local opportunity.',
+    partnersDescription: 'Companies, communities, and public entities that help Malaga-AI connect talent, venues, knowledge, and local opportunity.',
     sponsorTierCard: {
       name: 'Be a sponsor',
       tierLabel: {
@@ -40,7 +40,7 @@ export const partnersTexts: Record<Language, PartnersTexts> = {
     sponsorsDescription: 'Marcas que apoyan espacios de calidad para aprender, conectar y activar proyectos de IA en Málaga.',
     partnersKicker: 'Partners',
     partnersHeading: 'Partners para construir el ecosistema',
-    partnersDescription: 'Empresas, comunidades y entidades públicas que ayudan a Malaga AI a conectar talento, espacios, conocimiento y oportunidades locales.',
+    partnersDescription: 'Empresas, comunidades y entidades públicas que ayudan a Malaga-AI a conectar talento, espacios, conocimiento y oportunidades locales.',
     sponsorTierCard: {
       name: 'Sé patrocinador',
       tierLabel: {

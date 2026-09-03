@@ -21,7 +21,7 @@ export const photosTexts: Record<Language, PhotosTexts> = {
   en: {
     kicker: 'Photos',
     heading: 'Event photos',
-    description: 'A look at the sessions, conversations, and community moments shaping Malaga AI.',
+    description: 'A look at the sessions, conversations, and community moments shaping Malaga-AI.',
     closePhotoAriaLabel: 'Close photo',
     previousPhotoAriaLabel: 'Previous photo',
     nextPhotoAriaLabel: 'Next photo',
@@ -40,7 +40,7 @@ export const photosTexts: Record<Language, PhotosTexts> = {
   es: {
     kicker: 'Fotos',
     heading: 'Fotos de eventos',
-    description: 'Un vistazo a las sesiones, conversaciones y momentos de comunidad que dan forma a Malaga AI.',
+    description: 'Un vistazo a las sesiones, conversaciones y momentos de comunidad que dan forma a Malaga-AI.',
     closePhotoAriaLabel: 'Cerrar foto',
     previousPhotoAriaLabel: 'Foto anterior',
     nextPhotoAriaLabel: 'Foto siguiente',

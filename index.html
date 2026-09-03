@@ -8,7 +8,7 @@
       name="description"
       content="Malaga-AI is a community dedicated to sharing the power and promise of Artificial Intelligence (AI), so that all people may benefit from this transformative technology."
     />
-    <title>Malaga AI</title>
+    <title>Malaga-AI</title>
     <script>
       // Runs before first paint so the page never flashes the wrong theme.
       // A stored choice wins; otherwise follow the OS, defaulting to dark when
@@ -29,19 +29,6 @@
         root.classList.toggle('light', theme === 'light')
         root.classList.toggle('dark', theme === 'dark')
         root.style.colorScheme = theme
-
-        // English is the default language; only an explicit stored choice
-        // switches to Spanish. Set before first paint to avoid a flash.
-        var language = 'en'
-        try {
-          var storedLanguage = localStorage.getItem('malaga-ai-language')
-          if (storedLanguage === 'en' || storedLanguage === 'es') {
-            language = storedLanguage
-          }
-        } catch (error) {
-          // Blocked storage: keep the English default.
-        }
-        root.lang = language
       })()
     </script>
   </head>

@@ -7,7 +7,7 @@ import type { EventItem } from '@/features/events/types'
 
 function renderWithLanguage(ui: ReactElement, language: Language) {
   return render(
-    <LanguageContext.Provider value={{ language, setLanguage: vi.fn(), toggleLanguage: vi.fn() }}>
+    <LanguageContext.Provider value={{ language }}>
       {ui}
     </LanguageContext.Provider>,
   )

@@ -13,6 +13,7 @@ const initiatives = [
   },
   {
     icon: GraduationCap,
+    actionHref: 'https://discord.com/invite/2tv7W2jxXF',
   },
 ]
 
