@@ -1,6 +1,5 @@
 import { Linkedin, Mail } from 'lucide-react'
 import adrianImage from '@/assets/team/adrian.webp'
-import andreaImage from '@/assets/team/andrea.webp'
 import joseImage from '@/assets/team/jose.webp'
 import juanImage from '@/assets/team/juan.webp'
 import paulImage from '@/assets/team/paul.webp'
@@ -9,40 +8,29 @@ import rosaImage from '@/assets/team/rosa.webp'
 const team = [
   {
     name: 'Adrian Tineo',
-    role: 'Community Lead',
     image: adrianImage,
     emailUrl: 'mailto:adrian@malaga-ai.community',
     linkedinUrl: 'https://www.linkedin.com/in/adriantineo/',
   },
   {
     name: 'Rosa Castillo',
-    role: 'Community Lead',
     image: rosaImage,
     emailUrl: 'mailto:rosa@malaga-ai.community',
     linkedinUrl: 'https://www.linkedin.com/in/arosacastillo/',
   },
   {
     name: 'Paul Ben',
-    role: 'Collaborator',
     image: paulImage,
     emailUrl: 'mailto:paul@malaga-ai.community',
   },
   {
     name: 'Juan Gallego',
-    role: 'Technical Program Manager',
     image: juanImage,
     emailUrl: 'mailto:juan@malaga-ai.community',
     linkedinUrl: 'https://www.linkedin.com/in/juan-gallego-güeto-7b3a22141/',
   },
   {
-    name: 'Andrea Villanca',
-    role: 'Commnity Manager',
-    image: andreaImage,
-    linkedinUrl: 'https://www.linkedin.com/in/andreavillanca/',
-  },
-  {
     name: 'Jose Rodriguez',
-    role: 'Collaborator',
     image: joseImage,
     linkedinUrl: 'https://www.linkedin.com/in/jose-rodriguez-ortega/',
   },
@@ -80,11 +68,6 @@ export function Team() {
                 <div className="flex w-full items-start justify-between gap-2">
                   <div>
                     <h3 className="font-safiro text-base leading-tight text-foreground">{member.name}</h3>
-                    {member.role ? (
-                      <p className="mt-1 text-xs leading-4 text-muted-foreground">
-                        {member.role}
-                      </p>
-                    ) : null}
                   </div>
                   <div className="flex shrink-0 gap-2">
                     {member.emailUrl ? (
