@@ -1,7 +1,6 @@
 import { Linkedin, Mail } from 'lucide-react'
 import adrianImage from '@/assets/team/adrian.webp'
 import andreaImage from '@/assets/team/andrea.webp'
-import janineImage from '@/assets/team/janine.webp'
 import joseImage from '@/assets/team/jose.webp'
 import juanImage from '@/assets/team/juan.webp'
 import paulImage from '@/assets/team/paul.webp'
