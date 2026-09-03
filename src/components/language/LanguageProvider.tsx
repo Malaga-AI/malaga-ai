@@ -1,0 +1,36 @@
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import {
+  LanguageContext,
+  applyLanguage,
+  readStoredLanguage,
+  storeLanguage,
+  type Language,
+} from '@/lib/language'
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguageState] = useState<Language>(() => readStoredLanguage() ?? 'en')
+
+  useEffect(() => {
+    applyLanguage(language)
+  }, [language])
+
+  const setLanguage = useCallback((next: Language) => {
+    storeLanguage(next)
+    setLanguageState(next)
+  }, [])
+
+  const toggleLanguage = useCallback(() => {
+    setLanguageState((current) => {
+      const next = current === 'en' ? 'es' : 'en'
+      storeLanguage(next)
+      return next
+    })
+  }, [])
+
+  const value = useMemo(
+    () => ({ language, setLanguage, toggleLanguage }),
+    [language, setLanguage, toggleLanguage],
+  )
+
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
+}
