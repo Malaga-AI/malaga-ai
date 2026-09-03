@@ -34,7 +34,7 @@ export function SocialLinks({ className, linkClassName, showLabels = false }: So
           aria-label={ariaLabel}
           title={ariaLabel}
           className={cn(
-            'inline-flex h-11 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:border-teal-300/45 hover:bg-white/[0.14] focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2 focus:ring-offset-background',
+            'inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border-strong bg-surface px-3.5 text-sm font-semibold text-foreground transition hover:-translate-y-0.5 hover:border-primary/55 hover:bg-surface-strong focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
             !showLabels && 'w-11 px-0',
             linkClassName,
           )}

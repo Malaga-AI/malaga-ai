@@ -93,8 +93,8 @@ export function EventPhotos() {
     <section id="photos" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="photos-title">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Photos</p>
-          <h2 id="photos-title" className="mt-3 font-safiro text-4xl text-white md:text-5xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Photos</p>
+          <h2 id="photos-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">
             Event photos
           </h2>
           <p className="mt-4 text-lg leading-8 text-muted-foreground">
@@ -109,7 +109,7 @@ export function EventPhotos() {
 
       {selectedPhoto?.imageUrl ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 px-4 py-6 backdrop-blur-sm sm:px-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-overlay px-4 py-6 backdrop-blur-sm sm:px-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="photo-modal-title"
@@ -118,7 +118,7 @@ export function EventPhotos() {
           <div className="relative w-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
             <button
               type="button"
-              className="absolute -top-14 right-0 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.08] text-white transition hover:bg-white/[0.14] focus:outline-none focus:ring-2 focus:ring-teal-300"
+              className="absolute -top-14 right-0 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-surface text-foreground transition hover:bg-surface-strong focus:outline-none focus:ring-2 focus:ring-ring"
               onClick={() => setSelectedPhotoIndex(null)}
               aria-label="Close photo"
             >
@@ -127,7 +127,7 @@ export function EventPhotos() {
 
             <button
               type="button"
-              className="absolute left-2 top-[calc(50%-3rem)] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-slate-950/70 text-white shadow-lg backdrop-blur transition hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-teal-300 sm:left-4"
+              className="absolute left-2 top-[calc(50%-3rem)] inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-panel text-foreground shadow-lg backdrop-blur transition hover:bg-overlay focus:outline-none focus:ring-2 focus:ring-ring sm:left-4"
               onClick={showPreviousPhoto}
               aria-label="Previous photo"
             >
@@ -136,7 +136,7 @@ export function EventPhotos() {
 
             <button
               type="button"
-              className="absolute right-2 top-[calc(50%-3rem)] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-slate-950/70 text-white shadow-lg backdrop-blur transition hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-teal-300 sm:right-4"
+              className="absolute right-2 top-[calc(50%-3rem)] inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-panel text-foreground shadow-lg backdrop-blur transition hover:bg-overlay focus:outline-none focus:ring-2 focus:ring-ring sm:right-4"
               onClick={showNextPhoto}
               aria-label="Next photo"
             >
@@ -147,13 +147,13 @@ export function EventPhotos() {
               <img
                 src={selectedPhoto.imageUrl}
                 alt={selectedPhoto.title}
-                className="max-h-[78vh] w-full rounded-2xl border border-white/10 object-contain shadow-2xl"
+                className="max-h-[78vh] w-full rounded-2xl border border-border object-contain shadow-2xl"
               />
-              <figcaption className="mt-4 text-white">
+              <figcaption className="mt-4 text-foreground">
                 <h3 id="photo-modal-title" className="font-safiro text-2xl">
                   {selectedPhoto.title}
                 </h3>
-                <p className="mt-1 text-sm leading-6 text-slate-300">{selectedPhoto.description}</p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">{selectedPhoto.description}</p>
               </figcaption>
             </figure>
           </div>

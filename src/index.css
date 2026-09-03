@@ -10,23 +10,148 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Brand palette (github.com/Malaga-AI/logo):
+ *   navy #090E2A -> hsl(231 65% 10%)
+ *   cyan #18DAE3 -> hsl(183 78% 49%)
+ *
+ * `:root` carries the dark theme so the page still renders correctly when the
+ * pre-paint theme script in index.html cannot run (JS disabled). The light
+ * theme is opt-in via the `light` class on <html>.
+ */
 :root {
   color-scheme: dark;
+
   --background: 222 47% 6%;
   --foreground: 210 40% 98%;
   --muted: 218 30% 16%;
-  --muted-foreground: 215 18% 68%;
-  --border: 215 24% 18%;
+  --muted-foreground: 215 18% 70%;
+  --border: 215 24% 20%;
+  --border-strong: 214 22% 30%;
   --card: 222 38% 10%;
   --card-foreground: 210 40% 98%;
-  --primary: 174 72% 56%;
-  --primary-foreground: 222 47% 6%;
+  --primary: 183 76% 55%;
+  --primary-hover: 183 82% 68%;
+  --primary-foreground: 231 65% 8%;
+  /* Brand colour tuned for text/icons on --background (never for large fills). */
+  --brand-ink: 183 72% 74%;
   --accent: 198 78% 54%;
   --accent-foreground: 210 40% 98%;
+  --danger: 350 80% 78%;
+  --ring: 183 76% 55%;
+
+  /* Translucent layers: alpha is baked in, so no opacity modifier. */
+  --surface: rgba(255, 255, 255, 0.075);
+  --surface-strong: rgba(255, 255, 255, 0.14);
+  --panel: rgba(2, 6, 23, 0.62);
+  --overlay: rgba(2, 6, 23, 0.9);
+  --grid-line: rgba(24, 218, 227, 0.08);
+  --halo-primary: rgba(24, 218, 227, 0.12);
+  --halo-accent: rgba(14, 165, 233, 0.12);
+  --selection: rgba(24, 218, 227, 0.32);
+  --shadow-glow: 0 24px 80px rgba(24, 218, 227, 0.2);
+
+  /* Particle hero stage. */
+  --hero-bg: #05070d;
+  --hero-fog: radial-gradient(circle at 58% 42%, rgba(250, 204, 21, 0.1), transparent 30%),
+    radial-gradient(circle at 18% 70%, rgba(20, 184, 166, 0.14), transparent 28%),
+    linear-gradient(180deg, rgba(5, 7, 13, 0.12), #05070d 96%);
+  --hero-grid: rgba(255, 255, 255, 0.05);
+  --hero-grid-cross: rgba(255, 255, 255, 0.035);
+  --hero-ink: #ffffff;
+  --hero-ink-muted: #f1f5f9;
+  --hero-kicker: #fde047;
+  --hero-text-shadow: 0 6px 28px rgba(0, 0, 0, 0.9);
+
+  /* Sponsor tiers: metallics that read on navy. */
+  --tier-gold: #fcd34d;
+  --tier-gold-ink: #fcd34d;
+  --tier-silver: #e2e8f0;
+  --tier-silver-ink: #e2e8f0;
+  --tier-bronze: #fb923c;
+  --tier-bronze-ink: #fdba74;
+
   font-family: Inter, system-ui, sans-serif;
   background: hsl(var(--background));
   color: hsl(var(--foreground));
   scroll-behavior: smooth;
+}
+
+.light {
+  color-scheme: light;
+
+  --background: 205 45% 96%;
+  --foreground: 231 65% 10%;
+  --muted: 205 32% 91%;
+  --muted-foreground: 226 20% 38%;
+  --border: 213 25% 85%;
+  --border-strong: 214 22% 74%;
+  --card: 0 0% 100%;
+  --card-foreground: 231 65% 10%;
+  --primary: 183 78% 49%;
+  --primary-hover: 184 76% 41%;
+  --primary-foreground: 231 65% 10%;
+  --brand-ink: 190 92% 25%;
+  --accent: 199 89% 34%;
+  --accent-foreground: 0 0% 100%;
+  --danger: 350 70% 38%;
+  --ring: 188 84% 32%;
+
+  --surface: rgba(9, 14, 42, 0.045);
+  --surface-strong: rgba(9, 14, 42, 0.09);
+  --panel: rgba(255, 255, 255, 0.86);
+  --overlay: rgba(9, 14, 42, 0.72);
+  --grid-line: rgba(9, 14, 42, 0.06);
+  --halo-primary: rgba(24, 218, 227, 0.22);
+  --halo-accent: rgba(14, 165, 233, 0.16);
+  --selection: rgba(24, 218, 227, 0.35);
+  --shadow-glow: 0 24px 60px rgba(9, 14, 42, 0.1);
+
+  --hero-bg: #eaf3f7;
+  --hero-fog: radial-gradient(circle at 58% 42%, rgba(24, 218, 227, 0.18), transparent 32%),
+    radial-gradient(circle at 18% 70%, rgba(9, 14, 42, 0.07), transparent 30%),
+    linear-gradient(180deg, rgba(234, 243, 247, 0.2), #eaf3f7 96%);
+  --hero-grid: rgba(9, 14, 42, 0.06);
+  --hero-grid-cross: rgba(9, 14, 42, 0.045);
+  --hero-ink: #090e2a;
+  --hero-ink-muted: #2b3350;
+  --hero-kicker: #854d0e; /* amber-800: 6.1:1 on the light hero stage */
+  --hero-text-shadow: 0 4px 22px rgba(234, 243, 247, 0.95);
+
+  /* Sponsor tiers: darkened so the label keeps AA contrast on white. */
+  --tier-gold: #b45309;
+  --tier-gold-ink: #92400e;
+  --tier-silver: #64748b;
+  --tier-silver-ink: #475569;
+  --tier-bronze: #c2410c;
+  --tier-bronze-ink: #9a3412;
+}
+
+.sponsor-tier {
+  --tier: var(--tier-gold);
+  --tier-ink: var(--tier-gold-ink);
+  border-color: color-mix(in srgb, var(--tier) 38%, transparent);
+  background: color-mix(in srgb, var(--tier) 10%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--tier) 14%, transparent);
+}
+
+.sponsor-tier[data-tier='silver'] {
+  --tier: var(--tier-silver);
+  --tier-ink: var(--tier-silver-ink);
+}
+
+.sponsor-tier[data-tier='bronze'] {
+  --tier: var(--tier-bronze);
+  --tier-ink: var(--tier-bronze-ink);
+}
+
+.sponsor-tier__logo {
+  background: color-mix(in srgb, var(--tier) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tier) 25%, transparent);
+}
+
+.sponsor-tier__label {
+  color: var(--tier-ink);
 }
 
 * {
@@ -38,8 +163,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 15% 8%, rgba(45, 212, 191, 0.12), transparent 26rem),
-    radial-gradient(circle at 82% 18%, rgba(14, 165, 233, 0.12), transparent 24rem),
+    radial-gradient(circle at 15% 8%, var(--halo-primary), transparent 26rem),
+    radial-gradient(circle at 82% 18%, var(--halo-accent), transparent 24rem),
     hsl(var(--background));
 }
 
@@ -78,7 +203,7 @@ a {
 }
 
 ::selection {
-  background: rgba(45, 212, 191, 0.32);
+  background: var(--selection);
 }
 
 .collaborator-marquee {

@@ -14,7 +14,7 @@ const links = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 py-10">
+    <footer className="border-t border-border py-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
         <div>
           <BrandLogo showText={false} imageClassName="h-12 max-w-[220px]" />
@@ -25,7 +25,7 @@ export function Footer() {
         <div className="flex flex-col gap-5 md:items-end">
           <div className="flex flex-wrap gap-4 text-sm text-muted-foreground md:justify-end">
             {links.map((link) => (
-              <a key={link.href} href={link.href} className="hover:text-white">
+              <a key={link.href} href={link.href} className="hover:text-foreground">
                 {link.label}
               </a>
             ))}

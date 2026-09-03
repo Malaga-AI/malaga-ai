@@ -1,13 +1,36 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
     <meta
       name="description"
       content="Malaga-AI is a community dedicated to sharing the power and promise of Artificial Intelligence (AI), so that all people may benefit from this transformative technology."
     />
     <title>Malaga AI</title>
+    <script>
+      // Runs before first paint so the page never flashes the wrong theme.
+      // A stored choice wins; otherwise follow the OS, defaulting to dark when
+      // the OS expresses no preference (or the query is unsupported).
+      ;(function () {
+        var theme = 'dark'
+        try {
+          var stored = localStorage.getItem('malaga-ai-theme')
+          if (stored === 'light' || stored === 'dark') {
+            theme = stored
+          } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            theme = 'light'
+          }
+        } catch (error) {
+          // Blocked storage: keep the dark default.
+        }
+        var root = document.documentElement
+        root.classList.toggle('light', theme === 'light')
+        root.classList.toggle('dark', theme === 'dark')
+        root.style.colorScheme = theme
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

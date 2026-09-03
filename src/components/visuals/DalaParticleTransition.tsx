@@ -9,6 +9,7 @@ import {
   BufferGeometry,
   Color,
   PerspectiveCamera,
+  NormalBlending,
   Points,
   Scene,
   ShaderMaterial,
@@ -17,6 +18,7 @@ import {
   WebGLRenderer,
 } from 'three'
 import { Button } from '@/components/ui/button'
+import { useTheme, type Theme } from '@/lib/theme'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -38,6 +40,16 @@ const LOGO_OFFSET_Y = 0
 // Keep the Events artwork fully on the left, leaving the right side clear for
 // its copy. The prior offset left an unnecessary empty strip on wide screens.
 const SCROLL_SHIFT_X = -3.05
+
+// Particle colours per theme. Dark leans on white/cyan over near-black; light
+// leans on brand navy/teal over a pale stage.
+const STAGE_PALETTE: Record<Theme, string[]> = {
+  dark: ['#18DAE3', '#e5e7eb', '#8ef0f5', '#ffffff'],
+  light: ['#18DAE3', '#090E2A', '#0e7c8f', '#1f2a52'],
+}
+const STAGE_ACCENT: Record<Theme, string> = { dark: '#facc15', light: '#b45309' }
+// Core highlight direction: brighten on dark, darken on light.
+const STAGE_GLOW: Record<Theme, number> = { dark: 0.28, light: -0.22 }
 
 const panels = [
   {
@@ -117,6 +129,8 @@ void main() {
 `
 
 const fragmentShader = `
+uniform float uGlow;
+
 varying vec3 vColor;
 varying float vAlpha;
 varying float vTwist;
@@ -142,7 +156,7 @@ void main() {
   float glow = smoothstep(0.52, 0.06, length(p)) * 0.28;
   float alpha = max(line, inside * 0.2 + glow) * vAlpha;
 
-  gl_FragColor = vec4(vColor + glow * 0.28, alpha);
+  gl_FragColor = vec4(vColor + glow * uGlow, alpha);
 }
 `
 
@@ -262,15 +276,17 @@ function makeLogoShape(pool: LogoPool, seedOffset: number) {
   return target
 }
 
-function buildGeometry() {
+function buildGeometry(theme: Theme) {
   const geometry = new BufferGeometry()
   const shapes = Array.from({ length: SHAPE_COUNT }, () => new Float32Array(PARTICLE_COUNT * 3))
   const colors = new Float32Array(PARTICLE_COUNT * 3)
   const seeds = new Float32Array(PARTICLE_COUNT)
-  // Brand-led palette: cyan + white dominant (matching the logo). Yellow is a
-  // rare accent spark, rolled separately so it stays ~8% of particles.
-  const palette = [new Color('#18DAE3'), new Color('#e5e7eb'), new Color('#8ef0f5'), new Color('#ffffff')]
-  const accent = new Color('#facc15')
+  // Brand-led palette (matching the logo): cyan plus the theme's ink colour.
+  // On dark that ink is white; on light it is the brand navy, because white
+  // particles are invisible against a light stage. The rare warm spark is
+  // rolled separately so it stays ~8% of particles.
+  const palette = STAGE_PALETTE[theme].map((hex) => new Color(hex))
+  const accent = new Color(STAGE_ACCENT[theme])
 
   for (let i = 0; i < PARTICLE_COUNT; i += 1) {
     const points = [makeDiscFallback(i), makeDiscFallback(i + 7000), makeScatter(i)]
@@ -295,13 +311,14 @@ function buildGeometry() {
 export function DalaParticleTransition() {
   const rootRef = useRef<HTMLElement | null>(null)
   const canvasRef = useRef<HTMLDivElement | null>(null)
+  const { theme } = useTheme()
 
   useGSAP(
     () => {
       const canvasHost = canvasRef.current
       if (!canvasHost) return undefined
 
-      const geometry = buildGeometry()
+      const geometry = buildGeometry(theme)
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       const scene = new Scene()
       const camera = new PerspectiveCamera(42, 1, 0.1, 100)
@@ -321,8 +338,11 @@ export function DalaParticleTransition() {
         fragmentShader,
         transparent: true,
         depthWrite: false,
-        blending: AdditiveBlending,
+        // Additive blending only reads well over a dark stage; on light it
+        // washes every particle out to the background colour.
+        blending: theme === 'light' ? NormalBlending : AdditiveBlending,
         uniforms: {
+          uGlow: { value: STAGE_GLOW[theme] },
           uMorph: { value: 0 },
           uTime: { value: 0 },
           uPixelRatio: { value: Math.min(window.devicePixelRatio, 1.7) },
@@ -467,16 +487,16 @@ export function DalaParticleTransition() {
         renderer.domElement.remove()
       }
     },
-    { scope: rootRef },
+    { scope: rootRef, dependencies: [theme] },
   )
 
   return (
-    <section id="top" ref={rootRef} className="dala-stage relative min-h-[330vh] overflow-clip bg-[#05070d]">
+    <section id="top" ref={rootRef} className="dala-stage relative min-h-[330vh] overflow-clip bg-hero-bg">
       <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_58%_42%,rgba(250,204,21,0.1),transparent_30%),radial-gradient(circle_at_18%_70%,rgba(20,184,166,0.14),transparent_28%),linear-gradient(180deg,rgba(5,7,13,0.12),#05070d_96%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:46px_46px] opacity-70" />
+        <div className="absolute inset-0 bg-[image:var(--hero-fog)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(var(--hero-grid)_1px,transparent_1px),linear-gradient(90deg,var(--hero-grid-cross)_1px,transparent_1px)] bg-[size:46px_46px] opacity-70" />
         <div ref={canvasRef} className="absolute inset-0" aria-hidden="true" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#05070d] to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-hero-bg to-transparent" />
       </div>
 
       <div className="pointer-events-none absolute inset-0">
@@ -495,24 +515,24 @@ export function DalaParticleTransition() {
                 }`}
             >
               {panel.layout !== 'center' && (
-                <p className="text-xs font-black uppercase tracking-[0.12em] text-yellow-300">{panel.kicker}</p>
+                <p className="text-xs font-black uppercase tracking-[0.12em] text-hero-kicker">{panel.kicker}</p>
               )}
               {index === 0 ? (
-                <h1 className="mt-5 font-sans text-6xl font-semibold leading-[0.9] tracking-[-0.08em] text-white drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-7xl lg:text-8xl">
+                <h1 className="mt-5 font-sans text-6xl font-semibold leading-[0.9] tracking-[-0.08em] text-hero-ink drop-shadow-hero sm:text-7xl lg:text-8xl">
                   {panel.title}
                 </h1>
               ) : (
                 <h2
-                  className={`font-sans font-medium tracking-[-0.07em] text-white ${panel.layout === 'center'
-                    ? 'text-4xl leading-[1.08] drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl'
-                    : 'mt-5 text-4xl leading-[1.08] drop-shadow-[0_6px_28px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl'
+                  className={`font-sans font-medium tracking-[-0.07em] text-hero-ink ${panel.layout === 'center'
+                    ? 'text-4xl leading-[1.08] drop-shadow-hero sm:text-5xl lg:text-6xl'
+                    : 'mt-5 text-4xl leading-[1.08] drop-shadow-hero sm:text-5xl lg:text-6xl'
                     }`}
                 >
                   {panel.title}
                 </h2>
               )}
               <p
-                className={`mt-6 text-base leading-8 text-slate-100 sm:text-lg ${panel.layout === 'center' ? 'mx-auto max-w-5xl text-3xl leading-tight sm:text-4xl' : 'max-w-xl'
+                className={`mt-6 text-base leading-8 text-hero-ink-muted drop-shadow-hero sm:text-lg ${panel.layout === 'center' ? 'mx-auto max-w-5xl text-3xl leading-tight sm:text-4xl' : 'max-w-xl'
                   }`}
               >
                 {panel.copy}

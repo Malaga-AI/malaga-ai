@@ -67,9 +67,9 @@ function CollaboratorLogo({ collaborator }: { collaborator: Collaborator }) {
       href={collaborator.url}
       target="_blank"
       rel="noreferrer"
-      className="flex h-16 w-44 shrink-0 items-center gap-3 rounded-lg border border-white/10 bg-white/[0.055] px-3 transition hover:border-teal-300/40 hover:bg-white/[0.08]"
+      className="flex h-16 w-44 shrink-0 items-center gap-3 rounded-lg border border-border bg-surface px-3 transition hover:border-primary/50 hover:bg-surface-strong"
     >
-      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-white text-slate-950">
+      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-white text-[#090E2A]">
         <img
           src={collaborator.logo}
           alt=""
@@ -80,16 +80,16 @@ function CollaboratorLogo({ collaborator }: { collaborator: Collaborator }) {
           }}
         />
       </span>
-      <span className="min-w-0 text-sm font-medium leading-5 text-white">{collaborator.name}</span>
+      <span className="min-w-0 text-sm font-medium leading-5 text-foreground">{collaborator.name}</span>
     </a>
   )
 }
 
 function CollaboratorRow({ group, index }: { group: CollaboratorGroup; index: number }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.025] py-3">
+    <div className="overflow-hidden rounded-xl border border-border bg-surface py-3">
       <div className="mb-3 flex items-center justify-between px-4">
-        <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-200">{group.title}</h3>
+        <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-ink">{group.title}</h3>
         <span className="text-xs text-muted-foreground">{group.items.length}</span>
       </div>
       <div className="collaborator-marquee" data-direction={index % 2 === 0 ? 'left' : 'right'}>
@@ -113,8 +113,8 @@ export function CommunityPartners({ onContactTypeChange }: CommunityPartnersProp
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Sponsors</p>
-              <h2 id="sponsors-title" className="mt-3 font-safiro text-4xl text-white md:text-5xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Sponsors</p>
+              <h2 id="sponsors-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">
                 Sponsors that make our gatherings possible
               </h2>
               <p className="mt-4 text-lg leading-8 text-muted-foreground">
@@ -135,8 +135,8 @@ export function CommunityPartners({ onContactTypeChange }: CommunityPartnersProp
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Partners</p>
-              <h2 id="partners-title" className="mt-3 font-safiro text-4xl text-white md:text-5xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Partners</p>
+              <h2 id="partners-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">
                 Partners for building the ecosystem
               </h2>
               <p className="mt-4 text-lg leading-8 text-muted-foreground">
@@ -157,8 +157,8 @@ export function CommunityPartners({ onContactTypeChange }: CommunityPartnersProp
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Collaborators</p>
-              <h2 id="collaborators-title" className="mt-3 font-safiro text-4xl text-white md:text-5xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Collaborators</p>
+              <h2 id="collaborators-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">
                 Organizations and communities moving with us
               </h2>
               <p className="mt-4 text-lg leading-8 text-muted-foreground">

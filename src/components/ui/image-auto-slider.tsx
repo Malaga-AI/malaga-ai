@@ -25,7 +25,7 @@ export function ImageAutoSlider({ images, onImageClick }: ImageAutoSliderProps) 
               <button
                 type="button"
                 key={`${image.imageUrl}-${index}`}
-                className="group relative h-52 w-52 flex-shrink-0 overflow-hidden rounded-lg border border-white/10 bg-card/80 text-left shadow-2xl transition focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2 focus:ring-offset-background sm:h-64 sm:w-64 lg:h-80 lg:w-80"
+                className="group relative h-52 w-52 flex-shrink-0 overflow-hidden rounded-lg border border-border bg-card text-left shadow-xl transition focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background sm:h-64 sm:w-64 lg:h-80 lg:w-80"
                 onClick={() => onImageClick?.(image, index % images.length)}
                 aria-label={`Open photo: ${image.title || `Gallery image ${imageNumber}`}`}
               >

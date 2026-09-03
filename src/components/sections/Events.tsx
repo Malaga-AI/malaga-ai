@@ -39,16 +39,16 @@ type EventsProps = {
 
 function EventCardSkeleton() {
   return (
-    <article className="h-full overflow-hidden rounded-2xl border border-white/10 bg-card/80 shadow-sm">
-      <div className="aspect-[3/1] animate-pulse bg-white/[0.08]" />
+    <article className="h-full overflow-hidden rounded-2xl border border-border bg-card/80 shadow-sm">
+      <div className="aspect-[3/1] animate-pulse bg-surface" />
       <div className="space-y-4 p-5">
-        <div className="h-6 w-32 animate-pulse rounded-full bg-white/[0.08]" />
-        <div className="h-7 w-4/5 animate-pulse rounded bg-white/[0.08]" />
+        <div className="h-6 w-32 animate-pulse rounded-full bg-surface" />
+        <div className="h-7 w-4/5 animate-pulse rounded bg-surface" />
         <div className="space-y-2">
-          <div className="h-4 animate-pulse rounded bg-white/[0.08]" />
-          <div className="h-4 w-2/3 animate-pulse rounded bg-white/[0.08]" />
+          <div className="h-4 animate-pulse rounded bg-surface" />
+          <div className="h-4 w-2/3 animate-pulse rounded bg-surface" />
         </div>
-        <div className="h-10 w-36 animate-pulse rounded-full bg-white/[0.08]" />
+        <div className="h-10 w-36 animate-pulse rounded-full bg-surface" />
       </div>
     </article>
   )
@@ -74,14 +74,14 @@ export function Events({ events, isLoading = false, error, onRetry }: EventsProp
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Events</p>
-            <h2 id="events-title" className="mt-3 font-safiro text-4xl text-white md:text-5xl">Upcoming and recent sessions</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Events</p>
+            <h2 id="events-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">Upcoming and recent sessions</h2>
             <p className="mt-4 text-lg leading-8 text-muted-foreground">Technical talks, demos, workshops, panels, and community sessions hosted by Malaga AI.</p>
           </div>
 
           {!error && !isLoading && events.length > visibleEventCount ? (
             <div className="flex items-center gap-3">
-              <span className="text-sm text-slate-400">
+              <span className="text-sm text-muted-foreground">
                 {activeIndex + 1}-{activeIndex + visibleEvents.length} / {events.length}
               </span>
               <div className="flex gap-2">
@@ -90,7 +90,7 @@ export function Events({ events, isLoading = false, error, onRetry }: EventsProp
                   onClick={() => setActiveIndex((currentIndex) => Math.max(currentIndex - 1, 0))}
                   disabled={!canMoveBackward}
                   aria-label="Previous events"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white transition hover:border-teal-300/40 hover:bg-teal-300/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-white/10 disabled:hover:bg-white/[0.04]"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-foreground transition hover:border-primary/50 hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:bg-surface"
                 >
                   <ChevronLeft className="h-5 w-5" aria-hidden="true" />
                 </button>
@@ -99,7 +99,7 @@ export function Events({ events, isLoading = false, error, onRetry }: EventsProp
                   onClick={() => setActiveIndex((currentIndex) => Math.min(currentIndex + 1, maxStartIndex))}
                   disabled={!canMoveForward}
                   aria-label="Next events"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white transition hover:border-teal-300/40 hover:bg-teal-300/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-white/10 disabled:hover:bg-white/[0.04]"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-foreground transition hover:border-primary/50 hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:bg-surface"
                 >
                   <ChevronRight className="h-5 w-5" aria-hidden="true" />
                 </button>
@@ -109,13 +109,13 @@ export function Events({ events, isLoading = false, error, onRetry }: EventsProp
         </div>
 
         {error ? (
-          <div className="mt-10 rounded-2xl border border-rose-300/20 bg-rose-300/[0.06] p-6 text-slate-200">
+          <div className="mt-10 rounded-2xl border border-danger/30 bg-danger/10 p-6 text-muted-foreground">
             <p>We could not load the events right now.</p>
             {onRetry ? (
               <button
                 type="button"
                 onClick={onRetry}
-                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-teal-300 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2 focus:ring-offset-background"
+                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:-translate-y-0.5 hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
               >
                 Try again
               </button>
@@ -130,13 +130,13 @@ export function Events({ events, isLoading = false, error, onRetry }: EventsProp
         ) : null}
 
         {!error && !isLoading && events.length === 0 ? (
-          <div className="mt-10 rounded-2xl border border-white/10 bg-card/80 p-6 text-slate-200">
+          <div className="mt-10 rounded-2xl border border-border bg-card/80 p-6 text-muted-foreground">
             <p>We will announce new events soon.</p>
             <a
               href="https://malaga-ai.eventbrite.com"
               target="_blank"
               rel="noreferrer"
-              className="mt-4 inline-flex text-sm font-semibold text-teal-200 hover:text-teal-100"
+              className="mt-4 inline-flex text-sm font-semibold text-brand-ink hover:text-foreground"
             >
               Follow us on Eventbrite for updates
             </a>

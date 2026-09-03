@@ -54,8 +54,8 @@ export function Team() {
     <section id="team" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="team-title">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Team</p>
-          <h2 id="team-title" className="mt-3 font-safiro text-4xl text-white md:text-5xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Team</p>
+          <h2 id="team-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">
             The people making Malaga AI happen
           </h2>
           <p className="mt-4 text-lg leading-8 text-muted-foreground">
@@ -67,9 +67,9 @@ export function Team() {
           {team.map((member) => (
             <article
               key={member.name}
-              className="group flex h-full w-[72vw] max-w-56 shrink-0 snap-center flex-col overflow-hidden rounded-xl border border-white/10 bg-card/80 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-teal-300/40 sm:w-auto sm:max-w-none"
+              className="group flex h-full w-[72vw] max-w-56 shrink-0 snap-center flex-col overflow-hidden rounded-xl border border-border bg-card/80 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-primary/50 sm:w-auto sm:max-w-none"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.05]">
+              <div className="relative aspect-[4/3] overflow-hidden bg-surface">
                 <img
                   src={member.image}
                   alt={`${member.name} portrait`}
@@ -80,7 +80,7 @@ export function Team() {
               <div className="flex flex-1 p-3">
                 <div className="flex w-full items-start justify-between gap-2">
                   <div>
-                    <h3 className="font-safiro text-base leading-tight text-white">{member.name}</h3>
+                    <h3 className="font-safiro text-base leading-tight text-foreground">{member.name}</h3>
                     {member.role ? (
                       <p className="mt-1 text-xs leading-4 text-muted-foreground">
                         {member.role}
@@ -91,7 +91,7 @@ export function Team() {
                     {member.emailUrl ? (
                       <a
                         href={member.emailUrl}
-                        className="grid h-7 w-7 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 transition hover:border-teal-300/40 hover:text-white"
+                        className="grid h-7 w-7 place-items-center rounded-full border border-border bg-surface text-muted-foreground transition hover:border-primary/50 hover:text-foreground"
                         aria-label={`Email ${member.name}`}
                       >
                         <Mail className="h-3.5 w-3.5" />
@@ -102,7 +102,7 @@ export function Team() {
                         href={member.linkedinUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="grid h-7 w-7 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 transition hover:border-teal-300/40 hover:text-white"
+                        className="grid h-7 w-7 place-items-center rounded-full border border-border bg-surface text-muted-foreground transition hover:border-primary/50 hover:text-foreground"
                         aria-label={`${member.name} LinkedIn`}
                       >
                         <Linkedin className="h-3.5 w-3.5" />
