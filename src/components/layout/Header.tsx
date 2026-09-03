@@ -3,6 +3,7 @@ import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { BrandLogo } from '@/components/layout/BrandLogo'
 import { MobileMenu } from '@/components/layout/MobileMenu'
+import { SocialBar } from '@/components/layout/SocialBar'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
 
 const links = [
@@ -12,7 +13,6 @@ const links = [
   { href: '#photos', label: 'Photos' },
   { href: '#sponsors', label: 'Sponsors' },
   { href: '#partners', label: 'Partners' },
-  { href: '#collaborators', label: 'Collaborators' },
   { href: '#contact', label: 'Contact' },
 ]
 
@@ -41,6 +41,7 @@ export function Header() {
           </button>
         </div>
       </div>
+      <SocialBar />
       <MobileMenu open={open} links={links} onClose={() => setOpen(false)} />
     </header>
   )
