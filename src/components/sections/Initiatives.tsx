@@ -1,26 +1,31 @@
-import { BookOpen, GraduationCap, UsersRound } from 'lucide-react'
+import { GraduationCap, Sparkles, UsersRound } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 const initiatives = [
   {
-    title: 'Talent Group',
+    title: 'Career Advice AI',
+    status: 'Live',
+    description:
+      'Upload your CV and get a free, personalized read on how AI is reshaping your career — your strengths, your exposure, and where to grow next.',
+    icon: Sparkles,
+    actionLabel: 'Try it now',
+    actionHref: 'https://careeradvice.malaga-ai.community',
+  },
+  {
+    title: 'Talent Program',
     status: 'Active',
     description:
       'A bridge between companies looking for AI talent and people who join the community while searching for new work opportunities.',
     icon: UsersRound,
+    actionLabel: 'Contact our talent team',
+    actionHref: 'mailto:talent@malaga-ai.community',
   },
   {
-    title: 'Certified Studies Group',
+    title: 'Certified Study Groups',
     status: 'Active',
     description:
       'Since 2023, Malaga-AI study groups have helped cohesive teams learn AI by building projects, from Innovation Hub and LLM exploits to agents, safety AI, and evals.',
     icon: GraduationCap,
-  },
-  {
-    title: 'Training Session',
-    status: 'Under construction',
-    description:
-      'Practical sessions in progress for training specific skills through workshops, guided challenges, and applied learning.',
-    icon: BookOpen,
   },
 ]
 
@@ -57,6 +62,16 @@ export function Initiatives() {
                 </div>
                 <h3 className="mt-6 font-safiro text-2xl leading-tight text-foreground">{initiative.title}</h3>
                 <p className="mt-4 text-sm leading-6 text-muted-foreground">{initiative.description}</p>
+                {initiative.actionLabel && initiative.actionHref ? (
+                  <Button
+                    href={initiative.actionHref}
+                    {...(initiative.actionHref.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+                    variant="secondary"
+                    className="mt-6 self-start"
+                  >
+                    {initiative.actionLabel}
+                  </Button>
+                ) : null}
               </article>
             )
           })}
