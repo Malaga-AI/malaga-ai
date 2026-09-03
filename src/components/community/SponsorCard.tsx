@@ -27,7 +27,7 @@ export function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
         </div>
       )}
       <div>
-        <h3 className="font-semibold text-foreground">{sponsor.name}</h3>
+        <h3 className="font-safiro font-semibold text-foreground">{sponsor.name}</h3>
         <p className={cn('text-sm capitalize text-muted-foreground', tier && 'sponsor-tier__label')}>{sponsor.tier} partner</p>
       </div>
     </div>

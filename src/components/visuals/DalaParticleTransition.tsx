@@ -518,7 +518,7 @@ export function DalaParticleTransition() {
                 <p className="text-xs font-black uppercase tracking-[0.12em] text-hero-kicker">{panel.kicker}</p>
               )}
               {index === 0 ? (
-                <h1 className="mt-5 font-sans text-6xl font-semibold leading-[0.9] tracking-[-0.08em] text-hero-ink drop-shadow-hero sm:text-7xl lg:text-8xl">
+                <h1 className="mt-5 font-safiro text-6xl font-semibold leading-[0.9] tracking-normal text-hero-ink drop-shadow-hero sm:text-7xl lg:text-8xl">
                   {panel.title}
                 </h1>
               ) : (
