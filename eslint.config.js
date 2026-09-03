@@ -5,7 +5,10 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  // `.ola/worktrees/` holds checkouts of this same repo, added by the ola
+  // harness while a task runs. Left unfiltered, a stale one gets linted (and,
+  // for vitest, tested) as a second copy of the project.
+  { ignores: ['dist', '.ola'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
