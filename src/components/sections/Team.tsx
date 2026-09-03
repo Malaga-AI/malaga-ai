@@ -4,6 +4,7 @@ import joseImage from '@/assets/team/jose.webp'
 import juanImage from '@/assets/team/juan.webp'
 import paulImage from '@/assets/team/paul.webp'
 import rosaImage from '@/assets/team/rosa.webp'
+import { useTexts } from '@/lib/texts'
 
 const team = [
   {
@@ -37,17 +38,17 @@ const team = [
 ]
 
 export function Team() {
+  const texts = useTexts()
+
   return (
     <section id="team" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="team-title">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Team</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">{texts.team.kicker}</p>
           <h2 id="team-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">
-            The people making Malaga AI happen
+            {texts.team.heading}
           </h2>
-          <p className="mt-4 text-lg leading-8 text-muted-foreground">
-            A small, hands-on team coordinates the community, events, content, and collaborations behind Malaga AI.
-          </p>
+          <p className="mt-4 text-lg leading-8 text-muted-foreground">{texts.team.description}</p>
         </div>
 
         <div className="-mx-4 mt-10 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 [scrollbar-width:thin] sm:mx-0 sm:grid sm:snap-none sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-7">
@@ -74,7 +75,7 @@ export function Team() {
                       <a
                         href={member.emailUrl}
                         className="grid h-7 w-7 place-items-center rounded-full border border-border bg-surface text-muted-foreground transition hover:border-primary/50 hover:text-foreground"
-                        aria-label={`Email ${member.name}`}
+                        aria-label={texts.team.emailAriaLabel(member.name)}
                       >
                         <Mail className="h-3.5 w-3.5" />
                       </a>
@@ -85,7 +86,7 @@ export function Team() {
                         target="_blank"
                         rel="noreferrer"
                         className="grid h-7 w-7 place-items-center rounded-full border border-border bg-surface text-muted-foreground transition hover:border-primary/50 hover:text-foreground"
-                        aria-label={`${member.name} LinkedIn`}
+                        aria-label={texts.team.linkedinAriaLabel(member.name)}
                       >
                         <Linkedin className="h-3.5 w-3.5" />
                       </a>

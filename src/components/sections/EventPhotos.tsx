@@ -8,48 +8,18 @@ import image00024 from '@/assets/events/image00024.jpeg'
 import panel from '@/assets/events/Panel.jpg'
 import registration from '@/assets/events/Registration.jpg'
 import { ImageAutoSlider, type ImageAutoSliderItem } from '@/components/ui/image-auto-slider'
+import { useTexts } from '@/lib/texts'
 
-type GalleryPhoto = ImageAutoSliderItem
-
-const eventPhotos: GalleryPhoto[] = [
-  {
-    title: 'Malaga-AI Community Session Feb2026',
-    description: 'GSEC',
-    imageUrl: dsc05500,
-  },
-  {
-    title: 'Malaga-AI Community Session Feb2026',
-    description: 'GSEC',
-    imageUrl: dsc05507,
-  },
-  {
-    title: 'IWD2026',
-    description: 'Monday',
-    imageUrl: image00010,
-  },
-  {
-    title: 'IWD2026',
-    description: 'Monday',
-    imageUrl: image00024,
-  },
-  {
-    title: 'Employment in the Age Of AI 2026',
-    description: 'GSEC',
-    imageUrl: registration,
-  },
-  {
-    title: 'Employment in the Age Of AI 2026',
-    description: 'GSEC',
-    imageUrl: panel,
-  },
-  {
-    title: 'AI Agents 2025',
-    description: 'GSEC',
-    imageUrl: DSC05631,
-  },
-]
+const eventPhotoImages = [dsc05500, dsc05507, image00010, image00024, registration, panel, DSC05631]
 
 export function EventPhotos() {
+  const texts = useTexts()
+  const eventPhotos: ImageAutoSliderItem[] = eventPhotoImages.map((imageUrl, index) => ({
+    title: texts.photos.captions[index].title,
+    description: texts.photos.captions[index].description,
+    imageUrl,
+  }))
+
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
   const selectedPhoto = selectedPhotoIndex === null ? null : eventPhotos[selectedPhotoIndex]
 
@@ -93,13 +63,11 @@ export function EventPhotos() {
     <section id="photos" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="photos-title">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Photos</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">{texts.photos.kicker}</p>
           <h2 id="photos-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">
-            Event photos
+            {texts.photos.heading}
           </h2>
-          <p className="mt-4 text-lg leading-8 text-muted-foreground">
-            A look at the sessions, conversations, and community moments shaping Malaga AI.
-          </p>
+          <p className="mt-4 text-lg leading-8 text-muted-foreground">{texts.photos.description}</p>
         </div>
 
         <div className="mt-10">
@@ -120,7 +88,7 @@ export function EventPhotos() {
               type="button"
               className="absolute -top-14 right-0 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-surface text-foreground transition hover:bg-surface-strong focus:outline-none focus:ring-2 focus:ring-ring"
               onClick={() => setSelectedPhotoIndex(null)}
-              aria-label="Close photo"
+              aria-label={texts.photos.closePhotoAriaLabel}
             >
               <X className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -129,7 +97,7 @@ export function EventPhotos() {
               type="button"
               className="absolute left-2 top-[calc(50%-3rem)] inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-panel text-foreground shadow-lg backdrop-blur transition hover:bg-overlay focus:outline-none focus:ring-2 focus:ring-ring sm:left-4"
               onClick={showPreviousPhoto}
-              aria-label="Previous photo"
+              aria-label={texts.photos.previousPhotoAriaLabel}
             >
               <ChevronLeft className="h-6 w-6" aria-hidden="true" />
             </button>
@@ -138,7 +106,7 @@ export function EventPhotos() {
               type="button"
               className="absolute right-2 top-[calc(50%-3rem)] inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-panel text-foreground shadow-lg backdrop-blur transition hover:bg-overlay focus:outline-none focus:ring-2 focus:ring-ring sm:right-4"
               onClick={showNextPhoto}
-              aria-label="Next photo"
+              aria-label={texts.photos.nextPhotoAriaLabel}
             >
               <ChevronRight className="h-6 w-6" aria-hidden="true" />
             </button>
