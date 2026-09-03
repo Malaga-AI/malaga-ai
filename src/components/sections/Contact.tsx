@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowRight } from 'lucide-react'
+import { useTexts } from '@/lib/texts'
 
 const contactEndpoint = 'https://formsubmit.co/ajax/hello@malaga-ai.community'
 
@@ -11,6 +12,7 @@ type FormSubmitResponse = {
 }
 
 export function Contact() {
+  const texts = useTexts().contact
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
 
@@ -40,8 +42,8 @@ export function Contact() {
 
       if (!response.ok || result.success === false || result.success === 'false') {
         const message = result.message?.toLowerCase().includes('activation')
-          ? 'The form needs one-time activation. Check esparcaso@gmail.com and click the FormSubmit activation link.'
-          : result.message ?? 'Contact request failed'
+          ? texts.errorActivationMessage
+          : result.message ?? texts.errorFallbackMessage
 
         setSubmitMessage(message)
         throw new Error('Contact request failed')
@@ -49,10 +51,10 @@ export function Contact() {
 
       event.currentTarget.reset()
       setSubmitState('sent')
-      setSubmitMessage('Request sent. We will read it before the robots do.')
+      setSubmitMessage(texts.successMessage)
     } catch {
       setSubmitState('error')
-      setSubmitMessage((currentMessage) => currentMessage || 'Something went wrong. Please try again in a moment.')
+      setSubmitMessage((currentMessage) => currentMessage || texts.errorGenericMessage)
     }
   }
 
@@ -61,31 +63,31 @@ export function Contact() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 rounded-[2rem] border border-border bg-surface p-8 shadow-glow md:p-14 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Contact</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">{texts.kicker}</p>
             <h2 id="contact-title" className="mt-3 font-safiro text-4xl leading-tight text-foreground md:text-5xl">
-              Got an idea, a plan, or an AI question?
+              {texts.heading}
             </h2>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-              Send it over. If it involves AI, people, projects, or snacks after a meetup, we are probably curious.
+              {texts.description}
             </p>
           </div>
 
           <form id="contact-form" className="grid gap-4 scroll-mt-24" onSubmit={handleContactSubmit}>
             <div className="grid gap-2">
               <label className="text-sm font-medium text-muted-foreground" htmlFor="contact-name">
-                Name
+                {texts.nameLabel}
               </label>
               <input
                 id="contact-name"
                 name="name"
                 required
                 className="min-h-12 rounded-2xl border border-border bg-panel px-4 text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary"
-                placeholder="Your name"
+                placeholder={texts.namePlaceholder}
               />
             </div>
             <div className="grid gap-2">
               <label className="text-sm font-medium text-muted-foreground" htmlFor="contact-email">
-                Email
+                {texts.emailLabel}
               </label>
               <input
                 id="contact-email"
@@ -93,19 +95,19 @@ export function Contact() {
                 type="email"
                 required
                 className="min-h-12 rounded-2xl border border-border bg-panel px-4 text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary"
-                placeholder="you@example.com"
+                placeholder={texts.emailPlaceholder}
               />
             </div>
             <div className="grid gap-2">
               <label className="text-sm font-medium text-muted-foreground" htmlFor="contact-message">
-                Message
+                {texts.messageLabel}
               </label>
               <textarea
                 id="contact-message"
                 name="message"
                 rows={4}
                 className="resize-none rounded-2xl border border-border bg-panel px-4 py-3 text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary"
-                placeholder="Tell us what you have in mind."
+                placeholder={texts.messagePlaceholder}
               />
             </div>
             <button
@@ -113,7 +115,7 @@ export function Contact() {
               disabled={submitState === 'sending'}
               className="inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:-translate-y-0.5 hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
             >
-              {submitState === 'sending' ? 'Sending...' : 'Send request'} <ArrowRight className="ml-2 h-4 w-4" />
+              {submitState === 'sending' ? texts.submitSendingLabel : texts.submitIdleLabel} <ArrowRight className="ml-2 h-4 w-4" />
             </button>
             {submitState === 'sent' && submitMessage ? (
               <p className="text-sm text-brand-ink">{submitMessage}</p>

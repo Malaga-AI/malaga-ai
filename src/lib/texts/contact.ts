@@ -15,6 +15,7 @@ export type ContactTexts = {
   successMessage: string
   errorGenericMessage: string
   errorActivationMessage: string
+  errorFallbackMessage: string
 }
 
 export const contactTexts: Record<Language, ContactTexts> = {
@@ -33,6 +34,7 @@ export const contactTexts: Record<Language, ContactTexts> = {
     successMessage: 'Request sent. We will read it before the robots do.',
     errorGenericMessage: 'Something went wrong. Please try again in a moment.',
     errorActivationMessage: 'The form needs one-time activation. Check esparcaso@gmail.com and click the FormSubmit activation link.',
+    errorFallbackMessage: 'Contact request failed',
   },
   es: {
     kicker: 'Contacto',
@@ -49,5 +51,6 @@ export const contactTexts: Record<Language, ContactTexts> = {
     successMessage: 'Solicitud enviada. La leeremos antes que los robots.',
     errorGenericMessage: 'Algo ha salido mal. Inténtalo de nuevo en un momento.',
     errorActivationMessage: 'El formulario necesita una activación única. Revisa esparcaso@gmail.com y haz clic en el enlace de activación de FormSubmit.',
+    errorFallbackMessage: 'La solicitud de contacto ha fallado',
   },
 }

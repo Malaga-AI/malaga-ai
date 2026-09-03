@@ -1,6 +1,7 @@
 import { SponsorCard } from '@/components/community/SponsorCard'
 import { partners, sponsors } from '@/data/sponsors'
 import type { Sponsor } from '@/types/community'
+import { useTexts } from '@/lib/texts'
 
 function PartnerLogo({ partner }: { partner: Sponsor }) {
   return (
@@ -27,18 +28,20 @@ function PartnerLogo({ partner }: { partner: Sponsor }) {
 }
 
 export function CommunityPartners() {
+  const texts = useTexts().partners
+
   return (
     <>
       <section id="sponsors" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="sponsors-title">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Sponsors</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">{texts.sponsorsKicker}</p>
               <h2 id="sponsors-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">
-                Sponsors that make our gatherings possible
+                {texts.sponsorsHeading}
               </h2>
               <p className="mt-4 text-lg leading-8 text-muted-foreground">
-                Brands that support high-quality spaces for learning, connecting, and activating AI projects in Malaga.
+                {texts.sponsorsDescription}
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -51,13 +54,12 @@ export function CommunityPartners() {
       <section id="partners" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="partners-title">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Partners</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">{texts.partnersKicker}</p>
             <h2 id="partners-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">
-              Partners for building the ecosystem
+              {texts.partnersHeading}
             </h2>
             <p className="mt-4 text-lg leading-8 text-muted-foreground">
-              Companies, communities, and public entities that help Malaga AI connect talent, venues, knowledge, and local
-              opportunity.
+              {texts.partnersDescription}
             </p>
           </div>
           <div className="mt-10 flex flex-wrap gap-3">

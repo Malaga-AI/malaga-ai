@@ -1,4 +1,5 @@
 import type { Sponsor } from '@/types/community'
+import type { SponsorTier } from '@/lib/texts/partners'
 import malagaAiLogo from '@/assets/brand/malaga-ai-logo.png'
 import grupoBillinghamLogo from '@/assets/sponsors/grupo-billingham.png'
 import gdgMalagaLogo from '@/assets/friendly-communities/gdg-malaga.svg'
@@ -6,24 +7,28 @@ import womenTechmakersLogo from '@/assets/friendly-communities/women-techmakers-
 
 const favicon = (domain: string) => `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
 
-export const sponsors: Sponsor[] = [
+export type SponsorTierEntry = {
+  id: string
+  tier: SponsorTier
+  logo: string
+  url: string
+}
+
+export const sponsors: SponsorTierEntry[] = [
   {
     id: 'sponsor-gold',
-    name: 'Be a sponsor',
     tier: 'gold',
     logo: malagaAiLogo,
     url: 'https://malaga-ai.community/',
   },
   {
     id: 'sponsor-silver',
-    name: 'Be a sponsor',
     tier: 'silver',
     logo: malagaAiLogo,
     url: 'https://malaga-ai.community/',
   },
   {
     id: 'sponsor-bronze',
-    name: 'Be a sponsor',
     tier: 'bronze',
     logo: malagaAiLogo,
     url: 'https://malaga-ai.community/',
