@@ -49,6 +49,10 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       globals: true,
       setupFiles: './src/test/setup.ts',
+      // `.ola/worktrees/` holds checkouts of this same repo, so the default
+      // glob picks up a second copy of every test file and runs it against a
+      // half-finished tree.
+      exclude: ['**/node_modules/**', '**/dist/**', '**/.ola/**'],
     },
   }
 })
