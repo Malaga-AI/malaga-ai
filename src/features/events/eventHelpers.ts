@@ -8,6 +8,21 @@ export function getFeaturedEvent(events: EventItem[], now = Date.now()) {
   )
 }
 
+export function splitEventsByTime(events: EventItem[], now = Date.now()) {
+  const upcoming: EventItem[] = []
+  const past: EventItem[] = []
+
+  for (const event of events) {
+    if (new Date(event.startsAt).getTime() >= now) upcoming.push(event)
+    else past.push(event)
+  }
+
+  upcoming.sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime())
+  past.sort((a, b) => new Date(b.startsAt).getTime() - new Date(a.startsAt).getTime())
+
+  return { upcoming, past }
+}
+
 export function sortEventsForDisplay(events: EventItem[], now = Date.now()) {
   return [...events].sort((a, b) => {
     const aTime = new Date(a.startsAt).getTime()

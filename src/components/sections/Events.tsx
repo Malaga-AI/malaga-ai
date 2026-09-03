@@ -1,40 +1,38 @@
-import { useEffect, useMemo, useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useMemo } from 'react'
+import { CalendarDays, Clock, MapPin, Ticket, Users } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { EventCard } from '@/components/community/EventCard'
+import {
+  formatEventDateTime,
+  formatEventTimeRange,
+  getEventStateLabel,
+  getFeaturedEvent,
+  splitEventsByTime,
+} from '@/features/events/eventHelpers'
 import type { EventItem } from '@/features/events/types'
-
-const DESKTOP_VISIBLE_EVENTS = 3
-
-function useVisibleEventCount() {
-  const [visibleEventCount, setVisibleEventCount] = useState(DESKTOP_VISIBLE_EVENTS)
-
-  useEffect(() => {
-    if (typeof window.matchMedia !== 'function') return
-
-    const desktopQuery = window.matchMedia('(min-width: 1280px)')
-    const tabletQuery = window.matchMedia('(min-width: 640px)')
-    const updateVisibleEventCount = () => {
-      setVisibleEventCount(desktopQuery.matches ? 3 : tabletQuery.matches ? 2 : 1)
-    }
-
-    updateVisibleEventCount()
-    desktopQuery.addEventListener('change', updateVisibleEventCount)
-    tabletQuery.addEventListener('change', updateVisibleEventCount)
-
-    return () => {
-      desktopQuery.removeEventListener('change', updateVisibleEventCount)
-      tabletQuery.removeEventListener('change', updateVisibleEventCount)
-    }
-  }, [])
-
-  return visibleEventCount
-}
 
 type EventsProps = {
   events: EventItem[]
   isLoading?: boolean
   error?: Error
   onRetry?: () => void
+}
+
+function FeaturedEventSkeleton() {
+  return (
+    <div className="rounded-[2rem] border border-primary/25 bg-gradient-to-br from-primary/15 via-surface to-accent/10 p-6 shadow-glow md:p-10">
+      <div className="grid gap-8 lg:grid-cols-[1fr_0.72fr]">
+        <div className="space-y-5">
+          <div className="h-7 w-48 animate-pulse rounded-full bg-surface" />
+          <div className="h-12 w-4/5 animate-pulse rounded bg-surface" />
+          <div className="h-24 animate-pulse rounded bg-surface" />
+          <div className="h-11 w-36 animate-pulse rounded-full bg-surface" />
+        </div>
+        <div className="aspect-[2/1] animate-pulse rounded-3xl bg-surface" />
+      </div>
+    </div>
+  )
 }
 
 function EventCardSkeleton() {
@@ -48,64 +46,68 @@ function EventCardSkeleton() {
           <div className="h-4 animate-pulse rounded bg-surface" />
           <div className="h-4 w-2/3 animate-pulse rounded bg-surface" />
         </div>
-        <div className="h-10 w-36 animate-pulse rounded-full bg-surface" />
       </div>
     </article>
   )
 }
 
-export function Events({ events, isLoading = false, error, onRetry }: EventsProps) {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const visibleEventCount = useVisibleEventCount()
-  const maxStartIndex = Math.max(events.length - visibleEventCount, 0)
-  const visibleEvents = useMemo(
-    () => events.slice(activeIndex, activeIndex + visibleEventCount),
-    [activeIndex, events, visibleEventCount],
+function FeaturedEventCard({ event }: { event: EventItem }) {
+  return (
+    <div className="overflow-hidden rounded-[2rem] border border-primary/25 bg-gradient-to-br from-primary/15 via-surface to-accent/10 shadow-glow">
+      <div className="grid gap-8 lg:grid-cols-[1fr_0.72fr]">
+        <div className="p-6 md:p-10">
+          <Badge>Featured upcoming event</Badge>
+          <h3 className="mt-5 font-safiro text-4xl leading-tight text-foreground md:text-5xl">{event.title}</h3>
+          <p className="mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">{event.summary ?? event.description}</p>
+          <Button href={event.url} target="_blank" rel="noreferrer" className="mt-8">Register now</Button>
+        </div>
+        <div className="m-6 rounded-3xl border border-border bg-panel p-6 md:m-10 lg:ml-0">
+          {event.imageUrl ? (
+            <img
+              src={event.imageUrl}
+              alt=""
+              className="mb-6 aspect-[2/1] w-full rounded-2xl object-cover"
+              loading="lazy"
+            />
+          ) : null}
+          <div className="grid gap-4 text-sm text-muted-foreground">
+            <span className="flex items-center gap-3"><CalendarDays className="h-5 w-5 shrink-0 text-brand-ink" />{formatEventDateTime(event.startsAt, event.timezone)}</span>
+            <span className="flex items-center gap-3"><Clock className="h-5 w-5 shrink-0 text-brand-ink" />{formatEventTimeRange(event)}</span>
+            <span className="flex items-center gap-3"><MapPin className="h-5 w-5 shrink-0 text-brand-ink" />{event.venueName ?? (event.isOnline ? 'Online' : 'Venue to be confirmed')}</span>
+            {event.organizerName ? (
+              <span className="flex items-center gap-3"><Users className="h-5 w-5 shrink-0 text-brand-ink" />{event.organizerName}</span>
+            ) : null}
+            <span className="flex items-center gap-3"><Ticket className="h-5 w-5 shrink-0 text-brand-ink" />{getEventStateLabel(event)}</span>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {event.isFree ? <Badge>Free</Badge> : null}
+            {event.isOnline ? <Badge>Online</Badge> : <Badge>In person</Badge>}
+          </div>
+        </div>
+      </div>
+    </div>
   )
-  const canMoveBackward = activeIndex > 0
-  const canMoveForward = activeIndex < maxStartIndex
+}
 
-  useEffect(() => {
-    setActiveIndex((currentIndex) => Math.min(currentIndex, maxStartIndex))
-  }, [maxStartIndex])
+export function Events({ events, isLoading = false, error, onRetry }: EventsProps) {
+  const { featured, otherUpcoming, past } = useMemo(() => {
+    const featuredEvent = getFeaturedEvent(events)
+    const { upcoming, past: pastEvents } = splitEventsByTime(events)
+
+    return {
+      featured: featuredEvent,
+      otherUpcoming: featuredEvent ? upcoming.filter((event) => event.id !== featuredEvent.id) : upcoming,
+      past: pastEvents,
+    }
+  }, [events])
 
   return (
     <section id="events" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="events-title">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Events</p>
-            <h2 id="events-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">Upcoming and recent sessions</h2>
-            <p className="mt-4 text-lg leading-8 text-muted-foreground">Technical talks, demos, workshops, panels, and community sessions hosted by Malaga AI.</p>
-          </div>
-
-          {!error && !isLoading && events.length > visibleEventCount ? (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground">
-                {activeIndex + 1}-{activeIndex + visibleEvents.length} / {events.length}
-              </span>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setActiveIndex((currentIndex) => Math.max(currentIndex - 1, 0))}
-                  disabled={!canMoveBackward}
-                  aria-label="Previous events"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-foreground transition hover:border-primary/50 hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:bg-surface"
-                >
-                  <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveIndex((currentIndex) => Math.min(currentIndex + 1, maxStartIndex))}
-                  disabled={!canMoveForward}
-                  aria-label="Next events"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-foreground transition hover:border-primary/50 hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:bg-surface"
-                >
-                  <ChevronRight className="h-5 w-5" aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-          ) : null}
+        <div className="max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-ink">Events</p>
+          <h2 id="events-title" className="mt-3 font-safiro text-4xl text-foreground md:text-5xl">Upcoming and recent sessions</h2>
+          <p className="mt-4 text-lg leading-8 text-muted-foreground">Technical talks, demos, workshops, panels, and community sessions hosted by Malaga AI.</p>
         </div>
 
         {error ? (
@@ -124,8 +126,11 @@ export function Events({ events, isLoading = false, error, onRetry }: EventsProp
         ) : null}
 
         {!error && isLoading ? (
-          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {Array.from({ length: 3 }, (_, index) => <EventCardSkeleton key={index} />)}
+          <div className="mt-10 space-y-10">
+            <FeaturedEventSkeleton />
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {Array.from({ length: 3 }, (_, index) => <EventCardSkeleton key={index} />)}
+            </div>
           </div>
         ) : null}
 
@@ -144,14 +149,32 @@ export function Events({ events, isLoading = false, error, onRetry }: EventsProp
         ) : null}
 
         {!error && !isLoading && events.length > 0 ? (
-          <div className="mt-10 overflow-hidden" aria-live="polite">
-            <div className="-mx-2 flex">
-              {visibleEvents.map((event) => (
-                <div key={event.id} className="flex min-w-0 basis-full px-2 sm:basis-1/2 xl:basis-1/3">
-                  <EventCard event={event} />
+          <div className="mt-10 space-y-16">
+            {featured ? <FeaturedEventCard event={featured} /> : null}
+
+            {otherUpcoming.length > 0 ? (
+              <div>
+                <h3 className="font-safiro text-2xl leading-tight text-foreground">Also coming up</h3>
+                <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                  {otherUpcoming.map((event) => (
+                    <EventCard key={event.id} event={event} />
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : null}
+
+            {past.length > 0 ? (
+              <div>
+                <h3 className="font-safiro text-2xl leading-tight text-foreground">Past events</h3>
+                <div className="mt-6 -mx-4 flex gap-4 overflow-x-auto px-4 pb-2">
+                  {past.map((event) => (
+                    <div key={event.id} className="w-64 shrink-0 sm:w-72">
+                      <EventCard event={event} variant="compact" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         ) : null}
       </div>

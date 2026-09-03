@@ -3,7 +3,6 @@ import { Header } from '@/components/layout/Header'
 import { Contact } from '@/components/sections/Contact'
 import { Events } from '@/components/sections/Events'
 import { EventPhotos } from '@/components/sections/EventPhotos'
-import { FeaturedEvent } from '@/components/sections/FeaturedEvent'
 import { Initiatives } from '@/components/sections/Initiatives'
 import { CommunityPartners } from '@/components/sections/CommunityPartners'
 import { Team } from '@/components/sections/Team'
@@ -18,7 +17,6 @@ export default function App() {
       <Header />
       <main>
         <DalaParticleTransition />
-        <FeaturedEvent events={eventsState.events} isLoading={eventsState.isLoading} />
         <Events
           events={eventsState.events}
           isLoading={eventsState.isLoading}

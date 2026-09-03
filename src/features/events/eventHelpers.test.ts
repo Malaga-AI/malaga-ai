@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getFeaturedEvent, sortEventsForDisplay } from './eventHelpers'
+import { getFeaturedEvent, sortEventsForDisplay, splitEventsByTime } from './eventHelpers'
 import type { EventItem } from './types'
 
 function event(id: string, startsAt: string): EventItem {
@@ -47,5 +47,27 @@ describe('event helpers', () => {
     )
 
     expect(sorted.map((item) => item.id)).toEqual(['next', 'later', 'recent-past', 'older-past'])
+  })
+
+  it('splits events into ascending upcoming and descending past groups', () => {
+    const now = new Date('2026-06-13T12:00:00Z').getTime()
+    const { upcoming, past } = splitEventsByTime(
+      [
+        event('older-past', '2026-05-20T16:30:00Z'),
+        event('later', '2026-06-26T16:30:00Z'),
+        event('recent-past', '2026-05-28T16:30:00Z'),
+        event('next', '2026-06-25T16:30:00Z'),
+      ],
+      now,
+    )
+
+    expect(upcoming.map((item) => item.id)).toEqual(['next', 'later'])
+    expect(past.map((item) => item.id)).toEqual(['recent-past', 'older-past'])
+  })
+
+  it('returns empty groups when there are no events', () => {
+    const now = new Date('2026-06-13T12:00:00Z').getTime()
+
+    expect(splitEventsByTime([], now)).toEqual({ upcoming: [], past: [] })
   })
 })
