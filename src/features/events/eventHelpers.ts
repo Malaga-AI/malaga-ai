@@ -1,5 +1,20 @@
 import type { EventItem } from './types.js'
 
+type EventLanguage = 'en' | 'es'
+
+type EventTicketStateLabels = {
+  past: string
+  soldOut: string
+  registrationClosed: string
+  freeRegistration: string
+  upcoming: string
+}
+
+const DATE_LOCALES: Record<EventLanguage, string> = {
+  en: 'en-GB',
+  es: 'es-ES',
+}
+
 export function getFeaturedEvent(events: EventItem[], now = Date.now()) {
   return (
     [...events]
@@ -36,8 +51,8 @@ export function sortEventsForDisplay(events: EventItem[], now = Date.now()) {
   })
 }
 
-export function formatEventDateTime(isoDate: string, timezone?: string, locale = 'es-ES') {
-  return new Intl.DateTimeFormat(locale, {
+export function formatEventDateTime(isoDate: string, timezone: string | undefined, language: EventLanguage) {
+  return new Intl.DateTimeFormat(DATE_LOCALES[language], {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
@@ -47,7 +62,8 @@ export function formatEventDateTime(isoDate: string, timezone?: string, locale =
   }).format(new Date(isoDate))
 }
 
-export function formatEventTimeRange(event: EventItem, locale = 'es-ES') {
+export function formatEventTimeRange(event: EventItem, language: EventLanguage) {
+  const locale = DATE_LOCALES[language]
   const start = new Intl.DateTimeFormat(locale, {
     hour: '2-digit',
     minute: '2-digit',
@@ -65,14 +81,14 @@ export function formatEventTimeRange(event: EventItem, locale = 'es-ES') {
   return `${start} - ${end}`
 }
 
-export function getEventStateLabel(event: EventItem, now = Date.now()) {
+export function getEventStateLabel(event: EventItem, labels: EventTicketStateLabels, now = Date.now()) {
   if (new Date(event.startsAt).getTime() < now || event.status === 'completed' || event.status === 'ended') {
-    return 'Past event'
+    return labels.past
   }
 
-  if (event.isSoldOut) return 'Sold out'
-  if (event.hasAvailableTickets === false) return 'Registration closed'
-  if (event.isFree) return 'Free registration'
+  if (event.isSoldOut) return labels.soldOut
+  if (event.hasAvailableTickets === false) return labels.registrationClosed
+  if (event.isFree) return labels.freeRegistration
 
-  return 'Upcoming'
+  return labels.upcoming
 }

@@ -5,6 +5,8 @@ import {
   getEventStateLabel,
 } from '@/features/events/eventHelpers'
 import type { EventItem } from '@/features/events/types'
+import { useLanguage } from '@/lib/language'
+import { useTexts } from '@/lib/texts'
 import { cn } from '@/lib/utils'
 
 type EventCardProps = {
@@ -14,6 +16,8 @@ type EventCardProps = {
 
 export function EventCard({ event, variant = 'default' }: EventCardProps) {
   const isCompact = variant === 'compact'
+  const { language } = useLanguage()
+  const texts = useTexts().events
 
   return (
     <a
@@ -39,8 +43,8 @@ export function EventCard({ event, variant = 'default' }: EventCardProps) {
       )}
       <div className={cn('flex flex-1 flex-col', isCompact ? 'p-4' : 'p-5')}>
         <div className="flex flex-wrap gap-2">
-          <Badge>{getEventStateLabel(event)}</Badge>
-          {event.isOnline ? <Badge>Online</Badge> : <Badge>In person</Badge>}
+          <Badge>{getEventStateLabel(event, texts.ticketState)}</Badge>
+          {event.isOnline ? <Badge>{texts.badges.online}</Badge> : <Badge>{texts.badges.inPerson}</Badge>}
         </div>
         <h3
           className={cn(
@@ -56,18 +60,24 @@ export function EventCard({ event, variant = 'default' }: EventCardProps) {
         <div className={cn('grid gap-2.5 text-sm text-muted-foreground', isCompact ? 'mt-3' : 'mt-5')}>
           <span className="flex items-start gap-2">
             <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-brand-ink" />
-            {formatEventDateTime(event.startsAt, event.timezone)}
+            {formatEventDateTime(event.startsAt, event.timezone, language)}
           </span>
           {!isCompact ? (
             <span className="flex items-start gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-ink" />
-              {event.venueName ?? (event.isOnline ? 'Online' : 'Venue to be confirmed')}
+              {event.venueName ?? (event.isOnline ? texts.badges.online : texts.venueTbc)}
             </span>
           ) : null}
           {!isCompact ? (
             <span className="flex items-center gap-2">
               <Ticket className="h-4 w-4 shrink-0 text-brand-ink" />
-              {event.isSoldOut ? 'Sold out' : event.hasAvailableTickets === false ? 'Registration closed' : event.isFree ? 'Free registration' : 'Tickets on Eventbrite'}
+              {event.isSoldOut
+                ? texts.ticketState.soldOut
+                : event.hasAvailableTickets === false
+                  ? texts.ticketState.registrationClosed
+                  : event.isFree
+                    ? texts.ticketState.freeRegistration
+                    : texts.ticketsOnEventbrite}
             </span>
           ) : null}
         </div>

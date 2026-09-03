@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { getFeaturedEvent, sortEventsForDisplay, splitEventsByTime } from './eventHelpers'
+import {
+  formatEventDateTime,
+  formatEventTimeRange,
+  getEventStateLabel,
+  getFeaturedEvent,
+  sortEventsForDisplay,
+  splitEventsByTime,
+} from './eventHelpers'
+import { eventsTexts } from '@/lib/texts/events'
 import type { EventItem } from './types'
 
 function event(id: string, startsAt: string): EventItem {
@@ -69,5 +77,80 @@ describe('event helpers', () => {
     const now = new Date('2026-06-13T12:00:00Z').getTime()
 
     expect(splitEventsByTime([], now)).toEqual({ upcoming: [], past: [] })
+  })
+
+  it('formats the date and time in English for the "en" language', () => {
+    expect(formatEventDateTime('2026-06-25T16:30:00Z', 'Europe/Madrid', 'en')).toBe(
+      new Intl.DateTimeFormat('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/Madrid',
+      }).format(new Date('2026-06-25T16:30:00Z')),
+    )
+    expect(formatEventDateTime('2026-06-25T16:30:00Z', 'Europe/Madrid', 'en')).toContain('June')
+  })
+
+  it('formats the date and time in Spanish for the "es" language', () => {
+    expect(formatEventDateTime('2026-06-25T16:30:00Z', 'Europe/Madrid', 'es')).toBe(
+      new Intl.DateTimeFormat('es-ES', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/Madrid',
+      }).format(new Date('2026-06-25T16:30:00Z')),
+    )
+    expect(formatEventDateTime('2026-06-25T16:30:00Z', 'Europe/Madrid', 'es')).toContain('junio')
+  })
+
+  it('formats a time range using the locale for the given language', () => {
+    const withEnd = event('with-end', '2026-06-25T16:30:00Z')
+    withEnd.endsAt = '2026-06-25T18:00:00Z'
+    withEnd.timezone = 'Europe/Madrid'
+
+    expect(formatEventTimeRange(withEnd, 'en')).toBe(
+      `${new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' }).format(new Date(withEnd.startsAt))} - ${new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' }).format(new Date(withEnd.endsAt))}`,
+    )
+    expect(formatEventTimeRange(withEnd, 'es')).toBe(
+      `${new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' }).format(new Date(withEnd.startsAt))} - ${new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' }).format(new Date(withEnd.endsAt))}`,
+    )
+  })
+
+  it('formats just the start time when there is no end time', () => {
+    const withoutEnd = event('no-end', '2026-06-25T16:30:00Z')
+    withoutEnd.timezone = 'Europe/Madrid'
+
+    expect(formatEventTimeRange(withoutEnd, 'en')).not.toContain('-')
+  })
+
+  it('returns the ticket state label for the given language', () => {
+    const now = new Date('2026-06-13T12:00:00Z').getTime()
+
+    const pastEvent = event('gone', '2026-06-01T12:00:00Z')
+    expect(getEventStateLabel(pastEvent, eventsTexts.en.ticketState, now)).toBe('Past event')
+    expect(getEventStateLabel(pastEvent, eventsTexts.es.ticketState, now)).toBe('Evento pasado')
+
+    const soldOut = event('sold-out', '2026-06-25T16:30:00Z')
+    soldOut.isSoldOut = true
+    expect(getEventStateLabel(soldOut, eventsTexts.en.ticketState, now)).toBe('Sold out')
+    expect(getEventStateLabel(soldOut, eventsTexts.es.ticketState, now)).toBe('Entradas agotadas')
+
+    const closed = event('closed', '2026-06-25T16:30:00Z')
+    closed.hasAvailableTickets = false
+    expect(getEventStateLabel(closed, eventsTexts.en.ticketState, now)).toBe('Registration closed')
+    expect(getEventStateLabel(closed, eventsTexts.es.ticketState, now)).toBe('Inscripción cerrada')
+
+    const free = event('free', '2026-06-25T16:30:00Z')
+    free.isFree = true
+    expect(getEventStateLabel(free, eventsTexts.en.ticketState, now)).toBe('Free registration')
+    expect(getEventStateLabel(free, eventsTexts.es.ticketState, now)).toBe('Entrada gratuita')
+
+    const upcoming = event('upcoming', '2026-06-25T16:30:00Z')
+    expect(getEventStateLabel(upcoming, eventsTexts.en.ticketState, now)).toBe('Upcoming')
+    expect(getEventStateLabel(upcoming, eventsTexts.es.ticketState, now)).toBe('Próximo')
   })
 })
