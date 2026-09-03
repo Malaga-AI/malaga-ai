@@ -9,9 +9,11 @@ export type ImageAutoSliderItem = {
 type ImageAutoSliderProps = {
   images: ImageAutoSliderItem[]
   onImageClick?: (image: ImageAutoSliderItem, index: number) => void
+  openPhotoAriaLabel: (label: string) => string
+  galleryImageFallbackAlt: (imageNumber: number) => string
 }
 
-export function ImageAutoSlider({ images, onImageClick }: ImageAutoSliderProps) {
+export function ImageAutoSlider({ images, onImageClick, openPhotoAriaLabel, galleryImageFallbackAlt }: ImageAutoSliderProps) {
   const duplicatedImages = [...images, ...images]
 
   return (
@@ -20,6 +22,7 @@ export function ImageAutoSlider({ images, onImageClick }: ImageAutoSliderProps) 
         <div className="image-auto-slider__track flex w-max gap-4 sm:gap-5 lg:gap-6">
           {duplicatedImages.map((image, index) => {
             const imageNumber = (index % images.length) + 1
+            const fallbackLabel = galleryImageFallbackAlt(imageNumber)
 
             return (
               <button
@@ -27,11 +30,11 @@ export function ImageAutoSlider({ images, onImageClick }: ImageAutoSliderProps) 
                 key={`${image.imageUrl}-${index}`}
                 className="group relative h-52 w-52 flex-shrink-0 overflow-hidden rounded-lg border border-border bg-card text-left shadow-xl transition focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background sm:h-64 sm:w-64 lg:h-80 lg:w-80"
                 onClick={() => onImageClick?.(image, index % images.length)}
-                aria-label={`Open photo: ${image.title || `Gallery image ${imageNumber}`}`}
+                aria-label={openPhotoAriaLabel(image.title || fallbackLabel)}
               >
                 <img
                   src={image.imageUrl}
-                  alt={image.title || `Gallery image ${imageNumber}`}
+                  alt={image.title || fallbackLabel}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-110"
                   loading="lazy"
                 />

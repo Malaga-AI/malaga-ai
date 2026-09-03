@@ -2,6 +2,7 @@ import type { Language } from '@/lib/language'
 import { useLanguage } from '@/lib/language'
 import { chromeTexts, type ChromeTexts } from './chrome'
 import { eventsTexts, type EventsTexts } from './events'
+import { heroTexts, type HeroTexts } from './hero'
 import { initiativesTexts, type InitiativesTexts } from './initiatives'
 import { teamTexts, type TeamTexts } from './team'
 import { photosTexts, type PhotosTexts } from './photos'
@@ -12,6 +13,7 @@ import { documentTexts, type DocumentTexts } from './document'
 export type SiteTexts = {
   chrome: ChromeTexts
   events: EventsTexts
+  hero: HeroTexts
   initiatives: InitiativesTexts
   team: TeamTexts
   photos: PhotosTexts
@@ -24,6 +26,7 @@ export const TEXTS: Record<Language, SiteTexts> = {
   en: {
     chrome: chromeTexts.en,
     events: eventsTexts.en,
+    hero: heroTexts.en,
     initiatives: initiativesTexts.en,
     team: teamTexts.en,
     photos: photosTexts.en,
@@ -34,6 +37,7 @@ export const TEXTS: Record<Language, SiteTexts> = {
   es: {
     chrome: chromeTexts.es,
     events: eventsTexts.es,
+    hero: heroTexts.es,
     initiatives: initiativesTexts.es,
     team: teamTexts.es,
     photos: photosTexts.es,

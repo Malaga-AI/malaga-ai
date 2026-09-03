@@ -6,6 +6,7 @@ export type TeamTexts = {
   description: string
   emailAriaLabel: (name: string) => string
   linkedinAriaLabel: (name: string) => string
+  photoAlt: (name: string) => string
 }
 
 export const teamTexts: Record<Language, TeamTexts> = {
@@ -15,6 +16,7 @@ export const teamTexts: Record<Language, TeamTexts> = {
     description: 'A small, hands-on team coordinates the community, events, content, and collaborations behind Malaga AI.',
     emailAriaLabel: (name) => `Email ${name}`,
     linkedinAriaLabel: (name) => `${name} LinkedIn`,
+    photoAlt: (name) => `${name} portrait`,
   },
   es: {
     kicker: 'Equipo',
@@ -22,5 +24,6 @@ export const teamTexts: Record<Language, TeamTexts> = {
     description: 'Un equipo pequeño y muy implicado coordina la comunidad, los eventos, el contenido y las colaboraciones detrás de Malaga AI.',
     emailAriaLabel: (name) => `Enviar correo a ${name}`,
     linkedinAriaLabel: (name) => `LinkedIn de ${name}`,
+    photoAlt: (name) => `Retrato de ${name}`,
   },
 }

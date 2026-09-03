@@ -19,6 +19,7 @@ import {
 } from 'three'
 import { Button } from '@/components/ui/button'
 import { useTheme, type Theme } from '@/lib/theme'
+import { useTexts } from '@/lib/texts'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -51,27 +52,7 @@ const STAGE_ACCENT: Record<Theme, string> = { dark: '#facc15', light: '#b45309' 
 // Core highlight direction: brighten on dark, darken on light.
 const STAGE_GLOW: Record<Theme, number> = { dark: 0.28, light: -0.22 }
 
-const panels = [
-  {
-    kicker: 'The AI community in Malaga and beyond',
-    title: 'Meet Malaga AI.',
-    copy: 'A community for curious minds, builders, researchers, founders, and creatives exploring AI together through practical events, shared projects, honest learning, and the occasional “wait, the model did what?” moment.',
-    layout: 'left',
-  },
-  {
-    kicker: 'Events',
-    title: 'Talks, demos, and delightfully weird AI moments',
-    copy: 'Join practical sessions where ideas leave the slide deck, demos occasionally surprise their own creators, and smart people compare notes before the coffee gets cold.',
-    layout: 'right',
-  },
-  {
-    kicker: 'Malaga is moving',
-    title:
-      'AI is advancing across Malaga, from startups and research groups to meetups, universities, makers, and teams building by the sea.',
-    copy: 'Do not miss what is happening in the city: follow Malaga AI to discover the people, projects, events, and ideas shaping the next wave of AI in Malaga.',
-    layout: 'center',
-  },
-] as const
+const panelLayouts = ['left', 'right', 'center'] as const
 
 const vertexShader = `
 attribute vec3 aShape0;
@@ -312,14 +293,48 @@ export function DalaParticleTransition() {
   const rootRef = useRef<HTMLElement | null>(null)
   const canvasRef = useRef<HTMLDivElement | null>(null)
   const { theme } = useTheme()
+  const texts = useTexts().hero
+  const panels = panelLayouts.map((layout, index) => ({ ...texts.panels[index], layout }))
 
   useGSAP(
     () => {
       const canvasHost = canvasRef.current
       if (!canvasHost) return undefined
 
-      const geometry = buildGeometry(theme)
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+      const textItems = gsap.utils.toArray<HTMLElement>('.dala-panel', rootRef.current)
+      textItems.forEach((item) => {
+        gsap.fromTo(
+          item,
+          { autoAlpha: 0, y: 42, scale: 0.98 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 66%',
+              end: 'center center',
+              scrub: reduceMotion ? false : 0.7,
+            },
+          },
+        )
+      })
+
+      // Reduced motion skips the WebGL particle scene entirely rather than
+      // just disabling its scroll-linked scrub: building shaders and driving
+      // a render loop is non-essential motion work these users didn't ask for.
+      if (reduceMotion) {
+        return () => {
+          ScrollTrigger.getAll().forEach((trigger) => {
+            if (textItems.includes(trigger.trigger as HTMLElement)) trigger.kill()
+          })
+        }
+      }
+
+      const geometry = buildGeometry(theme)
       const scene = new Scene()
       const camera = new PerspectiveCamera(42, 1, 0.1, 100)
       camera.position.set(0, 0, 4.25)
@@ -440,26 +455,6 @@ export function DalaParticleTransition() {
         .to(particles.position, { x: 0, ease: 'none', duration: 1 }, '<')
       timeline.eventCallback('onUpdate', updatePointer)
 
-      const textItems = gsap.utils.toArray<HTMLElement>('.dala-panel', rootRef.current)
-      textItems.forEach((item) => {
-        gsap.fromTo(
-          item,
-          { autoAlpha: 0, y: 42, scale: 0.98 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 66%',
-              end: 'center center',
-              scrub: reduceMotion ? false : 0.7,
-            },
-          },
-        )
-      })
-
       let frame = 0
       const renderFrame = (time: number) => {
         frame += 1
@@ -540,14 +535,14 @@ export function DalaParticleTransition() {
               {index === 0 && (
                 <div className="pointer-events-auto mt-8 flex flex-col gap-3 sm:flex-row">
                   <Button href="#contact-form">
-                    Contact <ArrowRight className="ml-2 h-4 w-4" />
+                    {texts.contactCta} <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               )}
               {index === 1 && (
                 <div className="pointer-events-auto mt-8 flex">
                   <Button href="#events" variant="secondary">
-                    See events <ArrowRight className="ml-2 h-4 w-4" />
+                    {texts.eventsCta} <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               )}

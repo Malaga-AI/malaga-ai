@@ -71,7 +71,12 @@ export function EventPhotos() {
         </div>
 
         <div className="mt-10">
-          <ImageAutoSlider images={eventPhotos} onImageClick={(_, index) => setSelectedPhotoIndex(index)} />
+          <ImageAutoSlider
+            images={eventPhotos}
+            onImageClick={(_, index) => setSelectedPhotoIndex(index)}
+            openPhotoAriaLabel={texts.photos.openPhotoAriaLabel}
+            galleryImageFallbackAlt={texts.photos.galleryImageFallbackAlt}
+          />
         </div>
       </div>
 

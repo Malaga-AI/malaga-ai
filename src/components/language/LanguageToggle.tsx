@@ -1,10 +1,12 @@
 import { cn } from '@/lib/utils'
 import { useLanguage } from '@/lib/language'
+import { useTexts } from '@/lib/texts'
 
 export function LanguageToggle({ className }: { className?: string }) {
   const { language, toggleLanguage } = useLanguage()
+  const { languageToggleLabel } = useTexts().chrome
   const nextLanguage = language === 'en' ? 'es' : 'en'
-  const label = `Switch to ${nextLanguage === 'es' ? 'Spanish' : 'English'}`
+  const label = languageToggleLabel(nextLanguage)
 
   return (
     <button

@@ -60,7 +60,7 @@ export function Team() {
               <div className="relative aspect-[4/3] overflow-hidden bg-surface">
                 <img
                   src={member.image}
-                  alt={`${member.name} portrait`}
+                  alt={texts.team.photoAlt(member.name)}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                   loading="lazy"
                 />

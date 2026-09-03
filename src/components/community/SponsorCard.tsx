@@ -14,7 +14,7 @@ export function SponsorCard({ sponsor }: { sponsor: SponsorTierEntry }) {
       className="sponsor-tier flex h-full items-center gap-4 rounded-2xl border border-border bg-surface p-5"
     >
       <div className="sponsor-tier__logo grid h-14 w-24 shrink-0 place-items-center overflow-hidden rounded-xl bg-surface p-2">
-        <img src={sponsor.logo} alt={`${sponsorTierCard.name} logo`} className="max-h-10 max-w-20 object-contain" />
+        <img src={sponsor.logo} alt="" className="max-h-10 max-w-20 object-contain" />
       </div>
       <div>
         <h3 className="font-safiro font-semibold text-foreground">{sponsorTierCard.name}</h3>
