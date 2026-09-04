@@ -14,12 +14,12 @@
     "openMenuAriaLabel": { "en": "Open menu", "es": "Abrir menú" },
     "closeMenuAriaLabel": { "en": "Close menu", "es": "Cerrar menú" },
     "footerTagline": {
-      "en": "Malaga-AI is a community for people building, learning, and experimenting with artificial intelligence in Malaga.",
-      "es": "Malaga-AI es una comunidad de personas que construyen, aprenden y experimentan con la inteligencia artificial en Málaga."
+      "en": "Malaga-AI is a community sharing the power of AI, ensuring all people benefit from this transformative technology.",
+      "es": "Malaga-AI es una comunidad que comparte el potencial de la IA de modo que todo el mundo se beneficie de esta tecnología transformadora."
     },
     "footerCopyright": { "en": "© 2026 Malaga-AI.", "es": "© 2026 Malaga-AI." },
     "socialAriaLabel": { "en": "Malaga-AI on {{network}}", "es": "Malaga-AI en {{network}}" },
-    "brandLogoAlt": { "en": "Malaga-AI logo", "es": "Logotipo de Malaga-AI" },
+    "brandLogoAlt": { "en": "Malaga-AI logo", "es": "Logo de Malaga-AI" },
     "themeToggleLabel": {
       "light": { "en": "Switch to light theme", "es": "Cambiar a tema claro" },
       "dark": { "en": "Switch to dark theme", "es": "Cambiar a tema oscuro" }
@@ -28,10 +28,10 @@
 
   "contact": {
     "kicker": { "en": "Contact", "es": "Contacto" },
-    "heading": { "en": "Got an idea, a plan, or an AI question?", "es": "¿Tienes una idea, un plan o una pregunta sobre IA?" },
+    "heading": { "en": "Got an idea or an AI question?", "es": "¿Tienes una idea o una pregunta sobre IA?" },
     "description": {
-      "en": "Send it over. If it involves AI, people, projects, or snacks after a meetup, we are probably curious.",
-      "es": "Cuéntanoslo. Si tiene que ver con IA, personas, proyectos o aperitivos después de un meetup, seguro que nos interesa."
+      "en": "Send it over. We are eager to know about it.",
+      "es": "Cuéntanoslo. Nos interesa saberlo."
     },
     "nameLabel": { "en": "Name", "es": "Nombre" },
     "namePlaceholder": { "en": "Your name", "es": "Tu nombre" },
@@ -53,8 +53,8 @@
   "document": {
     "title": { "en": "Malaga-AI", "es": "Malaga-AI" },
     "description": {
-      "en": "Malaga-AI is a community dedicated to sharing the power and promise of Artificial Intelligence (AI), so that all people may benefit from this transformative technology.",
-      "es": "Malaga-AI es una comunidad dedicada a compartir el poder y la promesa de la Inteligencia Artificial (IA), para que todas las personas puedan beneficiarse de esta tecnología transformadora."
+      "en": "Malaga-AI is a community dedicated to sharing the power and promise of Artificial Intelligence, so that all people may benefit from this transformative technology.",
+      "es": "Malaga-AI es una comunidad dedicada a compartir el potencial y la oportunidad de la Inteligencia Artificial, para que todas las personas puedan beneficiarse de esta tecnología transformadora."
     }
   },
 
@@ -94,29 +94,29 @@
     "panels": [
       {
         "kicker": { "en": "The AI community in Malaga and beyond", "es": "La comunidad de IA en Málaga y más allá" },
-        "title": { "en": "Meet Malaga-AI.", "es": "Conoce Malaga-AI." },
+        "title": { "en": "Meet Malaga-AI", "es": "Conoce Malaga-AI" },
         "copy": {
           "en": "Malaga-AI is a community dedicated to sharing the power and promise of Artificial Intelligence (AI), so that all people may benefit from this transformative technology.",
-          "es": "Malaga-AI es una comunidad dedicada a compartir el poder y la promesa de la Inteligencia Artificial (IA), para que todas las personas puedan beneficiarse de esta tecnología transformadora."
+          "es": "Malaga-AI es una comunidad dedicada a compartir el potencial y la oportunidad de la Inteligencia Artificial, para que todas las personas puedan beneficiarse de esta tecnología transformadora."
         }
       },
       {
         "kicker": { "en": "Events", "es": "Eventos" },
-        "title": { "en": "Talks, demos, and delightfully weird AI moments", "es": "Charlas, demos y momentos de IA deliciosamente raros" },
+        "title": { "en": "Talks, demos, and vibrant networking", "es": "Charlas, demos y networking de primera" },
         "copy": {
-          "en": "Join practical sessions where ideas leave the slide deck, demos occasionally surprise their own creators, and smart people compare notes before the coffee gets cold.",
-          "es": "Únete a sesiones prácticas donde las ideas salen de las diapositivas, las demos a veces sorprenden hasta a quienes las crean, y gente inteligente comparte impresiones antes de que se enfríe el café."
+          "en": "Join practical sessions, learn from actual practitioners, and discover new friends in a welcoming and inclusive environment.",
+          "es": "Únete a sesiones prácticas, aprende de profesionales en activo y descubre nuevos colegas en un entorno agradable e inclusivo."
         }
       },
       {
         "kicker": { "en": "Malaga is moving", "es": "Málaga se mueve" },
         "title": {
-          "en": "AI is advancing across Malaga, from startups and research groups to meetups, universities, makers, and teams building by the sea.",
-          "es": "La IA avanza por toda Málaga, desde startups y grupos de investigación hasta meetups, universidades, makers y equipos que construyen junto al mar."
+          "en": "AI is moving fast and adoption is growing. Join the community and be part of the movement.",
+          "es": "La IA avanza rápido y se adopta cada vez más. Únete a la comunidad y forma parte de este movimiento."
         },
         "copy": {
-          "en": "Do not miss what is happening in the city: follow Malaga-AI to discover the people, projects, events, and ideas shaping the next wave of AI in Malaga.",
-          "es": "No te pierdas lo que está pasando en la ciudad: sigue a Malaga-AI para descubrir a las personas, proyectos, eventos e ideas que están dando forma a la próxima ola de IA en Málaga."
+          "en": "Don't miss what is going on: follow Malaga-AI to discover the people, projects, and ideas shaping the next wave of AI.",
+          "es": "No te pierdas lo que está pasando: sigue a Malaga-AI para descubrir a las personas, proyectos, e ideas que están dando forma a la próxima ola de IA."
         }
       }
     ],
@@ -154,8 +154,8 @@
         "title": { "en": "Certified Study Groups", "es": "Grupos de Estudio Certificados" },
         "status": { "en": "Active", "es": "Activo" },
         "description": {
-          "en": "Since 2023, Malaga-AI study groups have helped cohesive teams learn AI by building projects, from Innovation Hub and LLM exploits to agents, safety AI, and evals.",
-          "es": "Desde 2023, los grupos de estudio de Malaga-AI han ayudado a equipos cohesionados a aprender IA construyendo proyectos, desde el Innovation Hub y exploits de LLM hasta agentes, seguridad en IA y evals."
+          "en": "Since 2023, Malaga-AI study groups have helped cohesive teams learn AI by building projects, from LLM exploits to agents, safety AI, and evals.",
+          "es": "Desde 2023, los grupos de estudio de Malaga-AI han ayudado a equipos cohesionados a aprender IA construyendo proyectos, desde exploits de LLM hasta agentes, seguridad en IA y evals."
         },
         "actionLabel": { "en": "Join the community", "es": "Únete a la comunidad" }
       }
@@ -172,14 +172,14 @@
     "partnersKicker": { "en": "Partners", "es": "Partners" },
     "partnersHeading": { "en": "Partners for building the ecosystem", "es": "Partners para construir el ecosistema" },
     "partnersDescription": {
-      "en": "Companies, communities, and public entities that help Malaga-AI connect talent, venues, knowledge, and local opportunity.",
-      "es": "Empresas, comunidades y entidades públicas que ayudan a Malaga-AI a conectar talento, espacios, conocimiento y oportunidades locales."
+      "en": "Companies, communities, and public entities that support Malaga-AI and contribute to our success.",
+      "es": "Empresas, comunidades y entidades públicas que apoyan a Malaga-AI y contribuyen a nuestro éxito."
     },
     "sponsorTierCard": {
       "name": { "en": "Be a sponsor", "es": "Sé patrocinador" },
       "tierLabel": {
-        "gold": { "en": "gold partner", "es": "socio dorado" },
-        "silver": { "en": "silver partner", "es": "socio plateado" },
+        "gold": { "en": "gold partner", "es": "socio de oro" },
+        "silver": { "en": "silver partner", "es": "socio de plata" },
         "bronze": { "en": "bronze partner", "es": "socio de bronce" }
       }
     }
