@@ -42,10 +42,11 @@ const LOGO_OFFSET_Y = 0
 // its copy. The prior offset left an unnecessary empty strip on wide screens.
 const SCROLL_SHIFT_X = -3.05
 
-// Particle colours per theme. Dark leans on white/cyan over near-black; light
-// leans on brand navy (#090E2A) over a pale stage, with teal only as texture.
+// Particle colours per theme. Dark leans on brand teal (#18DAE3) over
+// near-black, tinting lighter toward white; light leans on brand navy
+// (#090E2A) over a pale stage, with teal only as texture.
 const STAGE_PALETTE: Record<Theme, string[]> = {
-  dark: ['#18DAE3', '#e5e7eb', '#8ef0f5', '#ffffff'],
+  dark: ['#18DAE3', '#5ee5ec', '#a6f0f5', '#ffffff'],
   light: ['#090E2A', '#141b3f', '#1f2a52', '#18DAE3'],
 }
 const STAGE_ACCENT: Record<Theme, string> = { dark: '#facc15', light: '#b45309' }
