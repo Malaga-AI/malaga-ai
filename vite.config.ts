@@ -53,6 +53,11 @@ export default defineConfig(({ mode }) => {
       // glob picks up a second copy of every test file and runs it against a
       // half-finished tree.
       exclude: ['**/node_modules/**', '**/dist/**', '**/.ola/**'],
+      // Node 22+ ships its own global `localStorage`, which shadows jsdom's
+      // working implementation and resolves to `undefined` without a
+      // `--localstorage-file`. Disable Node's copy in the test workers so
+      // `window.localStorage` is jsdom's real, working one again.
+      execArgv: ['--no-experimental-webstorage'],
     },
   }
 })
