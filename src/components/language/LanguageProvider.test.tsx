@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { LanguageProvider } from './LanguageProvider'
-import { documentTexts } from '@/lib/texts/document'
+import { TEXTS } from '@/lib/texts'
 
 function mockNavigatorLanguage(language: string) {
   Object.defineProperty(navigator, 'language', { value: language, configurable: true })
@@ -27,8 +27,8 @@ describe('LanguageProvider', () => {
     )
 
     expect(document.documentElement.lang).toBe('en')
-    expect(document.title).toBe(documentTexts.en.title)
-    expect(getMetaDescription()?.getAttribute('content')).toBe(documentTexts.en.description)
+    expect(document.title).toBe(TEXTS.en.document.title)
+    expect(getMetaDescription()?.getAttribute('content')).toBe(TEXTS.en.document.description)
   })
 
   it('sets the document title and meta description for a browser set to Spanish', () => {
@@ -40,8 +40,8 @@ describe('LanguageProvider', () => {
     )
 
     expect(document.documentElement.lang).toBe('es')
-    expect(document.title).toBe(documentTexts.es.title)
-    expect(getMetaDescription()?.getAttribute('content')).toBe(documentTexts.es.description)
+    expect(document.title).toBe(TEXTS.es.document.title)
+    expect(getMetaDescription()?.getAttribute('content')).toBe(TEXTS.es.document.description)
   })
 
   it('creates the meta description element when the page lacks one', () => {
@@ -55,6 +55,6 @@ describe('LanguageProvider', () => {
       </LanguageProvider>,
     )
 
-    expect(getMetaDescription()?.getAttribute('content')).toBe(documentTexts.en.description)
+    expect(getMetaDescription()?.getAttribute('content')).toBe(TEXTS.en.document.description)
   })
 })

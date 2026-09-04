@@ -6,7 +6,7 @@ import { EventCard } from '@/components/community/EventCard'
 import { useLanguage } from '@/lib/language'
 import type { Language } from '@/lib/language'
 import { useTexts } from '@/lib/texts'
-import type { EventsTexts } from '@/lib/texts/events'
+import type { EventsTexts } from '@/lib/texts'
 import {
   formatEventDateTime,
   formatEventTimeRange,

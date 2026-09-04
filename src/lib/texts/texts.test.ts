@@ -91,8 +91,13 @@ describe('translation coverage', () => {
       if (path.endsWith('.href')) return
 
       if (typeof en === 'function' && typeof es === 'function') {
-        const enCall = (en as (value: string) => string)('X')
-        const esCall = (es as (value: string) => string)('X')
+        // Most template functions accept any string ('X' is a fine probe).
+        // themeToggleLabel is a lookup keyed by an exact 'light' | 'dark'
+        // value instead, so a generic probe returns undefined — fall back
+        // to a real key for it.
+        const probe = path.endsWith('themeToggleLabel') ? 'light' : 'X'
+        const enCall = (en as (value: string) => string)(probe)
+        const esCall = (es as (value: string) => string)(probe)
         if (enCall === esCall && !SHARED_VALUES.has(enCall)) untranslated.push(`${path} :: ${enCall}`)
         return
       }

@@ -1,5 +1,5 @@
 import type { Sponsor } from '@/types/community'
-import type { SponsorTier } from '@/lib/texts/partners'
+import type { SponsorTier } from '@/lib/texts'
 import malagaAiLogo from '@/assets/brand/malaga-ai-logo.png'
 import grupoBillinghamLogo from '@/assets/sponsors/grupo-billingham.png'
 import gdgMalagaLogo from '@/assets/friendly-communities/gdg-malaga.svg'

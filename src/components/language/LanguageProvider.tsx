@@ -1,6 +1,6 @@
 import { useEffect, useMemo, type ReactNode } from 'react'
 import { LanguageContext, detectLanguage } from '@/lib/language'
-import { documentTexts } from '@/lib/texts/document'
+import { TEXTS } from '@/lib/texts'
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const language = useMemo(() => detectLanguage(), [])
@@ -8,7 +8,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = language
 
-    const { title, description } = documentTexts[language]
+    const { title, description } = TEXTS[language].document
     document.title = title
 
     let meta = document.querySelector('meta[name="description"]')

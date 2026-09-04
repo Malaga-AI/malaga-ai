@@ -7,7 +7,7 @@ import {
   sortEventsForDisplay,
   splitEventsByTime,
 } from './eventHelpers'
-import { eventsTexts } from '@/lib/texts/events'
+import { TEXTS } from '@/lib/texts'
 import type { EventItem } from './types'
 
 function event(id: string, startsAt: string): EventItem {
@@ -131,26 +131,26 @@ describe('event helpers', () => {
     const now = new Date('2026-06-13T12:00:00Z').getTime()
 
     const pastEvent = event('gone', '2026-06-01T12:00:00Z')
-    expect(getEventStateLabel(pastEvent, eventsTexts.en.ticketState, now)).toBe('Past event')
-    expect(getEventStateLabel(pastEvent, eventsTexts.es.ticketState, now)).toBe('Evento pasado')
+    expect(getEventStateLabel(pastEvent, TEXTS.en.events.ticketState, now)).toBe('Past event')
+    expect(getEventStateLabel(pastEvent, TEXTS.es.events.ticketState, now)).toBe('Evento pasado')
 
     const soldOut = event('sold-out', '2026-06-25T16:30:00Z')
     soldOut.isSoldOut = true
-    expect(getEventStateLabel(soldOut, eventsTexts.en.ticketState, now)).toBe('Sold out')
-    expect(getEventStateLabel(soldOut, eventsTexts.es.ticketState, now)).toBe('Entradas agotadas')
+    expect(getEventStateLabel(soldOut, TEXTS.en.events.ticketState, now)).toBe('Sold out')
+    expect(getEventStateLabel(soldOut, TEXTS.es.events.ticketState, now)).toBe('Entradas agotadas')
 
     const closed = event('closed', '2026-06-25T16:30:00Z')
     closed.hasAvailableTickets = false
-    expect(getEventStateLabel(closed, eventsTexts.en.ticketState, now)).toBe('Registration closed')
-    expect(getEventStateLabel(closed, eventsTexts.es.ticketState, now)).toBe('Inscripción cerrada')
+    expect(getEventStateLabel(closed, TEXTS.en.events.ticketState, now)).toBe('Registration closed')
+    expect(getEventStateLabel(closed, TEXTS.es.events.ticketState, now)).toBe('Inscripción cerrada')
 
     const free = event('free', '2026-06-25T16:30:00Z')
     free.isFree = true
-    expect(getEventStateLabel(free, eventsTexts.en.ticketState, now)).toBe('Free registration')
-    expect(getEventStateLabel(free, eventsTexts.es.ticketState, now)).toBe('Entrada gratuita')
+    expect(getEventStateLabel(free, TEXTS.en.events.ticketState, now)).toBe('Free registration')
+    expect(getEventStateLabel(free, TEXTS.es.events.ticketState, now)).toBe('Entrada gratuita')
 
     const upcoming = event('upcoming', '2026-06-25T16:30:00Z')
-    expect(getEventStateLabel(upcoming, eventsTexts.en.ticketState, now)).toBe('Upcoming')
-    expect(getEventStateLabel(upcoming, eventsTexts.es.ticketState, now)).toBe('Próximo')
+    expect(getEventStateLabel(upcoming, TEXTS.en.events.ticketState, now)).toBe('Upcoming')
+    expect(getEventStateLabel(upcoming, TEXTS.es.events.ticketState, now)).toBe('Próximo')
   })
 })
