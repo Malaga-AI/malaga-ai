@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { mapEventbriteEventToEventItem } from './eventbriteMapper'
+import { isPublicEventbriteEvent, mapEventbriteEventToEventItem } from './eventbriteMapper'
+
+describe('isPublicEventbriteEvent', () => {
+  it('accepts only events Eventbrite lists publicly', () => {
+    expect(isPublicEventbriteEvent({ id: '1', listed: true })).toBe(true)
+    expect(isPublicEventbriteEvent({ id: '2', listed: false })).toBe(false)
+    expect(isPublicEventbriteEvent({ id: '3', listed: null })).toBe(false)
+    expect(isPublicEventbriteEvent({ id: '4' })).toBe(false)
+  })
+})
 
 describe('mapEventbriteEventToEventItem', () => {
   it('normalizes Eventbrite events with logo, venue, organizer and tickets', () => {

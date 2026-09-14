@@ -23,6 +23,7 @@ export type EventbriteRawEvent = {
   is_free?: boolean | null
   currency?: string | null
   status?: string | null
+  listed?: boolean | null
   capacity?: number | null
   ticket_availability?: {
     has_available_tickets?: boolean | null
@@ -47,6 +48,12 @@ function toPrice(price?: EventbriteMoney | null) {
 
 function cleanText(value?: string | null) {
   return value?.replace(/\s+/g, ' ').trim()
+}
+
+// Eventbrite marks private events with `listed: false`. Only an explicit
+// `true` counts as public, so a missing flag never leaks a private event.
+export function isPublicEventbriteEvent(raw: EventbriteRawEvent) {
+  return raw.listed === true
 }
 
 export function mapEventbriteEventToEventItem(raw: EventbriteRawEvent): EventItem {

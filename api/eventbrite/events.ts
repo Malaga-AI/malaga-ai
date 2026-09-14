@@ -1,6 +1,10 @@
 import { fallbackEvents } from '../../src/features/events/fallbackEvents.js'
 import { sortEventsForDisplay } from '../../src/features/events/eventHelpers.js'
-import { mapEventbriteEventToEventItem, type EventbriteRawEvent } from '../../src/features/events/eventbriteMapper.js'
+import {
+  isPublicEventbriteEvent,
+  mapEventbriteEventToEventItem,
+  type EventbriteRawEvent,
+} from '../../src/features/events/eventbriteMapper.js'
 import type { EventItem, EventsResponse } from '../../src/features/events/types.js'
 
 type ServerlessRequest = {
@@ -86,8 +90,9 @@ export async function fetchEventbriteEvents() {
 
     for (let page = 0; page < MAX_PAGES_PER_STATUS; page += 1) {
       const payload = await fetchStatusEvents(status, continuation)
-      const mappedEvents = (payload.events ?? [])
-        .map((event) => mapEventbriteEventToEventItem(event as EventbriteRawEvent))
+      const mappedEvents = ((payload.events ?? []) as EventbriteRawEvent[])
+        .filter(isPublicEventbriteEvent)
+        .map(mapEventbriteEventToEventItem)
         .filter((event) => event.id && event.url && event.startsAt)
 
       events.push(...mappedEvents)
