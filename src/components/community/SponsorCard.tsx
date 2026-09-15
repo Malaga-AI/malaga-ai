@@ -23,5 +23,12 @@ export function SponsorCard({ sponsor }: { sponsor: SponsorTierEntry }) {
     </div>
   )
 
-  return sponsor.url ? <a href={sponsor.url}>{content}</a> : content
+  return sponsor.url ? (
+    <a
+      href={sponsor.url}
+      className="block h-full rounded-2xl transition hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+    >
+      {content}
+    </a>
+  ) : content
 }

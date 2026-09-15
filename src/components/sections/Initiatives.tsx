@@ -1,6 +1,7 @@
 import { GraduationCap, Sparkles, UsersRound } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTexts } from '@/lib/texts'
+import { cn } from '@/lib/utils'
 
 const initiatives = [
   {
@@ -35,11 +36,15 @@ export function Initiatives() {
           {initiatives.map((initiative, index) => {
             const Icon = initiative.icon
             const card = texts.initiatives.cards[index]
+            const hasAction = Boolean(card.actionLabel && initiative.actionHref)
 
             return (
               <article
                 key={card.title}
-                className="flex h-full flex-col rounded-2xl border border-border bg-card/80 p-6 shadow-sm backdrop-blur"
+                className={cn(
+                  'relative flex h-full flex-col rounded-2xl border border-border bg-card/80 p-6 shadow-sm backdrop-blur',
+                  hasAction && 'transition hover:-translate-y-1 hover:border-primary/50',
+                )}
               >
                 <div className="flex items-center justify-between gap-4">
                   <span className="grid h-12 w-12 place-items-center rounded-xl bg-primary/15 text-brand-ink">
@@ -51,11 +56,12 @@ export function Initiatives() {
                 </div>
                 <h3 className="mt-6 font-safiro text-2xl leading-tight text-foreground">{card.title}</h3>
                 <p className="mt-4 text-sm leading-6 text-muted-foreground">{card.description}</p>
-                {card.actionLabel && initiative.actionHref ? (
+                {hasAction ? (
                   <Button
                     href={initiative.actionHref}
                     {...(initiative.actionHref.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
                     variant="secondary"
+                    stretched
                     className="mt-6 self-start"
                   >
                     {card.actionLabel}

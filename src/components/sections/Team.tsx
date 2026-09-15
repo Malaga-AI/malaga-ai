@@ -55,13 +55,13 @@ export function Team() {
           {team.map((member) => (
             <article
               key={member.name}
-              className="group flex h-full w-[72vw] max-w-56 shrink-0 snap-center flex-col overflow-hidden rounded-xl border border-border bg-card/80 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-primary/50 sm:w-auto sm:max-w-none"
+              className="flex h-full w-[72vw] max-w-56 shrink-0 snap-center flex-col overflow-hidden rounded-xl border border-border bg-card/80 shadow-sm backdrop-blur sm:w-auto sm:max-w-none"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-surface">
                 <img
                   src={member.image}
                   alt={texts.team.photoAlt(member.name)}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover"
                   loading="lazy"
                 />
               </div>
