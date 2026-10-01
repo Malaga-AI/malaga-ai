@@ -2,6 +2,7 @@ import type { Sponsor } from '@/types/community'
 import type { SponsorTier } from '@/lib/texts'
 import malagaAiLogo from '@/assets/brand/malaga-ai-logo.png'
 import grupoBillinghamLogo from '@/assets/sponsors/grupo-billingham.png'
+import jOnTheBeachLogo from '@/assets/sponsors/j-on-the-beach.svg'
 import gdgMalagaLogo from '@/assets/friendly-communities/gdg-malaga.svg'
 import womenTechmakersLogo from '@/assets/friendly-communities/women-techmakers-malaga.svg'
 
@@ -189,5 +190,12 @@ export const partners: Sponsor[] = [
     tier: 'community',
     logo: favicon('polodigital.eu'),
     url: 'https://www.polodigital.eu/',
+  },
+  {
+    id: 'j-on-the-beach',
+    name: 'J On The Beach',
+    tier: 'community',
+    logo: jOnTheBeachLogo,
+    url: 'https://www.jonthebeach.com/',
   },
 ]
