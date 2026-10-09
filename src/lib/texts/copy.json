@@ -41,7 +41,7 @@
     "messagePlaceholder": { "en": "Tell us what you have in mind.", "es": "Cuéntanos qué tienes en mente." },
     "submitIdleLabel": { "en": "Send request", "es": "Enviar solicitud" },
     "submitSendingLabel": { "en": "Sending...", "es": "Enviando..." },
-    "successMessage": { "en": "Request sent. We will read it before the robots do.", "es": "Solicitud enviada. La leeremos antes que los robots." },
+    "successMessage": { "en": "Message sent successfully. Thank you for contacting us.", "es": "Mensaje enviado correctamente. Gracias por contactar con nosotros." },
     "errorGenericMessage": { "en": "Something went wrong. Please try again in a moment.", "es": "Algo ha salido mal. Inténtalo de nuevo en un momento." },
     "errorActivationMessage": {
       "en": "The form needs one-time activation. Check esparcaso@gmail.com and click the FormSubmit activation link.",

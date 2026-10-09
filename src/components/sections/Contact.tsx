@@ -19,7 +19,8 @@ export function Contact() {
   async function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const formData = new FormData(event.currentTarget)
+    const form = event.currentTarget
+    const formData = new FormData(form)
     const name = String(formData.get('name') ?? '').trim()
     const message = String(formData.get('message') ?? '').trim()
 
@@ -49,7 +50,7 @@ export function Contact() {
         throw new Error('Contact request failed')
       }
 
-      event.currentTarget.reset()
+      form.reset()
       setSubmitState('sent')
       setSubmitMessage(texts.successMessage)
     } catch {
