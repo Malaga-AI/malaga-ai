@@ -2,6 +2,7 @@ import type { Sponsor } from '@/types/community'
 import type { SponsorTier } from '@/lib/texts'
 import malagaAiLogo from '@/assets/brand/malaga-ai-logo.png'
 import grupoBillinghamLogo from '@/assets/sponsors/grupo-billingham.png'
+import fortyTwoMalagaLogo from '@/assets/sponsors/42-malaga.svg'
 import jOnTheBeachLogo from '@/assets/sponsors/j-on-the-beach.svg'
 import gdgMalagaLogo from '@/assets/friendly-communities/gdg-malaga.svg'
 import womenTechmakersLogo from '@/assets/friendly-communities/women-techmakers-malaga.svg'
@@ -190,6 +191,13 @@ export const partners: Sponsor[] = [
     tier: 'community',
     logo: favicon('polodigital.eu'),
     url: 'https://www.polodigital.eu/',
+  },
+  {
+    id: '42-malaga',
+    name: '42 Málaga',
+    tier: 'community',
+    logo: fortyTwoMalagaLogo,
+    url: 'https://www.42malaga.com/',
   },
   {
     id: 'j-on-the-beach',
