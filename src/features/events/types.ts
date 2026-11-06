@@ -22,6 +22,8 @@ export type EventItem = {
   capacity?: number
   hasAvailableTickets?: boolean
   isSoldOut?: boolean
+  // Co-hosted with a partner and published on the partner's Eventbrite.
+  isJointEvent?: boolean
 }
 
 export type EventsResponse = {

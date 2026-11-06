@@ -1,5 +1,6 @@
 import { fallbackEvents } from '../../src/features/events/fallbackEvents.js'
 import { sortEventsForDisplay } from '../../src/features/events/eventHelpers.js'
+import { partnerEventIds } from '../../src/features/events/partnerEvents.js'
 import {
   isPublicEventbriteEvent,
   mapEventbriteEventToEventItem,
@@ -28,6 +29,7 @@ type EventbriteEventsPayload = {
 const EVENTBRITE_BASE_URL = 'https://www.eventbriteapi.com/v3'
 const MAX_PAGES_PER_STATUS = 3
 const EVENT_STATUSES = ['live', 'ended']
+const EVENT_EXPAND = 'venue,organizer,ticket_availability,logo'
 
 function cacheSeconds() {
   const parsed = Number.parseInt(process.env.EVENTBRITE_CACHE_SECONDS ?? '300', 10)
@@ -42,24 +44,47 @@ export function jsonResponse(events: EventItem[], source: EventsResponse['source
   }
 }
 
+function eventbriteToken() {
+  const token = process.env.EVENTBRITE_PRIVATE_TOKEN
+  if (!token) throw new Error('Missing Eventbrite environment variables')
+  return token
+}
+
 async function fetchStatusEvents(status: string, continuation?: string) {
   const organizationId = process.env.EVENTBRITE_ORGANIZATION_ID
-  const token = process.env.EVENTBRITE_PRIVATE_TOKEN
 
-  if (!organizationId || !token) {
+  if (!organizationId) {
     throw new Error('Missing Eventbrite environment variables')
   }
 
   const url = new URL(`${EVENTBRITE_BASE_URL}/organizations/${organizationId}/events/`)
   url.searchParams.set('status', status)
   url.searchParams.set('order_by', status === 'live' ? 'start_asc' : 'start_desc')
-  url.searchParams.set('expand', 'venue,organizer,ticket_availability,logo')
+  url.searchParams.set('expand', EVENT_EXPAND)
   url.searchParams.set('page_size', '50')
 
   if (continuation) {
     url.searchParams.set('continuation', continuation)
   }
 
+  return (await fetchEventbriteJson(url)) as EventbriteEventsPayload
+}
+
+async function fetchEventById(id: string) {
+  const url = new URL(`${EVENTBRITE_BASE_URL}/events/${id}/`)
+  url.searchParams.set('expand', EVENT_EXPAND)
+  return (await fetchEventbriteJson(url)) as EventbriteRawEvent
+}
+
+// Partner events are extras: one that fails to load is skipped instead of
+// sending the whole list to the fallback data.
+async function fetchPartnerEvents(ids: string[]) {
+  const results = await Promise.allSettled(ids.map(fetchEventById))
+  return results.flatMap((result) => (result.status === 'fulfilled' ? [result.value] : []))
+}
+
+async function fetchEventbriteJson(url: URL): Promise<unknown> {
+  const token = eventbriteToken()
   const controller = new AbortController()
   const timeout = setTimeout(() => controller.abort(), 10_000)
 
@@ -76,10 +101,17 @@ async function fetchStatusEvents(status: string, continuation?: string) {
       throw new Error(`Eventbrite request failed with ${response.status}`)
     }
 
-    return (await response.json()) as EventbriteEventsPayload
+    return await response.json()
   } finally {
     clearTimeout(timeout)
   }
+}
+
+function toDisplayableEvents(rawEvents: EventbriteRawEvent[]) {
+  return rawEvents
+    .filter(isPublicEventbriteEvent)
+    .map(mapEventbriteEventToEventItem)
+    .filter((event) => event.id && event.url && event.startsAt)
 }
 
 export async function fetchEventbriteEvents() {
@@ -90,17 +122,15 @@ export async function fetchEventbriteEvents() {
 
     for (let page = 0; page < MAX_PAGES_PER_STATUS; page += 1) {
       const payload = await fetchStatusEvents(status, continuation)
-      const mappedEvents = ((payload.events ?? []) as EventbriteRawEvent[])
-        .filter(isPublicEventbriteEvent)
-        .map(mapEventbriteEventToEventItem)
-        .filter((event) => event.id && event.url && event.startsAt)
-
-      events.push(...mappedEvents)
+      events.push(...toDisplayableEvents((payload.events ?? []) as EventbriteRawEvent[]))
 
       if (!payload.pagination?.has_more_items || !payload.pagination.continuation) break
       continuation = payload.pagination.continuation
     }
   }
+
+  const jointEvents = toDisplayableEvents(await fetchPartnerEvents(partnerEventIds))
+  events.push(...jointEvents.map((event) => ({ ...event, isJointEvent: true })))
 
   const uniqueEvents = Array.from(new Map(events.map((event) => [event.id, event])).values())
   return sortEventsForDisplay(uniqueEvents)

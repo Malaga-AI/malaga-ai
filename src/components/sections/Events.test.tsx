@@ -163,6 +163,27 @@ describe('Events in Spanish', () => {
     )
   })
 
+  it('labels a featured joint event as a collaboration', () => {
+    const events = [makeEvent('joint', '2027-06-25T16:30:00Z', { isJointEvent: true })]
+
+    renderWithLanguage(<Events events={events} />, 'es')
+
+    expect(screen.getByText(es.badges.featuredJoint)).toBeInTheDocument()
+    expect(screen.queryByText(es.badges.featured)).not.toBeInTheDocument()
+  })
+
+  it('marks a joint event card that is not featured', () => {
+    const events = [
+      makeEvent('soonest', '2027-06-25T16:30:00Z'),
+      makeEvent('joint', '2027-07-25T16:30:00Z', { isJointEvent: true }),
+    ]
+
+    renderWithLanguage(<Events events={events} />, 'es')
+
+    expect(screen.getByText(es.badges.featured)).toBeInTheDocument()
+    expect(screen.getByText(es.badges.joint)).toBeInTheDocument()
+  })
+
   it('lists other upcoming events under the also-coming-up heading', () => {
     const events = [
       makeEvent('soonest', '2027-06-25T16:30:00Z'),

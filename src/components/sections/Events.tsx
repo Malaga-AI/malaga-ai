@@ -60,7 +60,7 @@ function FeaturedEventCard({ event, language, texts }: { event: EventItem; langu
     <div className="relative overflow-hidden rounded-[2rem] border border-primary/25 bg-gradient-to-br from-primary/15 via-surface to-accent/10 shadow-glow transition hover:-translate-y-1 hover:border-primary/50">
       <div className="grid gap-8 lg:grid-cols-[1fr_0.72fr]">
         <div className="p-6 md:p-10">
-          <Badge>{texts.badges.featured}</Badge>
+          <Badge>{event.isJointEvent ? texts.badges.featuredJoint : texts.badges.featured}</Badge>
           <h3 className="mt-5 font-safiro text-4xl leading-tight text-foreground md:text-5xl">{event.title}</h3>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">{event.summary ?? event.description}</p>
           <Button href={event.url} target="_blank" rel="noreferrer" stretched className="mt-8">{texts.registerCta}</Button>

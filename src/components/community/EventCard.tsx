@@ -44,6 +44,7 @@ export function EventCard({ event, variant = 'default' }: EventCardProps) {
       <div className={cn('flex flex-1 flex-col', isCompact ? 'p-4' : 'p-5')}>
         <div className="flex flex-wrap gap-2">
           <Badge>{getEventStateLabel(event, texts.ticketState)}</Badge>
+          {event.isJointEvent ? <Badge>{texts.badges.joint}</Badge> : null}
           {event.isOnline ? <Badge>{texts.badges.online}</Badge> : <Badge>{texts.badges.inPerson}</Badge>}
         </div>
         <h3

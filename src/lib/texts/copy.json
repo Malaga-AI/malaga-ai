@@ -77,6 +77,8 @@
     "ticketsOnEventbrite": { "en": "Tickets on Eventbrite", "es": "Entradas en Eventbrite" },
     "badges": {
       "featured": { "en": "Featured upcoming event", "es": "Próximo evento destacado" },
+      "featuredJoint": { "en": "Upcoming joint event", "es": "Próximo evento en colaboración" },
+      "joint": { "en": "Joint event", "es": "En colaboración" },
       "free": { "en": "Free", "es": "Gratis" },
       "online": { "en": "Online", "es": "Online" },
       "inPerson": { "en": "In person", "es": "Presencial" }

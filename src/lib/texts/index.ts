@@ -54,6 +54,8 @@ export type EventTicketStateLabels = {
 
 export type EventBadgeTexts = {
   featured: string
+  featuredJoint: string
+  joint: string
   free: string
   online: string
   inPerson: string
