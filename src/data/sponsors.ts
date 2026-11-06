@@ -206,4 +206,11 @@ export const partners: Sponsor[] = [
     logo: jOnTheBeachLogo,
     url: 'https://www.jonthebeach.com/',
   },
+  {
+    id: 'el-espanol',
+    name: 'El Español',
+    tier: 'community',
+    logo: favicon('elespanol.com'),
+    url: 'https://www.elespanol.com/malaga/',
+  },
 ]
