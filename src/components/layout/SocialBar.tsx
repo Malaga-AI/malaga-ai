@@ -14,6 +14,11 @@ const socialBarLinks = [
     Icon: EventbriteIcon,
   },
   {
+    href: 'https://nomadia.digital/en/app/community/c/malaga-ai',
+    label: 'Nomadia',
+    Icon: NomadiaIcon,
+  },
+  {
     href: 'https://discord.com/invite/2tv7W2jxXF',
     label: 'Discord',
     Icon: DiscordIcon,
@@ -54,6 +59,17 @@ function EventbriteIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0Zm5.88 8.9-.42 1.72a.3.3 0 0 1-.34.24l-6.02-.94-.36 1.83 5.15.8a.3.3 0 0 1 .25.35l-.34 1.7a.3.3 0 0 1-.35.24l-5.15-.8-.4 2.02 6.16.96a.3.3 0 0 1 .25.35l-.35 1.77a.3.3 0 0 1-.34.24l-8.4-1.31a.3.3 0 0 1-.25-.35L8.6 5.4a.3.3 0 0 1 .34-.24l8.7 1.36a.3.3 0 0 1 .24.35Z" />
+    </svg>
+  )
+}
+
+// Nomadia's mark (a circle crossed by a horizontal line), redrawn with a
+// stroke heavy enough to read at icon size.
+function NomadiaIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" {...props}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M1.5 12h21" />
     </svg>
   )
 }
