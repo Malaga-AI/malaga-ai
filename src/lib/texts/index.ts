@@ -105,6 +105,15 @@ export type InitiativesTexts = {
   cards: [InitiativeCard, InitiativeCard, InitiativeCard]
 }
 
+export type ProjectsTexts = {
+  kicker: string
+  heading: string
+  description: string
+  byline: string
+  authorLinkedinAriaLabel: (name: string) => string
+  cards: [InitiativeCard, InitiativeCard, InitiativeCard]
+}
+
 export type SponsorTier = 'gold' | 'silver' | 'bronze'
 
 export type SponsorTierCardTexts = {
@@ -153,6 +162,7 @@ export type SiteTexts = {
   events: EventsTexts
   hero: HeroTexts
   initiatives: InitiativesTexts
+  projects: ProjectsTexts
   team: TeamTexts
   photos: PhotosTexts
   partners: PartnersTexts
@@ -196,6 +206,9 @@ type LocalizedCopy = {
   events: EventsTexts
   hero: HeroTexts
   initiatives: InitiativesTexts
+  projects: Omit<ProjectsTexts, 'authorLinkedinAriaLabel'> & {
+    authorLinkedinAriaLabel: string
+  }
   partners: PartnersTexts
   photos: Omit<PhotosTexts, 'openPhotoAriaLabel' | 'galleryImageFallbackAlt'> & {
     openPhotoAriaLabel: string
@@ -221,6 +234,10 @@ function buildTexts(language: Language): SiteTexts {
       ...localized.chrome,
       socialAriaLabel: (network) => template(localized.chrome.socialAriaLabel, network),
       themeToggleLabel: (nextTheme) => localized.chrome.themeToggleLabel[nextTheme],
+    },
+    projects: {
+      ...localized.projects,
+      authorLinkedinAriaLabel: (name) => template(localized.projects.authorLinkedinAriaLabel, name),
     },
     photos: {
       ...localized.photos,

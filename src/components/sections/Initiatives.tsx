@@ -1,12 +1,12 @@
-import { GraduationCap, Sparkles, UsersRound } from 'lucide-react'
+import { GraduationCap, School, UsersRound } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTexts } from '@/lib/texts'
 import { cn } from '@/lib/utils'
 
 const initiatives = [
   {
-    icon: Sparkles,
-    actionHref: 'https://careeradvice.malaga-ai.community',
+    icon: School,
+    actionHref: 'mailto:hello@malaga-ai.community',
   },
   {
     icon: UsersRound,

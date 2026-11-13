@@ -70,12 +70,13 @@ describe('TEXTS', () => {
  *
  * `Partners`, `Online` and `Career Advice AI` are deliberate loanwords: Spanish
  * tech readers use them untranslated. The rest are proper nouns, an event
- * acronym, or the brand itself.
+ * acronym, a project name, or the brand itself.
  */
 const SHARED_VALUES = new Set([
   'Partners',
   'Online',
   'Career Advice AI',
+  'Glorieta',
   'Malaga-AI',
   '© 2026 Malaga-AI.',
   'GSEC',

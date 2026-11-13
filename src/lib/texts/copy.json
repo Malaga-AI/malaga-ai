@@ -3,6 +3,7 @@
     "nav": [
       { "href": "#events", "label": { "en": "Events", "es": "Eventos" } },
       { "href": "#initiatives", "label": { "en": "Initiatives", "es": "Iniciativas" } },
+      { "href": "#projects", "label": { "en": "Projects", "es": "Proyectos" } },
       { "href": "#team", "label": { "en": "Team", "es": "Equipo" } },
       { "href": "#photos", "label": { "en": "Photos", "es": "Fotos" } },
       { "href": "#sponsors", "label": { "en": "Sponsors", "es": "Patrocinadores" } },
@@ -135,13 +136,13 @@
     },
     "cards": [
       {
-        "title": { "en": "Career Advice AI", "es": "Career Advice AI" },
-        "status": { "en": "Live", "es": "Activo" },
+        "title": { "en": "Tailored Education", "es": "Formación a Medida" },
+        "status": { "en": "Open", "es": "Abierto" },
         "description": {
-          "en": "Upload your CV and get a free, personalized read on how AI is reshaping your career — your strengths, your exposure, and where to grow next.",
-          "es": "Sube tu CV y consigue un análisis gratuito y personalizado de cómo la IA está transformando tu carrera: tus puntos fuertes, tu exposición y hacia dónde crecer."
+          "en": "On-demand training for every AI need. Tell us how you work and we create a program together.",
+          "es": "Formación bajo demanda para cada necesidad de IA. Cuéntanos cómo trabajas y creamos un programa juntos."
         },
-        "actionLabel": { "en": "Try it now", "es": "Pruébalo ahora" }
+        "actionLabel": { "en": "Email us", "es": "Escríbenos" }
       },
       {
         "title": { "en": "Talent Program", "es": "Programa de Talento" },
@@ -160,6 +161,46 @@
           "es": "Desde 2023, los grupos de estudio de Malaga-AI han ayudado a equipos cohesionados a aprender IA construyendo proyectos, desde exploits de LLM hasta agentes, seguridad en IA y evals."
         },
         "actionLabel": { "en": "Join the community", "es": "Únete a la comunidad" }
+      }
+    ]
+  },
+
+  "projects": {
+    "kicker": { "en": "Community projects", "es": "Proyectos de la comunidad" },
+    "heading": { "en": "Built by people in our community", "es": "Creados por personas de nuestra comunidad" },
+    "description": {
+      "en": "Free tools and courses made by Malaga-AI members. Try them and share your feedback with their authors.",
+      "es": "Herramientas y cursos gratuitos hechos por miembros de Malaga-AI. Pruébalos y comparte tu opinión con sus autores."
+    },
+    "byline": { "en": "By", "es": "Por" },
+    "authorLinkedinAriaLabel": { "en": "{{name}} on LinkedIn", "es": "{{name}} en LinkedIn" },
+    "cards": [
+      {
+        "title": { "en": "Career Advice AI", "es": "Career Advice AI" },
+        "status": { "en": "Live", "es": "Activo" },
+        "description": {
+          "en": "Upload your CV and get a free, personalized read on how AI is reshaping your career — your strengths, your exposure, and where to grow next.",
+          "es": "Sube tu CV y consigue un análisis gratuito y personalizado de cómo la IA está transformando tu carrera: tus puntos fuertes, tu exposición y hacia dónde crecer."
+        },
+        "actionLabel": { "en": "Try it now", "es": "Pruébalo ahora" }
+      },
+      {
+        "title": { "en": "What is AI?", "es": "¿Qué es la IA?" },
+        "status": { "en": "Live", "es": "Activo" },
+        "description": {
+          "en": "A free, interactive AI literacy course for beginners and curious adults. Hands-on lessons explain machine learning, neural networks, Transformers, and large language models.",
+          "es": "Un curso interactivo y gratuito de alfabetización en IA para principiantes y adultos curiosos. Lecciones prácticas que explican el aprendizaje automático, las redes neuronales, los Transformers y los grandes modelos de lenguaje."
+        },
+        "actionLabel": { "en": "Start learning", "es": "Empieza a aprender" }
+      },
+      {
+        "title": { "en": "Glorieta", "es": "Glorieta" },
+        "status": { "en": "Live", "es": "Activo" },
+        "description": {
+          "en": "Guiri al Volante: a bilingual quiz that teaches newcomers the Spanish driving rules, from roundabouts and right-of-way to speed limits, with clear explanations for every answer.",
+          "es": "Guiri al Volante: un test bilingüe que enseña a los recién llegados las normas de circulación en España, desde las glorietas y la prioridad hasta los límites de velocidad, con explicaciones claras en cada respuesta."
+        },
+        "actionLabel": { "en": "Take the quiz", "es": "Haz el test" }
       }
     ]
   },

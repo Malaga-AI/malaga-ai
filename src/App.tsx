@@ -4,6 +4,7 @@ import { Contact } from '@/components/sections/Contact'
 import { Events } from '@/components/sections/Events'
 import { EventPhotos } from '@/components/sections/EventPhotos'
 import { Initiatives } from '@/components/sections/Initiatives'
+import { CommunityProjects } from '@/components/sections/CommunityProjects'
 import { CommunityPartners } from '@/components/sections/CommunityPartners'
 import { Team } from '@/components/sections/Team'
 import { DalaParticleTransition } from '@/components/visuals/DalaParticleTransition'
@@ -24,6 +25,7 @@ export default function App() {
           onRetry={eventsState.refetch}
         />
         <Initiatives />
+        <CommunityProjects />
         <Team />
         <EventPhotos />
         <CommunityPartners />
