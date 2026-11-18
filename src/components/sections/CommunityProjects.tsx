@@ -1,10 +1,15 @@
 import { BookOpenText, Car, Sparkles } from 'lucide-react'
+import glorietaLogo from '@/assets/projects/glorieta-logo.svg'
+import glorietaLogoWhite from '@/assets/projects/glorieta-logo-white.svg'
 import { Button } from '@/components/ui/button'
 import { useTexts } from '@/lib/texts'
+import { useTheme } from '@/lib/theme'
 
 type Project = {
   icon: typeof Sparkles
   actionHref: string
+  // Optional brand logo shown instead of the icon. `dark` is used on the dark theme.
+  logo?: { light: string; dark: string }
   author?: { name: string; linkedinUrl: string }
 }
 
@@ -22,12 +27,14 @@ const projects: Project[] = [
   {
     icon: Car,
     actionHref: 'https://glorieta.anaidic.com/',
+    logo: { light: glorietaLogo, dark: glorietaLogoWhite },
     author: { name: 'Geordie Everitt', linkedinUrl: 'https://www.linkedin.com/in/georgeeveritt/' },
   },
 ]
 
 export function CommunityProjects() {
   const texts = useTexts()
+  const { theme } = useTheme()
 
   return (
     <section id="projects" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="projects-title">
@@ -51,9 +58,17 @@ export function CommunityProjects() {
                 className="relative flex h-full flex-col rounded-2xl border border-border bg-card/80 p-6 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-primary/50"
               >
                 <div className="flex items-center justify-between gap-4">
-                  <span className="grid h-12 w-12 place-items-center rounded-xl bg-primary/15 text-brand-ink">
-                    <Icon className="h-6 w-6" />
-                  </span>
+                  {project.logo ? (
+                    <img
+                      src={theme === 'light' ? project.logo.light : project.logo.dark}
+                      alt={card.title}
+                      className="h-12 w-auto max-w-[180px] object-contain"
+                    />
+                  ) : (
+                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-primary/15 text-brand-ink">
+                      <Icon className="h-6 w-6" />
+                    </span>
+                  )}
                   <span className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold text-muted-foreground">
                     {card.status}
                   </span>
